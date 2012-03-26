@@ -20,8 +20,8 @@ link rel:"stylesheet",href:"/_c/bootswatch/bootstrap.css"
 link rel:"stylesheet",href:"/_c/bootswatch/bootstrap-responsive.css"
 link rel:"stylesheet",href:"/_c/fortawesome/css/font-awesome.css"
 link rel:"stylesheet",href:"/_c/validation/engine.css"
-
-stylesheets "lib", "application"
+link rel:"stylesheet",href:"/stylesheets/app/client/stylesheets/application.css"
+#stylesheets "lib", "application"
 
 
 link href: "/favicon.png", rel: "icon shortcut-icon favicon"
@@ -38,7 +38,12 @@ javascriptTag "/_j/jquery.min.js"
 #  yield "headJavaScripts"
 
 contentFor "bottom", ->
+  jsname = "transition,alert,modal,dropdown,scrollspy,tab,tooltip,popover,button,collapse,carousel,typeahead"
+  jsname.split(',').forEach (el)->
+    javascriptTag "/javascripts/vendor/javascripts/bootstrap/bootstrap-#{el}.js"
+  ###
   javascripts "vendor" 
   if Tower.env == "development"
     javascripts "development"
   javascripts "lib", "application"
+  ###
