@@ -1,0 +1,3 @@
+App.ChunkHelper = 
+  chunkElements: ->
+    $(".chunks")

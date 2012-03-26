@@ -1,0 +1,3 @@
+App.MessageHelper =
+  messageElements: ->
+    $(".messages")

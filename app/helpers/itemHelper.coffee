@@ -1,0 +1,3 @@
+App.ItemHelper =
+  itemElements: ->
+    $(".items")
