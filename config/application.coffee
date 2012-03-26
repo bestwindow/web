@@ -1,4 +1,4 @@
-Tower.env     = 'development'
+require '../app_config.coffee'
 global.__insc = (s)->console.log require('util').inspect(s)
 global.v      = require 'valentine'
 fs            = require 'fs'

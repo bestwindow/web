@@ -39,3 +39,6 @@ public/javascripts/
 public/stylesheets/
 npm-debug.log
 tmp/
+
+##app##
+app_config.coffee
