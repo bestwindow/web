@@ -15,8 +15,8 @@ csrfMetaTag()
 appleViewportMetaTag width: "device-width", max: 1, scalable: false
 
 #stylesheets "lib", "vendor", "application"
-
-link rel:"stylesheet",href:"/_c/bootswatch/bootstrap.css"
+cssPath = if Tower.stylesheet then "#{Tower.stylesheet}/" else ""
+link rel:"stylesheet",href:"/_c/bootswatch/#{cssPath}bootstrap.css"
 link rel:"stylesheet",href:"/_c/bootswatch/bootstrap-responsive.css"
 link rel:"stylesheet",href:"/_c/fortawesome/css/font-awesome.css"
 link rel:"stylesheet",href:"/_c/validation/engine.css"
