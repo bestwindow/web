@@ -1,3 +1,4 @@
+require '../app_config.coffee'
 global.__insc = (s)->console.log require('util').inspect(s)
 global.v      = require 'valentine'
 fs            = require 'fs'
@@ -64,8 +65,6 @@ Tower.imageSize.max = (type)->Tower.imageSize(type).length-1
 
 
 module.exports = global.App = new App
-
-require '../app_config.coffee'
 towermod = require '../app/towermod'
 
 
