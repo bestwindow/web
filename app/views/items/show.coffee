@@ -17,14 +17,14 @@ ul class:"breadcrumb",=>
     li class:"pull-right",=>
       a href:"/items/#{@item.id}/edit",->"编辑货物"
 
-
+console.log "htmlhtml"+@item.html
 div class:"content row",id:"itemshow",=>
   div class:"span7",=>
     div class:"picture", =>
       img src:"/image/#{@item.picture}_5.jpg",style:"border:20px solid white"
   div class:"span5",=>
     div class:"hero-unit",=>
-      div @item.text
+      div (@item.html || @item.text)
       div "&nbsp;"
       h3 "价格:￥ #{@item.get('price')}"
       a class:"btn btn-warning btn-large", href:"/messages/new/#{@ghost.id}/#{@item.id}",=>"询价&购买"

@@ -1,5 +1,6 @@
 class App.ItemsController extends App.ApplicationController
   @param "text"
+  @param "html"
   @param "picture"
   @param "price"
 
