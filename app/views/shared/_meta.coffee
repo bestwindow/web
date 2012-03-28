@@ -1,9 +1,12 @@
 meta charset: "utf-8"
 
+###
 if hasContentFor "title"
   title @title
 else
   title t("title")
+###
+title "B1楼"
 
 meta name: "description", content: t("description")
 meta name: "keywords", content: t("keywords")
