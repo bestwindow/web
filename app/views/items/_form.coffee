@@ -1,9 +1,9 @@
+javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
+javascriptTag '/_j/jquery.validationEngine.js'
 javascriptTag "/_j/jquery.maskMoney.js"
 javascriptTag "/_j/jquery.ui.widget.js"
 javascriptTag "/_j/jquery.iframe-transport.js"
 javascriptTag "/_j/jquery.fileupload.js"
-javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
-javascriptTag '/_j/jquery.validationEngine.js'
 javascriptTag '/_libs/epiceditor/epiceditor.js'
 javascriptTag "/_j/item.js"
 

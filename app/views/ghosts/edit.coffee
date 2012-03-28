@@ -11,7 +11,7 @@ ul class:"breadcrumb",=>
   li class:"active", =>"帐户设置"
 
 ghost = @ghost
-div class:"form-horizontal well", ->
+div class:"form-horizontal", ->
   formFor @ghost, (f) ->
     div class:"control-group", ->
       label class:"control-label",for:"ghost-email-input","邮件"
