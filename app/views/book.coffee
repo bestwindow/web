@@ -69,6 +69,7 @@ style '''
   .three .block2{width:492px;height:290px;float:right}
   .three .block2 .img {height:290px;overflow:hidden}
   .three .block2 .text {margin-top:-40px;color:white;font-size:18px;margin-left:10px}
+  .three .btn {display:none}
 
 '''
 
