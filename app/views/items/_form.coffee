@@ -12,6 +12,7 @@ formFor @item, (f) =>
   div class:"alert fade","&nbsp;"
   div id:"newitem", =>
     input name:"item[chunk]",type:"hidden",value:String @chunk.id
+    input name:"item[chunktitle]",type:"hidden",value:String @chunk.title
     input name:"item[text]",type:"hidden",id:"texthidden",value:"#{if edit then encodeURI(@item.text) else '货物描述'}"
     input name:"item[html]",type:"hidden",id:"htmlhidden"
     input name:"item[picture]",type:"hidden",id:"pictureinput",value:"#{if edit then @item.picture else ''}"

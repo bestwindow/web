@@ -6,7 +6,7 @@ if hasContentFor "title"
 else
   title t("title")
 ###
-title "B1楼"
+title "a demo"
 
 meta name: "description", content: t("description")
 meta name: "keywords", content: t("keywords")
@@ -18,6 +18,7 @@ csrfMetaTag()
 appleViewportMetaTag width: "device-width", max: 1, scalable: false
 
 #stylesheets "lib", "vendor", "application"
+
 cssPath = if Tower.stylesheet then "#{Tower.stylesheet}/" else ""
 link rel:"stylesheet",href:"/_c/bootswatch/#{cssPath}bootstrap.css"
 link rel:"stylesheet",href:"/_c/bootswatch/bootstrap-responsive.css"

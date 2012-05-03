@@ -25,7 +25,11 @@ class App.ApplicationController extends Tower.Controller
       @response.redirect "/"
   index: ->
     App.loadUser App.GhostHelper.findGhost,@request,@response,=>
-      @render "index"
+      #@render "index"
+      App.Item.order('createdAt',-1).paginate(page:1,limit:100).all (error, items)=>
+        @items = items
+        @render "book"
+
 
 
     ###
