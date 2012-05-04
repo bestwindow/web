@@ -21,6 +21,7 @@ style '''
   .modal-body .content{width:160px;padding-left:10px;padding-top:100px;float:left;overflow:hidden}  
   .modal-body .content .price{font-size:24px}
   .modal-body .content .text {font-size:0;margin-top:20px}
+  .modal-body .content .text p{font-size:0}
 
   .deck-container{padding:0px}
   .deck-container .deck-status{right:20px;bottom:0px}
