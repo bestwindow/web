@@ -6,11 +6,16 @@ javascriptTag "/_j/modernizr.custom.js"
 javascriptTag "/_j/deck/deck.core.js"
 javascriptTag "/_j/deck/extensions/scale/deck.scale.js"
 javascriptTag "/_j/deck/extensions/status/deck.status.js"
+javascriptTag "/_j/jquery.timeago.js"
+javascriptTag "/_j/jquery.timeago.zh-CN.js"
+
+    
 
 
 style '''
   body{background:#f7f7f7;padding:0px}
   #navigation,#footer{display:none}
+  abbr.timeago {font-size:16px;color:#888}
   .container {width:1024px}
   .modal {display:none}
   .modal-footer .btn{display:none}

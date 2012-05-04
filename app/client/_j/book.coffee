@@ -38,7 +38,7 @@ $ ->
       page[pagePos].items = [] if !page[pagePos].items
       page[pagePos].items.push bookItems[i]
     for i in [0..page.length-1]
-      div ="<div class=title>#{page[i].chunkTitle}</div>"
+      div = ''
       page[i].items.reverse()
       if page[i].items.length>=5
         blockLength = 5
@@ -48,6 +48,8 @@ $ ->
         blockLength = page[i].items.length
       for j in [0..blockLength-1]
         div +=  "<span class=\"block#{j}\" onclick=\"showItem('#{page[i].items[j].id}')\"><div class=img><img src=/image/#{page[i].items[j].picture}_7.jpg /></div><div class=text>#{page[i].items[j].text}</div></span>"
+        publishTime = page[i].items[j].createdAt
+      div = "<div class=title>#{page[i].chunkTitle}&nbsp;&nbsp;<abbr class=\"timeago\" title=\"#{publishTime}\"> #{publishTime}</abbr></div>#{div}"
       if page[i].items.length>=5
         pageType = 'five'
       else if page[i].items.length>=3
@@ -58,6 +60,7 @@ $ ->
       html+="<section class=\"bookpage slide #{pageType}\">#{div}</section>"
       html+='<p class="deck-status"><span class="deck-status-current"></span>/<span class="deck-status-total"></span></p>'
     book.html html
+    $("abbr.timeago").timeago()
     $.deck '.slide'
   makeBook()
 

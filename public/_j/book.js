@@ -30,7 +30,7 @@
       return $('#itemModal').modal();
     };
     makeBook = function() {
-      var blockLength, div, html, i, j, pagePos, pageType, pageTypeClass, _ref, _ref2, _ref3;
+      var blockLength, div, html, i, j, pagePos, pageType, pageTypeClass, publishTime, _ref, _ref2, _ref3;
       html = '';
       pageTypeClass = {
         zero: [''],
@@ -49,7 +49,7 @@
         page[pagePos].items.push(bookItems[i]);
       }
       for (i = 0, _ref2 = page.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-        div = "<div class=title>" + page[i].chunkTitle + "</div>";
+        div = '';
         page[i].items.reverse();
         if (page[i].items.length >= 5) {
           blockLength = 5;
@@ -60,7 +60,9 @@
         }
         for (j = 0, _ref3 = blockLength - 1; 0 <= _ref3 ? j <= _ref3 : j >= _ref3; 0 <= _ref3 ? j++ : j--) {
           div += "<span class=\"block" + j + "\" onclick=\"showItem('" + page[i].items[j].id + "')\"><div class=img><img src=/image/" + page[i].items[j].picture + "_7.jpg /></div><div class=text>" + page[i].items[j].text + "</div></span>";
+          publishTime = page[i].items[j].createdAt;
         }
+        div = "<div class=title>" + page[i].chunkTitle + "&nbsp;&nbsp;<abbr class=\"timeago\" title=\"" + publishTime + "\"> " + publishTime + "</abbr></div>" + div;
         if (page[i].items.length >= 5) {
           pageType = 'five';
         } else if (page[i].items.length >= 3) {
@@ -73,6 +75,7 @@
         html += '<p class="deck-status"><span class="deck-status-current"></span>/<span class="deck-status-total"></span></p>';
       }
       book.html(html);
+      $("abbr.timeago").timeago();
       return $.deck('.slide');
     };
     return makeBook();
