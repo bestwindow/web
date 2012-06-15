@@ -14,20 +14,23 @@ class App.ChunksController extends App.ApplicationController
       @render "admin"
 
   index: ->
-    App.Chunk.paginate(page:1,limit:100).all (error, chunks) =>
-      @paginate = 
-        limit:App.pageLimit
-        page:@pagination.current @params.page
-        route:"/chunks/page/" 
-      App.Item
-      .paginate(@paginate)
-      .order('createdAt',"desc")
-      .find (error,items)=>
-        @chunks = chunks
-        @paginate.end = @pagination.end items 
-        @items = items
-        @render "index"
-
+    if @format=='json'
+      App.Chunk.all (error, chunks) =>@render json:chunks
+    else
+      App.Chunk.paginate(page:1,limit:100).all (error, chunks) =>
+        @paginate = 
+          limit:App.pageLimit
+          page:@pagination.current @params.page
+          route:"/chunks/page/" 
+        App.Item
+        .paginate(@paginate)
+        .order('createdAt',"desc")
+        .find (error,items)=>
+          @chunks = chunks
+          @paginate.end = @pagination.end items 
+          @items = items
+          @render "index"
+      
   new: ->
     @chunk = new App.Chunk
     @render "new"
@@ -79,7 +82,6 @@ class App.ChunksController extends App.ApplicationController
           @response.redirect "/chunks/#{@params.id}"
 
   destroy: ->
-    console.log "destroy"
     App.Chunk.find @params.id, (error, resource) =>
       console.log "@chunk:"+resource
       if error

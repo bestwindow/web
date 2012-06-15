@@ -2,6 +2,7 @@ domain = ""
 imageSize = ""
 path = ""
 
+md5 = require "MD5"
 moment = require 'moment'
 magic = require 'imagemagick'
 fs = require 'fs'
@@ -33,6 +34,9 @@ App.ImageHelper = ((option)->
     imageSize = option.imageSize
     path = option.path || '/tmp/'
     fn =
+      writeLocal:(file,filename,next)->
+        filename = "/tmp/#{md5 filename}"
+        fs.writeFile filename,file,->next filename
       write:(file,type,next)->
         image = imageName(type,file)
         saveImage file,image,imageSize(type),->

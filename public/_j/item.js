@@ -1,7 +1,77 @@
 (function() {
 
   $(function() {
-    var initialize;
+    var crawUrl, crawlImage, initialize, showImage;
+    crawlImage = function(imageUrl) {
+      var url;
+      url = '/image/crawl';
+      $("#crawlImageBtn").attr('disabled', "disabled");
+      $("#crawlImageBtn").attr('value', "正在抓取");
+      return $.post(url, {
+        url: imageUrl
+      }, function(data) {
+        data = JSON.parse(data);
+        $("#crawlImageBtn").attr('disabled', false);
+        $("#crawlImageBtn").attr('value', "使用这张图片");
+        if (data.error) return alert("图片抓取失败");
+        showImage(data[0]);
+        $('#itemCrawler').addClass('hide');
+        $('#itemEditor').removeClass('hide');
+        return initialize();
+      });
+    };
+    crawUrl = function(e) {
+      var dom, url;
+      url = '/image/crawlurl';
+      dom = $("#targetUrlInput");
+      if (dom.val() === '') return true;
+      $("#targetUrlBtn").attr('disabled', "disabled");
+      $("#targetUrlBtn").attr('value', "正在抓取");
+      return $.post(url, {
+        url: dom.val()
+      }, function(data) {
+        var html, imageUrl, showSize, _i, _len, _ref;
+        data = JSON.parse(data);
+        html = [];
+        $("#targetUrlBtn").attr('disabled', false);
+        $("#targetUrlBtn").attr('value', "确定");
+        if (data.images.length <= 0) return $("#crawlerResult").html("没有抓取到图片");
+        _ref = data.images;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          imageUrl = _ref[_i];
+          html.push("<div class=item><img id=\"crawlerImage\" src=" + imageUrl + " onclick=crawlImage(this.src) />");
+        }
+        console.log("" + (html.join('</div>')) + "</div>");
+        html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=button onclick=\"$('#imageCarousel').carousel('prev')\" value=\"&lsaquo;\" />", "<input type=button onclick=\"$('#imageCarousel').carousel('next')\" value=\"&rsaquo;\" />&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button id=crawlImageBtn value=\"使用这张图片\" />", "</div>", '<div id="imageCarousel" class="carousel slide">', '<div class="carousel-inner">', html.join('</div>'), '</div>', '</div>'].join("");
+        $("#crawlerResult").html(html);
+        $($('#imageCarousel .item')[0]).addClass('active');
+        $("#crawlImageBtn").click(function() {
+          return crawlImage($('#imageCarousel .active img').attr("src"));
+        });
+        showSize = function() {
+          var d;
+          d = $('#imageCarousel .active img');
+          return $('#crawlerInfo').html("图片长宽:" + (d.width()) + " X " + (d.height()));
+        };
+        setTimeout(showSize, 2500);
+        dom = $('#imageCarousel');
+        dom.carousel({
+          interval: 6000000
+        });
+        return dom.on('slid', showSize);
+      });
+    };
+    $("#targetUrlBtn").click(crawUrl);
+    $("#targetUrlInput").keyup(function(event) {
+      if (event.type === "keyup" && event.which === 13) return crawUrl();
+    });
+    showImage = function(file) {
+      $("#pictureinput")[0].value = file.thumbnail_url.split("image/")[1].replace("_0.jpg", "");
+      $("#fileupload").css("display", "none");
+      $(".left").css("border", "8px solid #eee");
+      $("<div>").html("<a href=" + file.url + " target=_blank><img src=" + file.url + " width=430 /></a>").appendTo($("#fileresult"));
+      return $('#pictureclose').css("display", "block");
+    };
     $.money = function() {
       return $("#money").maskMoney({
         symbol: "￥ ",
@@ -10,7 +80,7 @@
         precision: 0
       });
     };
-    initialize = function() {
+    return initialize = function() {
       $("#fileupload").fileupload({
         dataType: "json",
         url: "/image",
@@ -19,11 +89,7 @@
         },
         done: function(e, data) {
           return $.each(data.result, function(index, file) {
-            $("#pictureinput")[0].value = file.thumbnail_url.split("image/")[1].replace("_0.jpg", "");
-            $("#fileupload").css("display", "none");
-            $(".left").css("border", "8px solid #eee");
-            $("<div>").html("<a href=" + file.url + " target=_blank><img src=" + file.url + " width=430 /></a>").appendTo($("#fileresult"));
-            return $('#pictureclose').css("display", "block");
+            return showImage(file);
           });
         }
       });
@@ -106,7 +172,6 @@
         return $('#pictureclose').css("display", "block");
       }
     };
-    return initialize();
   });
 
 }).call(this);

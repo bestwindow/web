@@ -9,6 +9,8 @@ class App.ItemsController extends App.ApplicationController
       when 'admin' then @loadUser =>@nextUrl @isMaster(),next,'/chunks'
       when 'create','new','update','edit' then @loadUser =>@nextUrl @request.user,next,'/chunks'
       else @loadUser next
+      
+    
 
   showEdit:(route)->
     error = => @response.redirect "/chunks"
@@ -36,13 +38,9 @@ class App.ItemsController extends App.ApplicationController
 
   new: ->
     App.Chunk.where(path:@params.id).first (error, resource) =>
-      if !resource || error
-        @response.redirect "/"
-      else
         @item = new App.Item
-        @chunk = resource
+        @chunk = resource || {}
         @render "new"
-
   create:->
     @params.item.founder = @request.user.get('id')
     App.Item.create @params.item,(error,resource)=>
