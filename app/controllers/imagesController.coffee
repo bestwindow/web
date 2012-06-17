@@ -3,23 +3,28 @@ util = require 'util'
 request = require 'request'
 jsdom  = require 'jsdom'
 fs     = require 'fs'
+Iconv  = require('iconv').Iconv
 jquery = fs.readFileSync("./public/_j/jquery.min.js").toString()
 
 
 
 class App.ImagesController extends App.ApplicationController
   
-  crawlImageUrl=(url,fn)->
-    options = url:url
+  crawlHtml=(url,fn)->
+    options = url:url,encoding:null
     afterRequest = (error, response, body)->
+      gbk_to_utf8_iconv = new Iconv 'GBK', 'UTF-8'
+      body = gbk_to_utf8_iconv.convert body
       jsdom.env
         html: body||""
         src: [jquery]
         done:(errors, window)->
-          res = []
+          res = images:[]
           $ = window.$
+          res.title = escape $("title").html()
+          res.price = $('#J_StrPrice').html()
           for i in $ '#J_UlThumb img'
-            res.push "#{  $(i).attr('src').split('.jpg')[0]}.jpg"
+            res.images.push "#{  $(i).attr('src').split('.jpg')[0]}.jpg"
           fn res
     try
       request options,afterRequest
@@ -75,9 +80,9 @@ class App.ImagesController extends App.ApplicationController
       @response.writeHead 200, {'Content-Type': 'image/jpeg' }
       @response.end fileData, 'binary'
   crawlUrl: ->
-    crawlImageUrl @params.url,(imageUrl)=>
+    crawlHtml @params.url,(html)=>
       @response.writeHead 200, {'Content-Type':'text/plain'}
-      @response.end JSON.stringify images:imageUrl
+      @response.end JSON.stringify result:html
   crawl: ->
     crawlImage @params.url,(imageUrl)=>
       if imageUrl ==''

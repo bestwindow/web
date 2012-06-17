@@ -27,7 +27,7 @@ div class:"content row",id:"itemshow",=>
       div (@item.html || @item.text)
       div "&nbsp;"
       h3 "价格:￥ #{@item.get('price')}"
-      a class:"btn btn-warning btn-large", href:"/messages/new/#{@ghost.id}/#{@item.id}",=>"询价&购买"
+      a class:"btn btn-warning btn-large", href:"#{@item.link}",target:"_blank",=>"购买"
     div => 
       text "此货物由"
       linkTo @ghost.name,"/shells/#{@ghost.id}"

@@ -21,17 +21,62 @@
       });
     };
     crawUrl = function(e) {
-      var dom, url;
+      var dom, link, price, url;
+      link = function(l) {
+        var domain, id, idIndex, idPos, idStr, pureLink, targetDomain;
+        targetDomain = function() {
+          var el, _i, _len, _ref;
+          _ref = ["taobao", "tmall"];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            el = _ref[_i];
+            if (l.indexOf(el) > 0) return el;
+          }
+          return false;
+        };
+        idPos = function() {
+          var el, _i, _len, _ref;
+          _ref = ["?id=", "&id="];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            el = _ref[_i];
+            if (l.indexOf(el) > 0) return el;
+          }
+          return false;
+        };
+        domain = targetDomain();
+        if (domain === false) return alert("目前只直至抓取taobao.com, tmall.com下的商品信息");
+        idIndex = idPos();
+        if (idIndex === false) return alert("链接信息不完整,没有找到商品id");
+        idStr = l.split(idIndex)[1];
+        id = idStr.split("&")[0];
+        pureLink = "http://detail.tmall.com/item.htm?id=" + id;
+        return $('#linkhidden').val(pureLink);
+      };
+      price = function(p) {
+        var pr;
+        pr = parseFloat(p);
+        if (!isNaN(pr)) {
+          $("#price").val(pr);
+          $("#money").val(pr);
+          return true;
+        } else {
+          return false;
+        }
+      };
       url = '/image/crawlurl';
       dom = $("#targetUrlInput");
       if (dom.val() === '') return true;
+      link(dom.val());
       $("#targetUrlBtn").attr('disabled', "disabled");
       $("#targetUrlBtn").attr('value', "正在抓取");
       return $.post(url, {
         url: dom.val()
       }, function(data) {
         var html, imageUrl, showSize, _i, _len, _ref;
-        data = JSON.parse(data);
+        data = JSON.parse(data).result;
+        $('#texthidden').val(unescape(data.title));
+        if (price(data.price) === false) {
+          return $("#crawlerResult").html("没有抓取到价格");
+        }
         html = [];
         $("#targetUrlBtn").attr('disabled', false);
         $("#targetUrlBtn").attr('value', "确定");
@@ -41,7 +86,6 @@
           imageUrl = _ref[_i];
           html.push("<div class=item><img id=\"crawlerImage\" src=" + imageUrl + " onclick=crawlImage(this.src) />");
         }
-        console.log("" + (html.join('</div>')) + "</div>");
         html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=button onclick=\"$('#imageCarousel').carousel('prev')\" value=\"&lsaquo;\" />", "<input type=button onclick=\"$('#imageCarousel').carousel('next')\" value=\"&rsaquo;\" />&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button id=crawlImageBtn value=\"使用这张图片\" />", "</div>", '<div id="imageCarousel" class="carousel slide">', '<div class="carousel-inner">', html.join('</div>'), '</div>', '</div>'].join("");
         $("#crawlerResult").html(html);
         $($('#imageCarousel .item')[0]).addClass('active');
@@ -80,7 +124,7 @@
         precision: 0
       });
     };
-    return initialize = function() {
+    initialize = function() {
       $("#fileupload").fileupload({
         dataType: "json",
         url: "/image",
@@ -172,6 +216,7 @@
         return $('#pictureclose').css("display", "block");
       }
     };
+    if ($('#itemCrawler').length === 0) return initialize();
   });
 
 }).call(this);

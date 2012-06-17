@@ -8,11 +8,12 @@ javascriptTag '/_libs/epiceditor/epiceditor.js'
 javascriptTag "/_j/item.js"
 
 edit = if @item.picture then true else false
-form id:"itemCrawler",onsubmit:"return false",->
-  input id:"targetUrlInput",placeholder:"请输入淘宝或天猫商品页网址"
-  input class:"btn btn-primary", id:"targetUrlBtn",value:"确定",type:"button"
-  div id:"crawlerResult"
-div id:"itemEditor",class:"hide",=>
+if !edit
+  form id:"itemCrawler",onsubmit:"return false",->
+    input id:"targetUrlInput",placeholder:"请输入淘宝或天猫商品页网址"
+    input class:"btn btn-primary", id:"targetUrlBtn",value:"确定",type:"button"
+    div id:"crawlerResult"
+div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
   formFor @item, (f) =>
     div class:"alert fade","&nbsp;"
     div id:"newitem", =>
@@ -20,6 +21,7 @@ div id:"itemEditor",class:"hide",=>
       input name:"item[chunktitle]",type:"hidden",value:String @chunk.title
       input name:"item[text]",type:"hidden",id:"texthidden",value:"#{if edit then encodeURI(@item.text) else '货物描述'}"
       input name:"item[html]",type:"hidden",id:"htmlhidden"
+      input name:"item[link]",type:"hidden",id:"linkhidden",value:"#{if edit then encodeURI(@item.link) else ''}"
       input name:"item[picture]",type:"hidden",id:"pictureinput",value:"#{if edit then @item.picture else ''}"
       input name:"item[price]",type:"hidden",id:"price",value:"#{if @item.price then @item.price else ''}"
       div class:"content", =>

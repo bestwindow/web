@@ -15,20 +15,48 @@ $ ->
       initialize()
                   
   crawUrl = (e)->
+    link = (l)->
+      #http://detail.tmall.com/item.htm?id=17291880090&ali_trackid=2:mm_29801262_0_0,1001155510048686:1339946923_4z6_1948906727
+      targetDomain = ->
+        for el in ["taobao","tmall"]
+          return el if l.indexOf(el)>0
+        return false
+      idPos = ->
+        for el in ["?id=","&id="]
+          return el if l.indexOf(el)>0
+        return false
+      domain = targetDomain()
+      return alert "目前只直至抓取taobao.com, tmall.com下的商品信息" if domain==false
+      idIndex = idPos()
+      return alert "链接信息不完整,没有找到商品id" if idIndex==false   
+      idStr = l.split(idIndex)[1]
+      id = idStr.split("&")[0]
+      pureLink =  "http://detail.tmall.com/item.htm?id=#{id}"
+      $('#linkhidden').val pureLink
+    price = (p)->
+      pr = parseFloat p
+      if !isNaN pr
+        $("#price").val pr
+        $("#money").val pr
+        true
+      else
+        false
     url = '/image/crawlurl'
     dom = $ "#targetUrlInput"
     return true if dom.val()==''
+    link dom.val()
     $("#targetUrlBtn").attr 'disabled',"disabled"
     $("#targetUrlBtn").attr 'value',"正在抓取"
     $.post url,url:dom.val(),(data)->
-      data = JSON.parse data
+      data = JSON.parse(data).result
+      $('#texthidden').val unescape data.title
+      return $("#crawlerResult").html "没有抓取到价格" if price(data.price) ==false
       html = []
       $("#targetUrlBtn").attr 'disabled',false
       $("#targetUrlBtn").attr 'value',"确定"
       return $("#crawlerResult").html "没有抓取到图片" if data.images.length<=0
       for imageUrl in data.images
         html.push "<div class=item><img id=\"crawlerImage\" src=#{imageUrl} onclick=crawlImage(this.src) />"
-      console.log "#{html.join '</div>'}</div>"
       html = [
         "<div>共获得#{data.images.length}张图片&nbsp;&nbsp;&nbsp;&nbsp;"
         "<input type=button onclick=\"$('#imageCarousel').carousel('prev')\" value=\"&lsaquo;\" />"
@@ -150,6 +178,9 @@ $ ->
     
     if $('#pictureinput').val()!=''
       $('#pictureclose').css "display","block"
+      
+      
+  initialize() if $('#itemCrawler').length==0
 
 
 
