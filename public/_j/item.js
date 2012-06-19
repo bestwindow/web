@@ -1,7 +1,28 @@
 (function() {
 
   $(function() {
-    var crawUrl, crawlImage, initialize, showImage;
+    var crawUrl, crawlChunk, crawlImage, initialize, showImage;
+    crawlChunk = function(fn) {
+      return $.get("/chunks.json", function(data) {
+        var dom, el, html, _i, _len;
+        dom = $("#chunkSelector");
+        html = '';
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          el = data[_i];
+          html += "<span class=\"label chunks\" title=\"" + el.id + "\">" + el.title + "</span>";
+        }
+        dom.html("请选择发布到哪个类别:" + html);
+        $('.chunks').click(function(e) {
+          var d;
+          if (top.chunkClick) top.chunkClick.removeClass("label-info");
+          d = top.chunkClick = $(e.target);
+          d.addClass("label-info");
+          $("#chunktitle").val(d.html());
+          return $("#chunkid").val(d.attr("title"));
+        });
+        return fn();
+      });
+    };
     crawlImage = function(imageUrl) {
       var url;
       url = '/image/crawl';
@@ -17,7 +38,11 @@
         showImage(data[0]);
         $('#itemCrawler').addClass('hide');
         $('#itemEditor').removeClass('hide');
-        return initialize();
+        if ($("#chunkid").val() === "" || $("#chunkid").val() === "undefined") {
+          return crawlChunk(initialize);
+        } else {
+          return initialize();
+        }
       });
     };
     crawUrl = function(e) {
@@ -172,13 +197,14 @@
         }
       });
       $("#item-form").submit(function(e) {
-        var after, alertDom, alertr, before, html, noerror, picture, price, text, validate;
+        var after, alertDom, alertr, before, chunkid, html, noerror, picture, price, text, validate;
         noerror = true;
         alertDom = $(".alert");
         text = $("#texthidden");
         html = $('#htmlhidden');
         price = $("#price");
         picture = $("#pictureinput");
+        chunkid = $("#chunkid");
         alertr = function(text) {
           alertDom.html(text);
           return noerror = false;
@@ -187,7 +213,9 @@
           return text.val($.epicEditor.get('editor').value);
         };
         validate = function() {
-          if (picture.val() === "") {
+          if (chunkid.val() === "" || chunkid.val() === "undefined") {
+            return alertr("请选择发布到哪个类别");
+          } else if (picture.val() === "") {
             return alertr("请上传一张货物图片");
           } else if (text.val() === "" || text.val() === "货物描述") {
             return alertr("请填写货物描述");

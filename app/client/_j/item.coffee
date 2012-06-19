@@ -1,5 +1,20 @@
 $ ->
   
+  crawlChunk = (fn)->
+    $.get "/chunks.json",(data)->
+      dom = $ "#chunkSelector"
+      html=''
+      for el in data
+        html+="<span class=\"label chunks\" title=\"#{el.id}\">#{el.title}</span>"
+      dom.html "请选择发布到哪个类别:#{html}"
+      $('.chunks').click (e)->
+        top.chunkClick.removeClass "label-info" if top.chunkClick
+        d = top.chunkClick = $ e.target
+        d.addClass "label-info"
+        $("#chunktitle").val d.html()
+        $("#chunkid").val d.attr "title"
+      fn()
+  
   crawlImage = (imageUrl)->
     url = '/image/crawl'
     $("#crawlImageBtn").attr 'disabled',"disabled"
@@ -12,7 +27,10 @@ $ ->
       showImage data[0]
       $('#itemCrawler').addClass 'hide'
       $('#itemEditor').removeClass 'hide'
-      initialize()
+      if $("#chunkid").val() is "" or $("#chunkid").val() is "undefined"
+        crawlChunk initialize
+      else
+        initialize()
                   
   crawUrl = (e)->
     link = (l)->
@@ -28,7 +46,7 @@ $ ->
       domain = targetDomain()
       return alert "目前只直至抓取taobao.com, tmall.com下的商品信息" if domain==false
       idIndex = idPos()
-      return alert "链接信息不完整,没有找到商品id" if idIndex==false   
+      return alert "链接信息不完整,没有找到商品id" if idIndex==false
       idStr = l.split(idIndex)[1]
       id = idStr.split("&")[0]
       pureLink =  "http://detail.tmall.com/item.htm?id=#{id}"
@@ -148,13 +166,16 @@ $ ->
       html      = $ '#htmlhidden'
       price     = $ "#price"
       picture   = $ "#pictureinput"
+      chunkid   = $ "#chunkid"
       alertr    = (text)->
         alertDom.html text
         noerror = false
       before    = ->
         text.val $.epicEditor.get('editor').value
       validate  = ->
-        if picture.val() is ""
+        if chunkid.val() is "" or chunkid.val() is "undefined"
+          alertr "请选择发布到哪个类别"
+        else if picture.val() is ""
           alertr "请上传一张货物图片"
         else if text.val() is "" or text.val() is "货物描述"
           alertr "请填写货物描述"

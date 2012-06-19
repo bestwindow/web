@@ -16,9 +16,10 @@ if !edit
 div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
   formFor @item, (f) =>
     div class:"alert fade","&nbsp;"
+    div id:"chunkSelector"
     div id:"newitem", =>
-      input name:"item[chunk]",type:"hidden",value:String @chunk.id
-      input name:"item[chunktitle]",type:"hidden",value:String @chunk.title
+      input name:"item[chunk]",type:"hidden",id:"chunkid",value:String @chunk.id
+      input name:"item[chunktitle]",type:"hidden",id:"chunktitle",value:String @chunk.title
       input name:"item[text]",type:"hidden",id:"texthidden",value:"#{if edit then encodeURI(@item.text) else '货物描述'}"
       input name:"item[html]",type:"hidden",id:"htmlhidden"
       input name:"item[link]",type:"hidden",id:"linkhidden",value:"#{if edit then encodeURI(@item.link) else ''}"

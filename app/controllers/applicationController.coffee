@@ -30,6 +30,16 @@ class App.ApplicationController extends Tower.Controller
         for i in [0..items.length-1]
           items.createdAt = App.moment(items.createdAt).format App.iso8601
         @items = items
+        @render "latest"
+  landing:->
+    @render "index"    
+  book: ->
+    App.loadUser App.GhostHelper.findGhost,@request,@response,=>
+      #@render "index"
+      App.Item.order('createdAt',-1).paginate(page:1,limit:100).all (error, items)=>
+        for i in [0..items.length-1]
+          items.createdAt = App.moment(items.createdAt).format App.iso8601
+        @items = items
         @render "book"
 
 
