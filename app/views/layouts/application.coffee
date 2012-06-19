@@ -10,12 +10,7 @@ html ->
     if hasContentFor "templates"
       yields "templates"
       
-    nav id: "navigation", class: "navbar navbar-fixed-top", role: "navigation", ->
-      div class: "navbar-inner", ->
-        div class: "container", ->
-          a class:"brand",href:"/","B1楼"
-          div ->
-            partial "shared/navigation"
+    partial "shared/navigation"
         
     header id: "header", class: "header", role: "banner", ->
       div class: "container", ->
