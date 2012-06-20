@@ -25,7 +25,16 @@ class App.ApplicationController extends Tower.Controller
       @response.redirect "/"
   index: ->
     App.loadUser App.GhostHelper.findGhost,@request,@response,=>
-      @render "latest"
+      @paginate = 
+      limit:App.pageLimit
+      page:@pagination.current @params.page
+      route:"/page/" 
+      App.Item.order('createdAt',-1).paginate(@paginate).all (error, items)=>
+        @paginate.end = @pagination.end items 
+        for i in [0..items.length-1]
+          items.createdAt = App.moment(items.createdAt).format App.iso8601
+        @items = items      
+        @render "latest"
   landing:->
     @render "index"    
   book: ->

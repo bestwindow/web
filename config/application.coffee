@@ -45,7 +45,7 @@ class App extends Tower.Application
     @moment         = moment
     @sanitizer      = require "sanitizer"
     @iso8601        = 'YYYY-MM-DDTHH:mm:ss'
-    @pageLimit      = 10
+    @pageLimit      = 2
 
     Tower.Store.MongoDB.config = Tower.config.databases.mongodb
     Tower.Store.MongoDB.initialize ->
@@ -56,9 +56,9 @@ Tower.domain='b1lou'
 Tower.imageSize = (type)->
   imageArray = 
     type:['picture','avatar','blog']
-    item:[100,192,200,300,400,500,600,960]
-    blog:[100,200,300,400,500,600,960]
-    avatar:[50,100,180,500]
+    item:[80,192,200,300,400,480,700,960]
+    blog:[80,200,300,400,480,700,960]
+    avatar:[50,100,180,480,700]
     background:[0]
   imageArray[type]
 Tower.imageSize.max = (type)->Tower.imageSize(type).length-1

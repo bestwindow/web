@@ -37,5 +37,7 @@ Tower.Route.draw ->
   @match "/exit",                       to: "application#logout"
   @match "(/book)",                     to: "application#book"
   @match "(/landing)",                  to: "application#landing"
+  @match "/page/:page",                 to: "application#index",    via: "get"
   @match "(/*path)",                    to: "application#index"
+  
 
