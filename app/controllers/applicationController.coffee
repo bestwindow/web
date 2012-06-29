@@ -30,11 +30,23 @@ class App.ApplicationController extends Tower.Controller
       page:@pagination.current @params.page
       route:"/page/" 
       App.Item.order('createdAt',-1).paginate(@paginate).all (error, items)=>
-        @paginate.end = @pagination.end items 
-        for i in [0..items.length-1]
-          items.createdAt = App.moment(items.createdAt).format App.iso8601
-        @items = items      
-        @render "latest"
+        @paginate.end = @pagination.end items
+        App.ChunkHelper.map items,(data)=>
+          recommendIds = []
+          for el in data
+            for i in [0..2]
+              recommendIds.push el.recommend[i] if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0
+          App.Item.find recommendIds,(error,recommends)=>
+            getRecommend = (id)->
+              for el in recommends
+                return el if String(el.id) == String(id)
+            for el in data
+              recommendArray = []
+              for i in [0..2]
+                recommendArray.push getRecommend el.recommend[i] if el.recommend[i]
+              el.recommend = recommendArray
+            @items = data
+            @render "latest"
   landing:->
     @render "index"    
   book: ->

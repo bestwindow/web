@@ -4,15 +4,24 @@ $ ->
     $.get "/chunks.json",(data)->
       dom = $ "#chunkSelector"
       html=''
+      chunkid = $ "#chunkid"
+      chunks = if chunkid.val()=="" then [] else chunkid.val().split ","
       for el in data
-        html+="<span class=\"label chunks\" title=\"#{el.id}\">#{el.title}</span>"
+        checked = if chunks.indexOf(el.id)>=0 then "checked=checked" else ""
+        html+="<span><input value=\"#{el.id}\" type=checkbox class=chunks #{checked} />#{el.title}</span>"
       dom.html "请选择发布到哪个类别:#{html}"
       $('.chunks').click (e)->
-        top.chunkClick.removeClass "label-info" if top.chunkClick
-        d = top.chunkClick = $ e.target
-        d.addClass "label-info"
-        $("#chunktitle").val d.html()
-        $("#chunkid").val d.attr "title"
+        chunkid = $ "#chunkid"
+        chunks = if chunkid.val()=="" then [] else chunkid.val().split ","
+        dom = $ e.target
+        if dom.is ':checked'
+          for i in [chunks.length-1..0]
+            return true if chunks[i] ==dom.val()
+          chunks.push dom.val()
+        else
+          for i in [chunks.length-1..0]
+            chunks.splice(i,1) if chunks[i] ==dom.val()
+        chunkid.val chunks.join ","
       fn()
   
   crawlImage = (imageUrl)->
@@ -27,10 +36,7 @@ $ ->
       showImage data[0]
       $('#itemCrawler').addClass 'hide'
       $('#itemEditor').removeClass 'hide'
-      if $("#chunkid").val() is "" or $("#chunkid").val() is "undefined"
-        crawlChunk initialize
-      else
-        initialize()
+      crawlChunk initialize
                   
   crawUrl = (e)->
     link = (l)->
@@ -121,7 +127,7 @@ $ ->
       symbolStay: true
       precision: 0
 
-  initialize = ->    
+  initialize = ->
     $("#fileupload").fileupload
       dataType: "json"
       url: "/image"
@@ -201,7 +207,7 @@ $ ->
       $('#pictureclose').css "display","block"
       
       
-  initialize() if $('#itemCrawler').length==0
+  crawlChunk initialize if $('#itemCrawler').length==0
 
 
 

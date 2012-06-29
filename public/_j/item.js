@@ -4,21 +4,33 @@
     var crawUrl, crawlChunk, crawlImage, initialize, showImage;
     crawlChunk = function(fn) {
       return $.get("/chunks.json", function(data) {
-        var dom, el, html, _i, _len;
+        var checked, chunkid, chunks, dom, el, html, _i, _len;
         dom = $("#chunkSelector");
         html = '';
+        chunkid = $("#chunkid");
+        chunks = chunkid.val() === "" ? [] : chunkid.val().split(",");
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           el = data[_i];
-          html += "<span class=\"label chunks\" title=\"" + el.id + "\">" + el.title + "</span>";
+          checked = chunks.indexOf(el.id) >= 0 ? "checked=checked" : "";
+          html += "<span><input value=\"" + el.id + "\" type=checkbox class=chunks " + checked + " />" + el.title + "</span>";
         }
         dom.html("请选择发布到哪个类别:" + html);
         $('.chunks').click(function(e) {
-          var d;
-          if (top.chunkClick) top.chunkClick.removeClass("label-info");
-          d = top.chunkClick = $(e.target);
-          d.addClass("label-info");
-          $("#chunktitle").val(d.html());
-          return $("#chunkid").val(d.attr("title"));
+          var i, _ref, _ref2;
+          chunkid = $("#chunkid");
+          chunks = chunkid.val() === "" ? [] : chunkid.val().split(",");
+          dom = $(e.target);
+          if (dom.is(':checked')) {
+            for (i = _ref = chunks.length - 1; _ref <= 0 ? i <= 0 : i >= 0; _ref <= 0 ? i++ : i--) {
+              if (chunks[i] === dom.val()) return true;
+            }
+            chunks.push(dom.val());
+          } else {
+            for (i = _ref2 = chunks.length - 1; _ref2 <= 0 ? i <= 0 : i >= 0; _ref2 <= 0 ? i++ : i--) {
+              if (chunks[i] === dom.val()) chunks.splice(i, 1);
+            }
+          }
+          return chunkid.val(chunks.join(","));
         });
         return fn();
       });
@@ -38,11 +50,7 @@
         showImage(data[0]);
         $('#itemCrawler').addClass('hide');
         $('#itemEditor').removeClass('hide');
-        if ($("#chunkid").val() === "" || $("#chunkid").val() === "undefined") {
-          return crawlChunk(initialize);
-        } else {
-          return initialize();
-        }
+        return crawlChunk(initialize);
       });
     };
     crawUrl = function(e) {
@@ -244,7 +252,7 @@
         return $('#pictureclose').css("display", "block");
       }
     };
-    if ($('#itemCrawler').length === 0) return initialize();
+    if ($('#itemCrawler').length === 0) return crawlChunk(initialize);
   });
 
 }).call(this);

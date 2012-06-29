@@ -24,4 +24,12 @@ Tower.Store.MongoDB.Serialization.serializeOptions = function(options) {
     if (typeof(options.offset)!='undefined')options.skip = options.offset
     return options;
   }
+  
+Tower.Store.MongoDB.Serialization.encodeArray = function(value) {
+  if (value === null) {
+    throw new Error("Value is not Array");
+  }
+  return value;
+}
+
 Tower.Store.MongoDB.include(Tower.Store.MongoDB.Serialization);

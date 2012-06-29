@@ -6,5 +6,4 @@ class App.Chunk extends Tower.Model
   @field "path", type: "String"
   @timestamps()
   #@belongsTo "ghosts",type:'Ghost'
-  
 
