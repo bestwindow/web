@@ -45,7 +45,7 @@ App.ImageHelper = ((option)->
         gridfs.get file,(err,filedata)->
           next filedata
     return fn
-)(domain:Tower.domain,imageSize:Tower.imageSize,db:"img-#{Tower.config.databases.mongodb[Tower.env].name}")
+)(domain:Tower.domain.split('.')[0],imageSize:Tower.imageSize,db:"img-#{Tower.config.databases.mongodb[Tower.env].name}")
 
 
 
