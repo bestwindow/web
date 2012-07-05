@@ -1,19 +1,20 @@
+domain = Tower.domain.replace '.','-'
 module.exports =
   mongodb:
     development:
-      name: "app-development"
+      name: "#{domain}-development"
       port: 27017
       host: "127.0.0.1"
     test:
-      name: "app-test"
+      name: "#{domain}-test"
       port: 27017
       host: "127.0.0.1"
     staging:
-      name: "app-staging"
+      name: "#{domain}-staging"
       port: 27017
       host: "127.0.0.1"
     production:
-      name: "app-production"
+      name: "#{domain}-production"
       port: 27017
       host: "127.0.0.1"
     
