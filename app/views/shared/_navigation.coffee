@@ -27,6 +27,6 @@
                 b class:"caret"
               ul class:"dropdown-menu",=>
                 li -> linkTo "我的首页","/ghosts"
-                li => linkTo "查看私信","/messages"
+                #li => linkTo "查看私信","/messages"
                 li => linkTo "帐户设置","/ghosts/#{@request.user.id}/edit"
                 li -> linkTo "退出登录","/exit"

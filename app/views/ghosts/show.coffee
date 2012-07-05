@@ -1,30 +1,31 @@
 javascriptTag "/_j/jquery.masonry.js"
-
 coffeescript ->
   $ ->
     $container = $('#items')
     $container.imagesLoaded -> $container.masonry itemSelector:'.item'
 
 contentFor "title", "Ghost #{@ghost.toLabel()}"
+javascriptTag "/_j/ghost.js"
 
-ul class:"breadcrumb",=>
-  li ->
-    a href:'/', '首页'
-    span class:"divider",'/'  
-  li class:"active", =>"我的首页"
+script ->
+  if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0
+    text "var favorits = ['#{@request.user.favorit.join('\',\'')}']"
+  else
+    text "var favorits = []"
 
 
-
-h2 '我发布的货物'
+h2 '我的收藏'
 div id:"items", =>
   for item in @items
-    div class:"item",=>
+    div class:"item chunk-show",=>
       div class:"item_picture",=>
         a href:"/items/#{item.get('id')}", ->
           img src:"/image/#{item.get('picture')}_1.jpg"
-      div class:"item_text",->
-        linkTo "#{item.get('text').split('\r\n')[0]}","/items/#{item.get('id')}"
-      div class:"item_price",->
-        linkTo "#{item.get('price')}","/items/#{item.get('id')}"
+      div class:"html", ->
+        item.html
+      div class:"operation",->
+        span class:"price", ->"￥#{item.price}"
+        a href:"#{item.link}",target:"_blank",->"购买"
+        a class:"favorits favoriteslist",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
 
 partial "shared/paginate"

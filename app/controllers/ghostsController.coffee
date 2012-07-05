@@ -43,6 +43,28 @@ class App.GhostsController extends App.ApplicationController
       page:@pagination.current @params.page
       route:"/ghosts/#{who}/page/"
     App.Ghost.find who, (error, resource) =>
+      result = (error,items)=>
+        items = [items] if !items.push
+        @paginate.end = @pagination.end items
+        @items = items
+        @ghost = resource
+        @render "show"
+      if !resource then return @response.redirect "/"
+      if resource.favorit && resource.favorit.length>0
+        App.Item
+        .paginate(@paginate)
+        .find resource.favorit,result
+      else
+        result null,[]       
+    ###
+    who = @params.id || ghost
+    if !App.GhostHelper.isSelf.bind(this,who)() and !@isMaster()
+      return @response.redirect "/shells/#{who}"
+    @paginate = 
+      limit:App.pageLimit
+      page:@pagination.current @params.page
+      route:"/ghosts/#{who}/page/"
+    App.Ghost.find who, (error, resource) =>
       if !resource then return @response.redirect "/"
       App.Item
       .paginate(@paginate)
@@ -53,6 +75,7 @@ class App.GhostsController extends App.ApplicationController
         @items = items
         @ghost = resource
         @render "show"
+    ###
     
   edit: ()->
     App.Ghost.find @params.id, (error, resource) =>
@@ -63,7 +86,6 @@ class App.GhostsController extends App.ApplicationController
   update: ->
     user = @request.user
     App.Ghost.find @params.id, (err, resource) =>
-      console.log "ghost updating"
       error = (e)=>
         if e then @request.flash 'error',e
         @response.redirect "/ghosts/#{user.id}/edit"
@@ -95,4 +117,38 @@ class App.GhostsController extends App.ApplicationController
         @redirectTo "index"
       else
         resource.destroy (error) =>
-          @redirectTo "index"
+          @redirectTo "index"        
+          
+  favoritCreate: ->
+    user = @request.user
+    return @resultJson true  if !@params.id
+    App.Ghost.find user.id, (err, resource) =>
+      q = {}
+      q.favorit =  resource.favorit || []
+      if q.favorit.length>0
+        for el in q.favorit
+          return @resultJson true if String(el) == String @params.id         
+      q.favorit.push @params.id
+      resource.updateAttributes q,(error)=>@resultJson error || null
+  favoritDestroy:->
+    user = @request.user
+    return @resultJson true if !@params.id
+    App.Ghost.find user.id, (err, resource) =>
+      q = {}
+      q.favorit =  resource.favorit || []
+      if q.favorit.length>0
+        for i in [0..q.favorit.length-1]
+          if String(q.favorit[i]) == String @params.id
+            q.favorit.splice i,1
+            break
+      else
+        @resultJson null 
+      resource.updateAttributes q,(error)=>@resultJson error || null  
+  resultJson :(error) ->
+    @response.writeHead 200, {'Content-Type':'text/plain'}
+    @response.end JSON.stringify result:error
+    
+    
+    
+    
+    

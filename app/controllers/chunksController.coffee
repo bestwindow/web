@@ -74,7 +74,8 @@ class App.ChunksController extends App.ApplicationController
         .where(chunk:String resource.id)#.where(chunk:$nin:[String resource.id])
         .order('createdAt',"desc")
         .find (error,items)=>
-          @paginate.end = @pagination.end items  
+          items = [items] if !items.push
+          @paginate.end = @pagination.end items
           @items = items
           @render "show"
       else

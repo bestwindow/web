@@ -6,6 +6,7 @@ class App.Ghost extends Tower.Model
   @field "user", type: "String"
   @field "responsibility",type: "Number",default:10000
   @field "read",type:"Number",default:0
+  @field "favorit",type:"Array"
   @timestamps()
   #@hasMany "items"
   #@hasMany "chunks", type: "Chunk"

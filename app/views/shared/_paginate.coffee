@@ -7,8 +7,8 @@ if @paginate.end
 nextPageNumber = @paginate.page+1
 div class:"pagination pagination-centered",=>
   ul =>
-    if @paginate.page is 1 then li class:"disabled",->a "«"
-    else li => linkTo "«","#{@paginate.route}#{@paginate.page-1}"
+    if @paginate.page is 1 then li class:"disabled",->a "< 前页"
+    else li => linkTo "< 前页","#{@paginate.route}#{@paginate.page-1}"
     li => a @paginate.page
-    if @paginate.end then li class:"disabled",->a "»"
-    else li =>linkTo "»","#{@paginate.route}#{@paginate.page+1}"
+    if @paginate.end then li class:"disabled",->a "后页 >"
+    else li =>linkTo "后页 >","#{@paginate.route}#{@paginate.page+1}"
