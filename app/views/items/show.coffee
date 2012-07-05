@@ -25,7 +25,7 @@ div class:"item-index row-fluid",->
       a href:"#{item.link}",target:"_blank",->"购买"
       a class:"favorits",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
       span class:"pull-right",->
-        chunkString = ["相似品位的"]
+        chunkString = ["相似品味的"]
         chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in item.chunk
         text chunkString.join '&nbsp;'
 
