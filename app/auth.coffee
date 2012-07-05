@@ -96,6 +96,7 @@ exports.createSession = createSession = (req, res, next) ->
       res.cookie "logintoken", loginToken.cookieValue,
         expires: new Date(Date.now() + 1024 * 604800000)
         path: "/"
+        domain:".#{Tower.domain}"
       next()
   else
     res.redirect "/login"
@@ -118,6 +119,7 @@ authenticateByLoginToken = (proxy,req, res, next) ->
           res.cookie "logintoken", token.cookieValue,
             expires: new Date(Date.now() + 1024 * 604800000)
             path: "/"
+            domain:".#{Tower.domain}"
           next()
       else
         delete req.user

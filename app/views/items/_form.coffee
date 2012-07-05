@@ -14,7 +14,7 @@ div class:"bookmark pull-right",->
     "javascript:top.fm=document.createElement('form');"
     "document.charset='utf-8';"
     "fm.method='get';"
-    "fm.action='http://www.#{Tower.domain}.co/items/new/'+encodeURIComponent(top.location).replace(/\\./g,'-');"
+    "fm.action='http://www.#{Tower.domain}/items/new/'+encodeURIComponent(top.location).replace(/\\./g,'-');"
     "fm.target='#{Tower.domain}';"
     "document.body.appendChild(fm);"
     "fm.submit();"
