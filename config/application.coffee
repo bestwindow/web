@@ -52,7 +52,7 @@ class App extends Tower.Application
       console.log("Tower.Store.MongoDB.database:"+Tower.Store.MongoDB.database)
 
 
-Tower.domain='b1lou'
+Tower.domain='baohao'
 Tower.imageSize = (type)->
   imageArray = 
     type:['picture','avatar','blog']
