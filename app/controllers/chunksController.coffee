@@ -47,7 +47,6 @@ class App.ChunksController extends App.ApplicationController
     
     creater = (fn)->
       chunk = chunks.splice(0,1)[0]
-      console.log JSON.stringify chunk
       App.Chunk.create chunk,->
         fn null  
     waterfall = []

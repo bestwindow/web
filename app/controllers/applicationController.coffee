@@ -37,6 +37,7 @@ class App.ApplicationController extends Tower.Controller
             for i in [0..2]
               recommendIds.push el.recommend[i] if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0
           App.Item.find recommendIds,(error,recommends)=>
+            recommends = [recommends] if !recommends.push
             getRecommend = (id)->
               for el in recommends
                 return el if String(el.id) == String(id)
@@ -45,6 +46,7 @@ class App.ApplicationController extends Tower.Controller
               for i in [0..2]
                 recommendArray.push getRecommend el.recommend[i] if el.recommend[i]
               el.recommend = recommendArray
+            
             @items = data
             @render "latest"
   landing:->
