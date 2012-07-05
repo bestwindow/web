@@ -43,7 +43,7 @@ div class:"item-index row-fluid",->
           "</div>"
           "</div>"
         ].join ''
-      if (i+1)%3 is 0
+      if (i+1)%3 is 0 or (item.recommend.length<3 and i is item.recommend.length-1)
         div class:"recommend-index row-fluid",->
           text recommendHtml.join ''
         recommendHtml=[]
