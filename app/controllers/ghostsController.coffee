@@ -1,8 +1,8 @@
+require './applicationController'
 class App.GhostsController extends App.ApplicationController
   @param "email"
   @param "name"
   @param "user"
-
 
   @beforeAction (next)->
     __insc @request.user
