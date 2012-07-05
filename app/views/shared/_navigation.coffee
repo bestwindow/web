@@ -1,4 +1,4 @@
-    nav id: "navigation", class: "navbar navbar-fixed-top", role: "navigation", ->
+    nav id: "navigation", class: "navbar navbar-site", role: "navigation", ->
       div class: "navbar-inner", ->
         div class: "container", ->
           a class:"brand",href:"/","guofm"

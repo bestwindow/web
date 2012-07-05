@@ -1,29 +1,44 @@
 contentFor "title", "Item #{@item.toLabel()}"
 
-
+item = @item
 edit = if App.GhostHelper.isSelf.bind(this,@ghost.id)() then true else false
-ul class:"breadcrumb",=>
-  li ->
-    a href:'/', '首页'
-    span class:"divider",'/'
-  if edit
-    li class:"pull-right",=>
+if edit
+  ul class:"breadcrumb",->
+    li -> "&nbsp;"
+    li class:"pull-right",->
       a href:"/items/#{@item.id}/edit",->"编辑货物"
 
+div class:"item-index row-fluid",->
+  div class:"item span9",->
+    div ->
+      a href:"/items/#{item.id}",->
+        img src:"/image/#{item.picture}_5.jpg"
+    div class:"html", ->
+      item.html
+    div class:"operation",->
+      span class:"price", ->"￥#{item.price}"
+      a href:"#{item.link}",target:"_blank",->"购买"
+      span class:"pull-right",->
+        chunkString = ["相似品位的"]
+        chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in item.chunk
+        text chunkString.join '&nbsp;'
 
-div class:"content row",id:"itemshow",=>
-  div class:"span7",=>
-    div class:"picture", =>
-      img src:"/image/#{@item.picture}_5.jpg",style:"border:20px solid white"
-  div class:"span5",=>
-    div class:"hero-unit",=>
-      div (@item.html || @item.text)
-      div "&nbsp;"
-      h3 "价格:￥ #{@item.get('price')}"
-      a class:"btn btn-warning btn-large", href:"#{@item.link}",target:"_blank",=>"购买"
-
-for item in @item.recommend
-  div ->
-    img src:"/image/#{item.picture}_2.jpg"
-  div ->
-    (item.html || item.text)
+    recommendHtml = []
+    for i in [0..item.recommend.length-1]
+      el = item.recommend[i]
+      if el
+        recommendHtml.push [
+          "<div class=span4>"
+          "<div>"
+          "<a href=/items/#{el.id}><img src=/image/#{el.picture}_2.jpg /></a>"
+          "</div>"
+          "<div>"
+          "#{el.html || el.text}"
+          "</div>"
+          "</div>"
+        ].join ''
+      if (i+1)%3 is 0
+        div class:"recommend-index row-fluid",->
+          text recommendHtml.join ''
+        recommendHtml=[]
+    

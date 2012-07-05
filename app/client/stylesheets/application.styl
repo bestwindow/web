@@ -16,8 +16,11 @@ box-shadow-heavy()
 
 //app
 body
-  padding-top: 84px
   background:white
+
+input
+  border:1px solid black
+  margin:0
 abbr
 abbr[title]
   border:0px
@@ -29,8 +32,8 @@ a:hover
   color:black
   text-decoration:underline  
 
-.navbar-fixed-top .container
-.navbar-fixed-bottom .container
+.navbar-site .container
+.navbar-site .container
   width:680px
 
 #navigation .navbar-inner
@@ -86,6 +89,7 @@ a:hover
   margin-top:38px
   width:480px
 
+.chunk-show .operation
 .item-index .operation
  border-top:1px solid black
  border-bottom:1px solid black
@@ -93,10 +97,11 @@ a:hover
  font-size:12px
  margin-bottom:42px
 
+.chunk-show .operation a
 .item-index .operation a
   font-weight:bold
   color:#FA6503
-  
+
 .item-index div.item
   width:500px
    
@@ -104,10 +109,22 @@ a:hover
   width:100px
   margin:8px auto
   overflow:hidden
+  
+.recommend-index img
+  width:160px
+  margin-left:-1px
+  margin-bottom:5px
+.recommend-index div.span4
+  overflow:hidden
+.recommend-index
+  font-weight:bold
+  margin-top:40px
  
 
 
 //item
+.item_picture img
+  width:160px
 .item_picture_small
   height:50px
 #item-form
@@ -168,6 +185,43 @@ a:hover
       width:200px
       float:right
       text-align:right
+      
+#imageCarousel .item a
+  display:block      
+#imageCarousel div.item
+  overflow:hidden
+  height:180px
+  background:gray
+  text-align:center
+  padding:3px
+  margin:3px
+  line-height:30px
+  
+  
+.chunks1
+  font-size:20px
+  padding-bottom:40px
+  margin-bottom:10px
+  border-bottom:1px solid black
+  clear:both
+.chunks2
+  font-size:14px
+  padding:15px 30px
+  clear:both
+div.ends2
+.chunks3
+  clear:none
+  font-size:12px
+  padding:0
+  padding-left:20px
+  float:left
+  width:85px
+  
+#targetUrlInput
+  width:70%
+
+#crawlerResult
+  margin:20px 0px
 
 //messages
 .messageslist
@@ -178,9 +232,8 @@ a:hover
 //chunk
 #items 
   .item
-    width:192px
-    padding:15px
-    margin:6px
+    width:160px
+    margin-right:6px
     overflow:hidden
     float:left
     background:white

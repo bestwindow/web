@@ -23,8 +23,14 @@ class App.ImagesController extends App.ApplicationController
           $ = window.$
           res.title = escape $("title").html()
           res.price = $('#J_StrPrice').html()
-          for i in $ '#J_UlThumb img'
-            res.images.push "#{  $(i).attr('src').split('.jpg')[0]}.jpg"
+          for i in [].concat($.makeArray $ '#J_UlThumb img')
+          .concat($.makeArray $ ".J_TRegion img")
+          .concat($.makeArray $ ".tb-shop img")
+            el = $ i
+            if el.attr('src').indexOf(".jpg")>0
+              res.images.push "#{el.attr('src').split('.jpg')[0]}.jpg"
+            else
+              res.images.push el.attr('src').split('?')[0]
           fn res
     try
       request options,afterRequest
@@ -83,6 +89,7 @@ class App.ImagesController extends App.ApplicationController
     crawlHtml @params.url,(html)=>
       @response.writeHead 200, {'Content-Type':'text/plain'}
       @response.end JSON.stringify result:html
+      console.log "ok"
   crawl: ->
     crawlImage @params.url,(imageUrl)=>
       if imageUrl ==''

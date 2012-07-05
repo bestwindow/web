@@ -33,8 +33,9 @@ class App.ItemsController extends App.ApplicationController
         # Auth to edit
         if route is 'edit' and !App.GhostHelper.isSelf.bind(this,ghost.id)() and !@isMaster() then return error()
         @ghost = ghost
-        @item = resource
-        @render route
+        App.ChunkHelper.map resource,(result)=>
+          @item = result
+          @render route
       if !resource then return error()
       v.parallel getGhost,getRecommend,render
          
@@ -47,10 +48,9 @@ class App.ItemsController extends App.ApplicationController
         @render "index"
 
   new: ->
-    App.Chunk.where(path:@params.id).first (error, resource) =>
-      @item = new App.Item
-      @chunk = resource || {}
-      @render "new"
+    @item = new App.Item
+    @website = @params.id
+    @render "new"
       
   recommend:(chunks,next)->
     itemsRecommend = []

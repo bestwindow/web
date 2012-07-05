@@ -8,17 +8,33 @@ javascriptTag '/_libs/epiceditor/epiceditor.js'
 javascriptTag "/_j/item.js"
 
 edit = if @item.picture then true else false
+
+div class:"bookmark pull-right",->
+  a href:([
+    "javascript:top.fm=document.createElement('form');"
+    "document.charset='utf-8';"
+    "fm.method='get';"
+    "fm.action='http://www.#{Tower.domain}.com/items/new/'+encodeURIComponent(top.location).replace(/\\./g,'-');"
+    "fm.target='#{Tower.domain}';"
+    "document.body.appendChild(fm);"
+    "fm.submit();"
+  ].join ''), onclick:'return false',->'书签工具'
 if !edit
+  input id:"website",value:"#{if @website then @website else ''}",type:'hidden'
   form id:"itemCrawler",onsubmit:"return false",->
     input id:"targetUrlInput",placeholder:"请输入淘宝或天猫商品页网址"
     input class:"btn btn-primary", id:"targetUrlBtn",value:"确定",type:"button"
     div id:"crawlerResult"
+else
+  tempId = []
+  tempId.push el.id for el in @item.chunk
+  @item.chunk = tempId.join ','
 div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
   formFor @item, (f) =>
     div class:"alert fade","&nbsp;"
     div id:"chunkSelector"
     div id:"newitem", =>
-      input name:"item[chunk]",type:"hidden",id:"chunkid",value:"#{if edit then @item.chunk.join(',') else ''}"
+      input name:"item[chunk]",type:"hidden",id:"chunkid",value:"#{if edit then @item.chunk else ''}"
       input name:"item[text]",type:"hidden",id:"texthidden",value:"#{if edit then encodeURI(@item.text) else '货物描述'}"
       input name:"item[html]",type:"hidden",id:"htmlhidden"
       input name:"item[link]",type:"hidden",id:"linkhidden",value:"#{if edit then encodeURI(@item.link) else ''}"
