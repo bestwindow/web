@@ -30,21 +30,22 @@ div class:"item-index row-fluid",->
         text chunkString.join '&nbsp;'
 
     recommendHtml = []
-    for i in [0..item.recommend.length-1]
-      el = item.recommend[i]
-      if el
-        recommendHtml.push [
-          "<div class=span4>"
-          "<div>"
-          "<a href=/items/#{el.id}><img src=/image/#{el.picture}_2.jpg /></a>"
-          "</div>"
-          "<div>"
-          "#{el.html || el.text}"
-          "</div>"
-          "</div>"
-        ].join ''
-      if (i+1)%3 is 0 or (item.recommend.length<3 and i is item.recommend.length-1)
-        div class:"recommend-index row-fluid",->
-          text recommendHtml.join ''
-        recommendHtml=[]
+    if item.recommend
+      for i in [0..item.recommend.length-1]
+        el = item.recommend[i]
+        if el
+          recommendHtml.push [
+            "<div class=span4>"
+            "<div>"
+            "<a href=/items/#{el.id}><img src=/image/#{el.picture}_2.jpg /></a>"
+            "</div>"
+            "<div>"
+            "#{el.html || el.text}"
+            "</div>"
+            "</div>"
+          ].join ''
+        if (i+1)%3 is 0 or (item.recommend.length<3 and i is item.recommend.length-1)
+          div class:"recommend-index row-fluid",->
+            text recommendHtml.join ''
+          recommendHtml=[]
     
