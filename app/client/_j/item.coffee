@@ -22,6 +22,7 @@ $ ->
         "hats"
         "glasses"
         "belts"
+        "watch"
       ]
     Lohas:
       zakka:[
