@@ -5,7 +5,7 @@
     chunkDef = {
       Style: {
         apparel: ["coat", "tshirt", "tops", "bottom", "skirts", "dress", "suits", "kids", "underdress"],
-        accessories: ["bags-handbags", "wallet", "jewelry", "shoes", "scarf-tie", "hats", "glasses", "belts"]
+        accessories: ["bags-handbags", "wallet", "jewelry", "shoes", "scarf-tie", "hats", "glasses", "belts", "watch"]
       },
       Lohas: {
         zakka: ["kitchen", "stationery", "ware", "pets", "crafts", "paper"],

@@ -35,7 +35,7 @@
           var dom, itemId, url;
           dom = $(e.target);
           itemId = dom.attr('id').replace('favorit-', '');
-          url = "/ghosts/favorit";
+          url = "/favorit";
           return $.post(url, {
             id: itemId
           }, function(data) {

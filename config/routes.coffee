@@ -7,7 +7,7 @@ Tower.Route.draw ->
 
   @resources "ghosts"
   @match "/ghosts/:id/page/:page",      to: "ghosts#show",    via: "get"
-  @match "/ghosts/favorit",             to: "ghosts#favoritCreate",    via: "post"
+  @match "/favorit",             to: "ghosts#favoritCreate",    via: "post"
   @match "/ghosts/remove-favorit",      to: "ghosts#favoritDestroy",    via: "post"
 
   
