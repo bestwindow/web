@@ -86,7 +86,7 @@ class App.GhostsController extends App.ApplicationController
   update: ->
     user = @request.user
     App.Ghost.find @params.id, (err, resource) =>
-      error = (e)=>
+      errorRedirect = (e)=>
         if e then @request.flash 'error',e
         @response.redirect "/ghosts/#{user.id}/edit"
       done = (success)=>
@@ -98,7 +98,7 @@ class App.GhostsController extends App.ApplicationController
         if @params.ghost.email!='' then query.email = @params.ghost.email
         if @params.ghost.name!='' then query.name = @params.ghost.name
         App.updateUser query,pass,(e)->next e,query
-      if err || !@params.ghost then return error()
+      if err || !@params.ghost then return errorRedirect()
       if !@params.ghost.password
         if user.email ==@params.ghost.email && user.name ==@params.ghost.name then return done()
         return updateUser {id:user.user},false,(e,q)->

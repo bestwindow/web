@@ -31,7 +31,7 @@ class App.ItemsController extends App.ApplicationController
       render = (e,ghost,recommend)=>
         return errorRedirect() if e
         # Auth to edit
-        if route is 'edit' and !App.GhostHelper.isSelf.bind(this,ghost.id)() and !@isMaster() then return error()
+        if route is 'edit' and !App.GhostHelper.isSelf.bind(this,ghost.id)() and !@isMaster() then return errorRedirect()
         @ghost = ghost
         App.ChunkHelper.map resource,(result)=>
           @item = result
