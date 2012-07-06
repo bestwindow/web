@@ -10,7 +10,7 @@ class App.GhostsController extends App.ApplicationController
       when 'admin'  then @loadUser =>@nextUrl @isMaster(),next,'/'
       when 'new'    then @nextUrl @request.user,next,'login'
       when 'create' then next()
-      when 'show','index' then @loadUser ->next()
+      when 'show','index','favoritCreate' then @loadUser ->next()
       else 
         @loadUser =>@nextUrl @request.user && (@isMaster()==true || @isSelf()==true),next,'/'
 
@@ -143,7 +143,7 @@ class App.GhostsController extends App.ApplicationController
             break
       else
         @resultJson null 
-      resource.updateAttributes q,(error)=>@resultJson error || null  
+      resource.updateAttributes q,(error)=>@resultJson error || null
   resultJson :(error) ->
     @response.writeHead 200, {'Content-Type':'text/plain'}
     @response.end JSON.stringify result:error
