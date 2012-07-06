@@ -14,7 +14,10 @@ class App.ImagesController extends App.ApplicationController
     options = url:url,encoding:null
     afterRequest = (error, response, body)->
       gbk_to_utf8_iconv = new Iconv 'GBK', 'UTF-8'
-      body = gbk_to_utf8_iconv.convert body
+      try
+        body = gbk_to_utf8_iconv.convert body
+      catch error
+        body = String body
       jsdom.env
         html: body||""
         src: [jquery]
