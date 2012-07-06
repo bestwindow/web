@@ -15,7 +15,7 @@ class App.ItemsController extends App.ApplicationController
       return el if id == chunks._id
     null
   showEdit:(route)->
-    error = => @response.redirect "/chunks"
+    errorRedirect = => @response.redirect "/chunks"
 
     App.Item.find @params.id, (error, resource) =>
       getGhost =  (next)->
@@ -29,14 +29,14 @@ class App.ItemsController extends App.ApplicationController
             resource.recommend = recommend.shuffle()
             next e,recommend
       render = (e,ghost,recommend)=>
-        return error() if e
+        return errorRedirect() if e
         # Auth to edit
         if route is 'edit' and !App.GhostHelper.isSelf.bind(this,ghost.id)() and !@isMaster() then return error()
         @ghost = ghost
         App.ChunkHelper.map resource,(result)=>
           @item = result
           @render route
-      if !resource then return error()
+      if !resource then return errorRedirect()
       v.parallel getGhost,getRecommend,render
          
   index: ->
