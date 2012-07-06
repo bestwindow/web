@@ -23,6 +23,9 @@ class App.ImagesController extends App.ApplicationController
         src: [jquery]
         done:(errors, window)->
           res = images:[]
+          if errors or !window or !window.$
+            console.log errors
+            fn []
           $ = window.$
           res.title = escape $("title").html()
           res.price = $('#J_StrPrice').html()

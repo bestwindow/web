@@ -80,7 +80,6 @@ class App.ItemsController extends App.ApplicationController
         for i in [0..items.length-1]
           if i<sizeResult              
             random = parseInt Math.random() * items.length,10
-            console.log "#{JSON.stringify items[random]}/r/n/r/n"
             if i ==0 && sizeResult==staticRecommend
               itemsRecommend.unshift String items[random].id if items[random]
             else
@@ -112,11 +111,7 @@ class App.ItemsController extends App.ApplicationController
     chunks = @params.item.chunk.split ","
     @recommend [].concat(chunks),(items)=>
       @params.item.recommend = items
-      console.log "测试推荐"
-      console.log @params.item.recommend
-      console.log "测试chunk"
       @params.item.chunk=chunks
-      console.log @params.item.chunk
       App.Item.create @params.item,(error,resource)=>
         if error
           @response.redirect "new"
