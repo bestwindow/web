@@ -109,14 +109,18 @@ class App.ItemsController extends App.ApplicationController
   create:->
     @params.item.founder = @request.user.get('id')
     chunks = @params.item.chunk.split ","
-    @recommend [].concat(chunks),(items)=>
-      @params.item.recommend = items
-      @params.item.chunk=chunks
-      App.Item.create @params.item,(error,resource)=>
-        if error
-          @response.redirect "new"
-        else
-          @response.redirect Tower.urlFor resource
+    try
+      @recommend [].concat(chunks),(items)=>
+        @params.item.recommend = items
+        @params.item.chunk=chunks
+        App.Item.create @params.item,(error,resource)=>
+          if error
+            @response.redirect "new"
+          else
+            @response.redirect Tower.urlFor resource
+    catch error
+      console.log error
+      @response.redirect "new"
   show:  ->
     @showEdit 'show'
   edit: ->
