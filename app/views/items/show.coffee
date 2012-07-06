@@ -8,10 +8,7 @@ script ->
 item = @item
 edit = if App.GhostHelper.isSelf.bind(this,@ghost.id)() then true else false
 if edit
-  ul class:"breadcrumb",->
-    li -> "&nbsp;"
-    li class:"pull-right",->
-      a href:"/items/#{@item.id}/edit",->"编辑货物"
+  a href:"/items/#{@item.id}/edit",->"编辑货物"
 
 div class:"item-index row-fluid",->
   div class:"item span9",->
