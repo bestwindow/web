@@ -29,7 +29,7 @@ $ ->
     destory:(e)->
       dom = $ e.target
       itemId = dom.attr('id').replace 'favorit-',''
-      url = "/ghosts/remove-favorit"
+      url = "/favorit/remove"
       $.post url,id:itemId,(data)->
         result = JSON.parse(data).result
         if result is null or result is true

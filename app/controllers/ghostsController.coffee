@@ -10,7 +10,7 @@ class App.GhostsController extends App.ApplicationController
       when 'admin'  then @loadUser =>@nextUrl @isMaster(),next,'/'
       when 'new'    then @nextUrl @request.user,next,'login'
       when 'create' then next()
-      when 'show','index','favoritCreate' then @loadUser ->next()
+      when 'show','index','favoritCreate','favoritDestroy' then @loadUser ->next()
       else 
         @loadUser =>@nextUrl @request.user && (@isMaster()==true || @isSelf()==true),next,'/'
 
