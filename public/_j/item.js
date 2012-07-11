@@ -246,9 +246,9 @@
             };
             target.html(size.width + " X " + size.height);
             if (size.width > size.height) {
-              return dom.css("width", "80%");
+              return dom.css("width", "132px");
             } else {
-              return dom.css("height", "85%");
+              return dom.css("height", "152px");
             }
           });
         };

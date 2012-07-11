@@ -24,20 +24,43 @@ class App.ImagesController extends App.ApplicationController
         done:(errors, window)->
           res = images:[]
           if errors or !window or !window.$
-            console.log errors
             fn []
           $ = window.$
           res.title = escape $("title").html()
           res.price = $('#J_StrPrice').html()
-          for i in [].concat($.makeArray $ '#J_UlThumb img')
-          .concat($.makeArray $ ".J_TRegion img")
-          .concat($.makeArray $ ".tb-shop img")
+
+          next = ->
+            for i in [].concat($.makeArray $ "#header img")
+            .concat($.makeArray $ '#J_UlThumb img')
+            .concat($.makeArray $ ".J_TRegion img")
+            .concat($.makeArray $ "#J_DivItemDesc img")
+            .concat($.makeArray $ ".tb-shop img")
+              el = $ i
+              if el.attr('src').indexOf(".jpg")>0
+                res.images.push "#{el.attr('src').split('.jpg')[0]}.jpg"
+              else
+                res.images.push el.attr('src').split('?')[0]
+            fn res
+
+          apiItemDesc = false
+          scriptAddress = false
+          for i in [].concat($.makeArray $ 'textarea').concat($.makeArray $ 'script')
             el = $ i
-            if el.attr('src').indexOf(".jpg")>0
-              res.images.push "#{el.attr('src').split('.jpg')[0]}.jpg"
-            else
-              res.images.push el.attr('src').split('?')[0]
-          fn res
+            scriptString = el.text()+el.val()
+            if scriptString.indexOf('apiItemDesc":"')>=0
+              apiItemDesc = true
+              scriptAddress = scriptString.split('apiItemDesc":"')[1].split('"')[0].replace /\\/g,''
+          if apiItemDesc && scriptAddress
+            try
+              request {url:scriptAddress},(sc_error, sc_response, sc_body)->
+                if sc_body.indexOf("var desc='")>=0
+                  $('#header').html sc_body.split("var desc='")[1].split("';")[0]
+                next()
+            catch error
+              next()
+          else
+            next()
+
     try
       request options,afterRequest
     catch error
@@ -95,7 +118,6 @@ class App.ImagesController extends App.ApplicationController
     crawlHtml @params.url,(html)=>
       @response.writeHead 200, {'Content-Type':'text/plain'}
       @response.end JSON.stringify result:html
-      console.log "ok"
   crawl: ->
     crawlImage @params.url,(imageUrl)=>
       if imageUrl ==''

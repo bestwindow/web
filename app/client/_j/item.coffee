@@ -243,9 +243,9 @@ $ ->
           size = width:dom.width(),height:dom.height()
           target.html size.width+" X "+size.height
           if size.width > size.height
-            dom.css "width","80%"
+            dom.css "width","132px"
           else
-            dom.css "height","85%"
+            dom.css "height","152px"
       render()
       top.setCrawlImage = (dom)->
         dom = $ dom

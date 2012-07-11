@@ -51,7 +51,7 @@
           var dom, itemId, url;
           dom = $(e.target);
           itemId = dom.attr('id').replace('favorit-', '');
-          url = "/ghosts/remove-favorit";
+          url = "/favorit/remove";
           return $.post(url, {
             id: itemId
           }, function(data) {
