@@ -45,7 +45,7 @@ class App extends Tower.Application
     @moment         = moment
     @sanitizer      = require "sanitizer"
     @iso8601        = 'YYYY-MM-DDTHH:mm:ss'
-    @pageLimit      = 8
+    @pageLimit      = 12
 
     Tower.Store.MongoDB.config = Tower.config.databases.mongodb
     Tower.Store.MongoDB.initialize ->
@@ -56,7 +56,7 @@ class App extends Tower.Application
 Tower.imageSize = (type)->
   imageArray = 
     type:['picture','avatar','blog']
-    item:[100,160,200,300,400,500,700,960]
+    item:[100,160,200,300,400,500]
     blog:[100,200,300,400,480,700,960]
     avatar:[50,100,180,480,700]
     background:[0]
@@ -81,5 +81,10 @@ compileClient = ->
     if file.match /\.(coffee)$/
       fs.writeFileSync "public/_j/#{file.replace(/\.(coffee)$/,'.js')}",cs.compile fs.readFileSync "#{sourceDir}#{file}","utf-8"
 compileClient()
+
+
+
+
+
 
 

@@ -1,31 +1,7 @@
 (function() {
 
   $(function() {
-    var chunkDef, crawUrl, crawlChunk, crawlImage, initialize, showImage;
-    chunkDef = {
-      Style: {
-        apparel: ["coat", "tshirt", "tops", "bottom", "skirts", "dress", "suits", "kids", "underdress"],
-        accessories: ["bags-handbags", "wallet", "jewelry", "shoes", "scarf-tie", "hats", "glasses", "belts", "watch"]
-      },
-      Lohas: {
-        zakka: ["kitchen", "stationery", "ware", "pets", "crafts", "paper"],
-        organic: ["plants", "Farming"],
-        food: ["drinks", "coffee-tea", "homemade", "vegeterian", "bakery", "localfood"]
-      },
-      Body: ["health-fitness", "skin", "hair", "grooming", "fragrances"],
-      Hobby: {
-        home: ["deco", "furniture", "lights", "appliance"],
-        geek: ["itech", "electronics", "toys", "tools"],
-        game: ["sports", "outfits"]
-      },
-      Creative: {
-        "photo-films": ["polariod", "photobook"],
-        publication: ["western-zine", "japan-zine", "HK-TW", "indies"],
-        arts: ["sculpture", "cerimic", "prints"],
-        musics: ["Vinyl-Turntables", "Headphones-sounds", "Instruments"]
-      },
-      Vintage: ["fleamarket", "mid-century", "Antiques", "vintage-cloth"]
-    };
+    var crawUrl, crawlChunk, crawlImage, initialize, showImage;
     crawlChunk = function(fn) {
       return $.get("/chunks.json", function(data) {
         var checked, chunker, chunkid, chunks, dom, e1, e2, e2Key, e2Value, e3, html, key, template, value, _i, _j, _len, _len2;
@@ -48,8 +24,12 @@
             return "";
           }
         };
-        template = function(i, lv, ends) {
-          return "<div class=\"chunks" + lv + " " + (ends || '') + "\"><div><input value=\"" + i.id + "\" type=checkbox class=chunks " + (checked(i.id)) + " />" + i.title + "</div>";
+        template = function(oc, lv, ends) {
+          if (oc) {
+            return "<div class=\"chunks" + lv + " " + (ends || '') + "\"><div><input value=\"" + oc.id + "\" type=checkbox class=chunks " + (checked(oc.id)) + " />" + oc.title + "</div>";
+          } else {
+            return "";
+          }
         };
         for (key in chunkDef) {
           value = chunkDef[key];

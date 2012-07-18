@@ -26,11 +26,17 @@ abbr[title]
   border:0px
   cursor:auto
 a
-  color:black
+  color:#FA6503
   text-decoration:none
 a:hover
-  color:black
-  text-decoration:underline  
+  color:#FA6503
+  text-decoration:none  
+  
+
+.dropdown-menu a
+  background-color:white!important
+.dropdown-menu a:hover
+  background-color:black!important
 
 .navbar-site .container
 .navbar-site .container
@@ -38,16 +44,38 @@ a:hover
 
 #navigation .navbar-inner
   height:78px
-#navigation .nav  
-  width: 450px
-  padding-top: 30px
-  font-size: 14px
+  
+#navigation .navbar-inner a
+  color:#FA6503
+  font-weight:bold
+  
+#navigation .nav-sub
+  width:706px
+  margin-top:50px
+    
+#navigation .nav-sub ul.nav 
+  width: 70px
+  float:right
+#navigation .nav-sub ul.nav a
+  padding:0
+#navigation .nav-sub .fave
+  float:right
+  width:80px
+  display:block
+
 
 #navigation .navbar-inner 
   background:black
 .navbar-inner a.brand
-  line-height:60px
-  font-size:60px
+  padding-top:31px
+.navbar-inner a.brand img
+  margin-left:-18px
+
+#navigation ul.dropdown-menu
+  padding:25px 0px
+  text-align:center
+  line-
+
   
 #sub-nav
   width:680px
@@ -60,11 +88,7 @@ a:hover
 
 #sub-nav .upper a
   margin-right:22px
-
-
-#sub-nav .upper .last
-  margin:0
-  margin-left:5px
+  color:black
   
 #sub-nav .down
   font-size:14px
@@ -74,6 +98,8 @@ a:hover
 #sub-nav .down .dropdown a
   float:right
 
+#content
+  min-height:600px
 #content
 #footer
   width:680px
@@ -85,22 +111,42 @@ a:hover
 .container
   width:100% 
   
+
+#footer .footer-links
+  text-align:center
+  border-top:1px solid black
+  padding:2px 0
+  font-size:12px
+
+#footer .footer-links .hr
+  height:4px
+  background:black
+  font-size:0px
+  margin-bottom:10px
+
+#footer .footer-links a
+  color:black
+  padding-right:50px
+  
+#footer .footer-links div.copyright
+  color:gray
+  
+.item-index
+  margin-top:30px
+  
 .item-index .html
   margin-top:38px
-  width:480px
 
 .chunk-show .operation
 .item-index .operation
  border-top:1px solid black
  border-bottom:1px solid black
  line-height:20px
- font-size:12px
  margin-bottom:42px
 
 .chunk-show .operation a
 .item-index .operation a
   font-weight:bold
-  color:#FA6503
 
 .item-index div.item
   width:500px
@@ -123,8 +169,20 @@ a:hover
 
 
 //item
-.item_picture img
-  width:160px
+.item_picture
+  height:192px
+  
+  
+.html p::first-line
+  font-weight:bold
+  font-size:16px
+  line-height:300%
+  
+.chunk-show .html
+  height:40px
+  overflow:hidden
+  font-weight:bold
+  
 .item_picture_small
   height:50px
 #item-form

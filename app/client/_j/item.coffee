@@ -1,101 +1,5 @@
 $ ->
-  
-  chunkDef = 
-    Style:
-      apparel:[
-        "coat"
-        "tshirt"
-        "tops"
-        "bottom"
-        "skirts"
-        "dress" 
-        "suits"
-        "kids"
-        "underdress"
-      ]
-      accessories:[
-        "bags-handbags"
-        "wallet"
-        "jewelry"
-        "shoes"
-        "scarf-tie"
-        "hats"
-        "glasses"
-        "belts"
-        "watch"
-      ]
-    Lohas:
-      zakka:[
-        "kitchen"
-        "stationery"
-        "ware"
-        "pets"
-        "crafts"
-        "paper"
-      ]
-      organic:[
-        "plants"
-        "Farming"
-      ]
-      food:[
-        "drinks"
-        "coffee-tea"
-        "homemade"
-        "vegeterian"
-        "bakery"
-        "localfood"
-      ]
-    Body:[
-      "health-fitness" 
-      "skin" 
-      "hair" 
-      "grooming" 
-      "fragrances"
-      ]
-    Hobby:
-      home:[
-        "deco"
-        "furniture"
-        "lights"
-        "appliance"
-      ]
-      geek:[
-        "itech"
-        "electronics"
-        "toys"
-        "tools"
-      ]
-      game:[
-        "sports"
-        "outfits"
-      ]
-    Creative:
-      "photo-films":[
-        "polariod"
-        "photobook"
-      ]
-      publication:[
-        "western-zine"  
-        "japan-zine"  
-        "HK-TW"
-        "indies"
-      ]
-      arts:[
-        "sculpture"
-        "cerimic"
-        "prints"
-      ]
-      musics:[
-        "Vinyl-Turntables"
-        "Headphones-sounds"
-        "Instruments"
-      ]
-    Vintage:[
-      "fleamarket"
-      "mid-century"
-      "Antiques"
-      "vintage-cloth"
-      ]
+
   crawlChunk = (fn)->
     $.get "/chunks.json",(data)->
       dom = $ "#chunkSelector"
@@ -108,7 +12,7 @@ $ ->
         null
       checked = (id)->
         if chunks.indexOf(id)>=0 then "checked=checked" else ""
-      template = (i,lv,ends)->"<div class=\"chunks#{lv} #{ends||''}\"><div><input value=\"#{i.id}\" type=checkbox class=chunks #{checked i.id} />#{i.title}</div>"
+      template = (oc,lv,ends)->if oc then "<div class=\"chunks#{lv} #{ends||''}\"><div><input value=\"#{oc.id}\" type=checkbox class=chunks #{checked oc.id} />#{oc.title}</div>" else ""
       for key,value of chunkDef
         e1 = chunker key
         html+=template e1,1

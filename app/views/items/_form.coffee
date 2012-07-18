@@ -1,3 +1,6 @@
+script ->
+  "top.chunkDef = #{JSON.stringify App.chunkDef}"
+
 javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
 javascriptTag '/_j/jquery.validationEngine.js'
 javascriptTag "/_j/jquery.maskMoney.js"
@@ -50,8 +53,8 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
             input id:"fileupload",type:"file",name:"files[]",style:"display:none"
             div id:"fileresult",=>
               div =>
-                a href:"/image/#{@item.picture}_7.jpg",target:"_blank",=>
-                  img src:"/image/#{@item.picture}_7.jpg",width:430
+                a href:"/image/#{@item.picture}_5.jpg",target:"_blank",=>
+                  img src:"/image/#{@item.picture}_5.jpg",width:430
         div class:"right", =>
           div id:"text"
           input class:"money",id:"money",type:"text",value:"#{if @item.price then @item.price else '￥'}"

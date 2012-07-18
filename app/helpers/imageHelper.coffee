@@ -14,6 +14,7 @@ imageName =(type,file)->
 
 
 saveImage = (file,imagename_mongod,sizeArray,next)->
+  hLimited = 1.2
   magic.identify ['-format','%w.%h',file],(err,fileSize)->
     fWidth = fileSize.split('.')[0]
     fHeight = fileSize.split('.')[1]
@@ -21,6 +22,9 @@ saveImage = (file,imagename_mongod,sizeArray,next)->
       tempFile = "#{file}_#{idx}"
       wSize = if el == 0 || el > fWidth then fWidth else el
       hSize = parseInt fHeight*wSize/fWidth,10
+      if hSize>(el*hLimited)
+        wSize = parseInt wSize*((el*hLimited)/hSize),10
+        hSize = el*hLimited
       magic.resize {srcPath:file,dstPath:tempFile,quality:0.9,width:wSize,height:hSize},(err)->
         fs.readFile tempFile,(err,buffer)->
           gridfs.put buffer,("#{imagename_mongod}_#{idx}.jpg"),'w',(err,r)->
