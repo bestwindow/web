@@ -18,6 +18,7 @@ div ->
           span class:"price", ->"￥#{item.price}"
           a href:"#{item.link}",target:"_blank",->"购买"
           a class:"favorits",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
+          a href:"#",onclick:"void((function(s,d,e,r,l,p,t,z,c){var f='http://v.t.sina.com.cn/share/share.php',u=z||d.location,p=['?url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function a(){var _url=[f,p].join('');if(!window.open(_url,'mb',['toolbar=0,status=0,resizable=1,width=600,height=460,left=',(s.width-600)/2,',top=',(s.height-460)/2].join('')))u.href=_url;};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else a();})(screen,document,encodeURIComponent,'','','http://www.#{Tower.domain}/image/#{item.picture}_5.jpg','#{encodeURIComponent item.text.substr(0,100).replace(/\#/g,'')}','http://www.#{Tower.domain}/items/#{item.id}','utf-8'));return false",->"分享"
           span class:"pull-right",->
             chunkString = ["相似品味的"]
             chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in item.chunk
