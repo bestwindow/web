@@ -46,7 +46,8 @@ class App.ApplicationController extends Tower.Controller
               recommendArray   = []
               recommendlength  = if el.recommend.length>=recommendLimit then recommendLimit else el.recommend.length
               for i in [0..recommendlength-1]
-                if el.recommend[i] then recommendArray.push getRecommend el.recommend[i] 
+                if el.recommend[i] && ((r,a)->for ar in a then if String(ar.id)==String(r) then return true)(el.recommend[i].id,recommendArray)!=true
+                  recommendArray.push getRecommend el.recommend[i] 
               el.recommend = recommendArray
             
             @items = data
