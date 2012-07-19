@@ -17,15 +17,12 @@ contentFor "title", "Chunk #{@chunk.toLabel()}"
 
 
 
-ul class:"breadcrumb",=>      
-  li class:"active", =>"#{@chunk.title}"
-  li class:"pull-right",=> 
-    a href:"/items/new/#{@chunk.get('path')}",->"+新建货物"
+div class:"page-title", => @chunk.title
 
-div id:"items", =>
+div id:"items", ->
   for item in @items
-    div class:"item chunk-show",=>
-      div class:"item_picture",=>
+    div class:"item chunk-show",->
+      div class:"item_picture",->
         a href:"/items/#{item.get('id')}", ->
           img src:"/image/#{item.get('picture')}_1.jpg"
       div class:"html", ->

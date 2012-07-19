@@ -4,12 +4,8 @@ javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
 javascriptTag '/_j/jquery.validationEngine.js'
 javascriptTag '/_j/auth.js'
 
-ul class:"breadcrumb",=>
-  li ->
-    a href:'/', '首页'
-    span class:"divider",'/'  
-  li class:"active", =>"帐户设置"
 
+div class:"page-title",->"帐户设置"
 ghost = @ghost
 div class:"form-horizontal", ->
   formFor @ghost, (f) ->
