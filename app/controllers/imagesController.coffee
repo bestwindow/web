@@ -13,23 +13,23 @@ class App.ImagesController extends App.ApplicationController
   crawlHtml=(url,fn)->
     options = url:url,encoding:null
     domainList = ['taobao.com','tmall.com','amazon.com']
+    domain = (->
+      for el in domainList
+        if url.replace('://','').split('com/')[0].indexOf(el)>=0 then return el
+      false
+    )()
     afterRequest = (error, response, body)->
-      gbk_to_utf8_iconv = new Iconv 'GBK', 'UTF-8'
-      try
-        body = gbk_to_utf8_iconv.convert body
-      catch error
-        body = String body
-      jsdom.env
-        html: body||""
-        src: [jquery]
-        done:(errors, window)->
+      process = 
+        'amazon.com':(errors,window)->
+          
+        "taobao.com":(errors, window)->
           res = images:[]
           if errors or !window or !window.$
             fn []
           $ = window.$
           res.title = escape $("title").html()
           res.price = $('#J_StrPrice').html()
-
+        
           next = ->
             for i in [].concat($.makeArray $ "#header img")
             .concat($.makeArray $ '#J_UlThumb img')
@@ -42,7 +42,7 @@ class App.ImagesController extends App.ApplicationController
               else
                 res.images.push el.attr('src').split('?')[0]
             fn res
-
+        
           apiItemDesc = false
           scriptAddress = false
           for i in [].concat($.makeArray $ 'textarea').concat($.makeArray $ 'script')
@@ -61,6 +61,24 @@ class App.ImagesController extends App.ApplicationController
               next()
           else
             next()
+      process["tmall.com"] = process["taobao.com"]
+      decoder = ->
+        if domain is false then return fn images:[],title:'',price:''
+        if ["tmall.com","taobao.com"].indexOf(domain)>=0
+          gbk_to_utf8_iconv = new Iconv 'GBK', 'UTF-8'
+          try
+            body = gbk_to_utf8_iconv.convert body
+          catch error
+            body = String body
+        else
+          body = String body
+  
+        jsdom.env
+          html: body||""
+          src: [jquery]
+          done:process[domain]
+      
+      decoder()
 
     try
       request options,afterRequest

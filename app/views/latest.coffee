@@ -5,6 +5,7 @@ script ->
     text "var favorits = ['#{@request.user.favorit.join('\',\'')}']"
   else
     text "var favorits = []"
+div class:"page-title"
 div ->
   for item in @items
     div class:"item-index row-fluid",->
