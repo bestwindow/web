@@ -1,6 +1,7 @@
 require '../app_config.coffee'
 global.__insc = (s)->console.log require('util').inspect(s)
 global.v      = require 'valentine'
+global.ck     = require 'coffeekup'
 fs            = require 'fs'
 auth          = require '../app/auth'
 mongooseAuth  = auth.mongooseAuth
