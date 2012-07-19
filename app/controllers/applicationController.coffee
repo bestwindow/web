@@ -40,8 +40,8 @@ class App.ApplicationController extends Tower.Controller
           App.Item.find recommendIds,(error,recommends)=>
             recommends = [recommends] if !recommends.push
             getRecommend = (id)->
-              for el in recommends
-                return el if String(el.id) == String(id)
+              for recommend in recommends
+                return recommend if String(recommend.id) == String(id)
             for el in data
               recommendArray   = []
               recommendlength  = if el.recommend.length>=recommendLimit then recommendLimit else el.recommend.length
