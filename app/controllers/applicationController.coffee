@@ -36,7 +36,7 @@ class App.ApplicationController extends Tower.Controller
           recommendIds = []
           for el in data
             for i in [0..recommendLimit-1]
-              recommendIds.push el.recommend[i] if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0
+              if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0 then recommendIds.push el.recommend[i]
           App.Item.find recommendIds,(error,recommends)=>
             recommends = [recommends] if !recommends.push
             getRecommend = (id)->
@@ -46,7 +46,7 @@ class App.ApplicationController extends Tower.Controller
               recommendArray   = []
               recommendlength  = if el.recommend.length>=recommendLimit then recommendLimit else el.recommend.length
               for i in [0..recommendlength-1]
-                recommendArray.push getRecommend el.recommend[i] if el.recommend[i]
+                if el.recommend[i] then recommendArray.push getRecommend el.recommend[i] 
               el.recommend = recommendArray
             
             @items = data
