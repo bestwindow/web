@@ -32,9 +32,10 @@ class App.ApplicationController extends Tower.Controller
       App.Item.order('createdAt',-1).paginate(@paginate).all (error, items)=>
         @paginate.end = @pagination.end items
         App.ChunkHelper.map items,(data)=>
+          recommendLimit = 3
           recommendIds = []
           for el in data
-            for i in [0..2]
+            for i in [0..recommendLimit-1]
               recommendIds.push el.recommend[i] if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0
           App.Item.find recommendIds,(error,recommends)=>
             recommends = [recommends] if !recommends.push
@@ -42,8 +43,9 @@ class App.ApplicationController extends Tower.Controller
               for el in recommends
                 return el if String(el.id) == String(id)
             for el in data
-              recommendArray = []
-              for i in [0..2]
+              recommendArray   = []
+              recommendlength  = if el.recommend.length>=recommendLimit then recommendLimit else el.recommend.length
+              for i in [0..recommendlength-1]
                 recommendArray.push getRecommend el.recommend[i] if el.recommend[i]
               el.recommend = recommendArray
             

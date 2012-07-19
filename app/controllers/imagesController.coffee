@@ -12,6 +12,7 @@ class App.ImagesController extends App.ApplicationController
   
   crawlHtml=(url,fn)->
     options = url:url,encoding:null
+    domainList = ['taobao.com','tmall.com','amazon.com']
     afterRequest = (error, response, body)->
       gbk_to_utf8_iconv = new Iconv 'GBK', 'UTF-8'
       try

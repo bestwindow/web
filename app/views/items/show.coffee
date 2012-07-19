@@ -37,7 +37,7 @@ div class:"item-index row-fluid",->
             "<a href=/items/#{el.id}><img src=/image/#{el.picture}_2.jpg /></a>"
             "</div>"
             "<div>"
-            "#{item.text.split("\r\n")[0]}"
+            "#{el.text.split("\r\n")[0]}"
             "</div>"
             "</div>"
           ].join ''
