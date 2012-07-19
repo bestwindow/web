@@ -59,6 +59,11 @@ class App.ItemsController extends App.ApplicationController
     sizeResult = sizeRecommend = staticRecommend
     findLimit = staticRecommend*staticRecommend
     sameChunkFlag = true
+    isUnique = (it)->
+      if !it or itemsRecommend.indexOf(String it.id)>=0
+        false
+      else
+        true
     finder = (fn)->
       chunks = adjust chunks
       tempChunks = [].concat chunks
@@ -81,9 +86,9 @@ class App.ItemsController extends App.ApplicationController
           if i<sizeResult              
             random = parseInt Math.random() * items.length,10
             if i ==0 && sizeResult==staticRecommend
-              itemsRecommend.unshift String items[random].id if items[random]
+              itemsRecommend.unshift String items[random].id if isUnique items[random]
             else
-              itemsRecommend.push String items[random].id if items[random]
+              itemsRecommend.push String items[random].id if isUnique items[random]
             items.splice random,1
         fn null   
     waterfall = [finder,finder,finder,finder

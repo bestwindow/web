@@ -33,10 +33,10 @@ div class:"item-index row-fluid",->
         if el
           recommendHtml.push [
             "<div class=span4>"
-            "<div>"
-            "<a href=/items/#{el.id}><img src=/image/#{el.picture}_2.jpg /></a>"
+            "<div class=image>"
+            "<a href=/items/#{el.id}><img src=/image/#{el.picture}_1.jpg /></a>"
             "</div>"
-            "<div>"
+            "<div class=html>"
             "#{el.text.split("\r\n")[0]}"
             "</div>"
             "</div>"
