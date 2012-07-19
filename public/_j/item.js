@@ -1,7 +1,7 @@
 (function() {
 
   $(function() {
-    var crawUrl, crawlChunk, crawlImage, initialize, showImage;
+    var crawUrl, crawlChunk, crawlImage, initialize, showImage, updateInfo;
     crawlChunk = function(fn) {
       return $.get("/chunks.json", function(data) {
         var checked, chunker, chunkid, chunks, dom, e1, e2, e2Key, e2Value, e3, html, key, template, value, _i, _j, _len, _len2;
@@ -87,6 +87,12 @@
         return fn();
       });
     };
+    updateInfo = function() {
+      $('#itemCrawler').addClass('hide');
+      $('.bookmark').addClass('hide');
+      $('#itemEditor').removeClass('hide');
+      return crawlChunk(initialize);
+    };
     crawlImage = function(imageUrl) {
       var url;
       url = '/image/crawl';
@@ -100,10 +106,7 @@
         $("#crawlImageBtn").attr('value', "使用这张图片");
         if (data.error) return alert("图片抓取失败");
         showImage(data[0]);
-        $('#itemCrawler').addClass('hide');
-        $('.bookmark').addClass('hide');
-        $('#itemEditor').removeClass('hide');
-        return crawlChunk(initialize);
+        return updateInfo();
       });
     };
     top.targetUrlBtnReset = function(fn) {
@@ -213,7 +216,7 @@
             html = htmlTemp;
             $('#imageCarousel .row-fluid').html(html.join('</div>'));
           } else {
-            html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />", "</div>", '<div id="imageCarousel">', '<div class=row-fluid>', html.join('</div>'), '</div>', '</div>'].join("");
+            html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">", "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />", "</div>", '<div id="imageCarousel">', '<div class=row-fluid>', html.join('</div>'), '</div>', '</div>'].join("");
             $("#crawlerResult").html(html);
           }
           return $("#crawlerResult .item img").load(function() {
@@ -257,8 +260,11 @@
           });
           return render(area);
         });
-        return $("#crawlImageBtn").click(function() {
+        $("#crawlImageBtn").click(function() {
           if (top.CrawlImage) return crawlImage(top.CrawlImage);
+        });
+        return $("#noImageBtn").click(function() {
+          return updateInfo();
         });
       });
     };

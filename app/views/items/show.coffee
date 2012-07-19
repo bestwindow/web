@@ -10,7 +10,7 @@ edit = if App.GhostHelper.isSelf.bind(this,@ghost.id)() then true else false
 if edit
   div class:"page-title",->
     text "商品详情"
-    a href:"/items/#{it.id}/edit",->"编辑货物"
+    a href:"/items/#{it.id}/edit",->"编辑商品"
 else
   div class:"page-title",->"商品详情"
 

@@ -1,8 +1,3 @@
-ul class:"breadcrumb",=>
-  li ->
-    a href:'/', '首页'
-    span class:"divider",'/'
-  li class:"active", =>"创建货物"
-
+div class:"page-title", -> "新建商品"
 partial "form"
 

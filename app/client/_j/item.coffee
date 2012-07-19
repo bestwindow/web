@@ -52,6 +52,13 @@ $ ->
         chunkid.val chunks.join ","
       fn()
   
+  
+  updateInfo = ->
+    $('#itemCrawler').addClass 'hide'
+    $('.bookmark').addClass 'hide'
+    $('#itemEditor').removeClass 'hide'
+    crawlChunk initialize
+  
   crawlImage = (imageUrl)->
     url = '/image/crawl'
     $("#crawlImageBtn").attr 'disabled',"disabled"
@@ -62,10 +69,8 @@ $ ->
       $("#crawlImageBtn").attr 'value',"使用这张图片"
       return alert "图片抓取失败" if data.error
       showImage data[0]
-      $('#itemCrawler').addClass 'hide'
-      $('.bookmark').addClass 'hide'
-      $('#itemEditor').removeClass 'hide'
-      crawlChunk initialize
+      updateInfo()
+
            
   top.targetUrlBtnReset = (fn)->
     d = $("#targetUrlBtn")
@@ -132,7 +137,8 @@ $ ->
             "<div>共获得#{data.images.length}张图片&nbsp;&nbsp;&nbsp;&nbsp;"
             "<span id=crawlerInfo></span>"
             "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
-            "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />"  
+            "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">"
+            "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />"
             "</div>"
             '<div id="imageCarousel">'
             '<div class=row-fluid>'
@@ -170,6 +176,9 @@ $ ->
         render area
       $("#crawlImageBtn").click ->
         crawlImage top.CrawlImage if top.CrawlImage
+      
+      $("#noImageBtn").click ->
+        updateInfo()
 
   
       
