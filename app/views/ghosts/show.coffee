@@ -22,7 +22,7 @@ div id:"items", =>
         a href:"/items/#{item.get('id')}", ->
           img src:"/image/#{item.get('picture')}_1.jpg"
       div class:"html", ->
-        item.html
+        item.text.split("\r\n")[0]
       div class:"operation",->
         span class:"price", ->"￥#{item.price}"
         a href:"#{item.link}",target:"_blank",->"购买"
