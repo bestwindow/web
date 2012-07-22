@@ -13,7 +13,7 @@ javascriptTag "/_j/item.js"
 edit = if @item.picture then true else false
 
 div class:"bookmark pull-right",->
-  a href:"javascript:(function(){window.guofmDomain='#{Tower.domain};function%20l(u,i){var%20d=document;if(d.getElementById(i)){d.getElementById(i).parentNode.removeChild(d.getElementById(i))}var%20s=d.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('charset', 'UTF-8');s.src=u;s.id=i;d.body.appendChild(s);}l('http://www.#{Tower.domain}/_j/bookmark.js?'+((new Date()).getDate()),'bookmark')})();", onclick:'return false',->'书签工具'
+  a href:"javascript:(function(){window.guofmDomain='#{Tower.domain}';function%20l(u,i){var%20d=document;if(d.getElementById(i)){d.getElementById(i).parentNode.removeChild(d.getElementById(i))}var%20s=d.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('charset', 'UTF-8');s.src=u;s.id=i;d.body.appendChild(s);}l('http://www.#{Tower.domain}/_j/bookmark.js?'+((new Date()).getDate()),'bookmark')})();", onclick:'return false',->'书签工具'
 if !edit
   input id:"website",value:"#{if @website then @website else ''}",type:'hidden'
   input id:"imagelist",value:"#{if @imagelist then @imagelist else ''}",type:'hidden'
