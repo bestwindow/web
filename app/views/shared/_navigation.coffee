@@ -3,21 +3,22 @@
         div class: "container", =>
           a class:"brand",href:"/",->
             img src:"/images/logo.gif"
-          div class:"nav-sub",=>
-            ul class:"nav pull-right",=>
-              li class:"dropdown #{if !@request.user then 'anonymous' else 'logedin'}", =>
-                if !@request.user
-                  a href:"/login", -> "用户登录"
-                else
-                  a class:"dropdown-toggle","data-toggle":"dropdown",href:"#",->
-                    text "帐户"
-                    b class:"caret"
-                  ul class:"dropdown-menu",=>
-                    #li => linkTo "查看私信","/messages"
-                    li => linkTo "帐户设置","/ghosts/#{@request.user.id}/edit"
-                    li -> linkTo "退出登录","/exit"
-            if @request.user
-              a class:"fave",href:"/ghosts",-> "我的收藏"
+          if @request
+            div class:"nav-sub",=>
+              ul class:"nav pull-right",=>
+                li class:"dropdown #{if !@request.user then 'anonymous' else 'logedin'}", =>
+                  if !@request.user
+                    a href:"/login", -> "用户登录"
+                  else
+                    a class:"dropdown-toggle","data-toggle":"dropdown",href:"#",->
+                      text "帐户"
+                      b class:"caret"
+                    ul class:"dropdown-menu",=>
+                      #li => linkTo "查看私信","/messages"
+                      li => linkTo "帐户设置","/ghosts/#{@request.user.id}/edit"
+                      li -> linkTo "退出登录","/exit"
+              if @request.user
+                a class:"fave",href:"/ghosts",-> "我的收藏"
     div id:"registerPanel",class:"hide",->
       div class:"words",->"果味调频是一个线上lifestyle指南，手工为你调试生活好品味。"
       div class:"pull-right",->

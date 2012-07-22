@@ -34,8 +34,9 @@
       };
       init = function() {
         var d, dom, el, _i, _len, _results;
-        if (!favorits || favorits.length <= 0) return true;
+        if (typeof favorits === 'undefined' || favorits.length <= 0) return true;
         dom = $('.favorits');
+        if ($('.anonymous').length === 0) dom.removeClass('hide');
         _results = [];
         for (_i = 0, _len = dom.length; _i < _len; _i++) {
           el = dom[_i];

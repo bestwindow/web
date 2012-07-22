@@ -15,10 +15,10 @@ UserSchema.plugin mongooseAuth,
     everyauth:
       getLoginPath: "/login"
       postLoginPath: "/login"
-      loginView: "login.coffeekup"
+      loginView: "login.coffee"
       getRegisterPath: "/register"
       postRegisterPath: "/register"
-      registerView: "register.coffeekup"
+      registerView: "register.coffee"
       loginSuccessRedirect: "/loggedin"
       registerSuccessRedirect: "/registed"
 

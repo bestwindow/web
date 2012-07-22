@@ -22,6 +22,10 @@ mongodb = (->
 class App extends Tower.Application
   @configure ->  
     @server.set 'views', './app/views' #for mongooseAuth 1/2
+    #@server.set 'view engine', 'coffee'
+    @server.register ".coffee", ck.adapters.express # register engine with given extension 
+    @server.set "view engine", 'coffeekup' # view engine for everyauth
+    
     @use "favicon", Tower.publicPath + "/favicon.ico"
     @use "static",  Tower.publicPath, maxAge: Tower.publicCacheDuration
     @use "profiler" if Tower.env != "production"

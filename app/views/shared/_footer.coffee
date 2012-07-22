@@ -1,9 +1,9 @@
 div class:"footer-links",->
   div class:"hr",->"&nbsp;"
   div ->
-    a href:"#",->"关于"
+    a href:"/aboutus",->"关于"
     a href:"#",->"联系我们"
-    a href:"#",->"关注微薄"
+    a href:"http://weibo.com/u/2823730364",target:"_blank",->"关注微薄"
   div class:"copyright",->
     "copyright..."
 cite class: "copyright",->

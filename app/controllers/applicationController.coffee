@@ -14,6 +14,7 @@ class App.ApplicationController extends Tower.Controller
     end:(source)->if source and source.length is 0 then true else false
 
 
+
   registed: ->
     App.createSession @request,@response,()=>
       @response.redirect "/ghosts/new"
@@ -23,6 +24,9 @@ class App.ApplicationController extends Tower.Controller
   logout: ->
     App.deleteSession @request,@response,()=>
       @response.redirect "/"
+  aboutus: ->
+    App.loadUser App.GhostHelper.findGhost,@request,@response,=>
+      @render "aboutus"
   index: ->
     App.loadUser App.GhostHelper.findGhost,@request,@response,=>
       @paginate = 

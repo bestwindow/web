@@ -42,6 +42,9 @@ Tower.Route.draw ->
   @match "(/book)",                     to: "application#book"
   @match "(/landing)",                  to: "application#landing"
   @match "/page/:page",                 to: "application#index",    via: "get"
+  @match "/aboutus",                    to: "application#aboutus"
+  
   @match "(/*path)",                    to: "application#index"
+
   
 
