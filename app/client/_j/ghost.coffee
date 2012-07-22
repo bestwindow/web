@@ -1,5 +1,21 @@
 
 $ ->
+  
+  top.register = (->
+    _dom = null
+    anonymous = $ '.anonymous'
+    registerDestoryCookie = $.cookie 'registerDestoryCookie'
+    _dom = $ '#registerPanel'
+    newRegisterPanel = (->
+      if registerDestoryCookie or anonymous.length is 0 then return true
+      _dom.removeClass 'hide'
+    )()
+    destoryer = $ '#registerDestoryBtn'
+    if destoryer.length is 0 then return true
+    destoryer.click ->
+      $('#registerPanel').addClass 'hide'
+      $.cookie 'registerDestoryCookie','true',expires:3600,path:'/'
+  )()
 
   top.favorit = (->
     

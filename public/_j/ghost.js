@@ -1,6 +1,26 @@
 (function() {
 
   $(function() {
+    top.register = (function() {
+      var anonymous, destoryer, newRegisterPanel, registerDestoryCookie, _dom;
+      _dom = null;
+      anonymous = $('.anonymous');
+      registerDestoryCookie = $.cookie('registerDestoryCookie');
+      _dom = $('#registerPanel');
+      newRegisterPanel = (function() {
+        if (registerDestoryCookie || anonymous.length === 0) return true;
+        return _dom.removeClass('hide');
+      })();
+      destoryer = $('#registerDestoryBtn');
+      if (destoryer.length === 0) return true;
+      return destoryer.click(function() {
+        $('#registerPanel').addClass('hide');
+        return $.cookie('registerDestoryCookie', 'true', {
+          expires: 3600,
+          path: '/'
+        });
+      });
+    })();
     return top.favorit = (function() {
       var init, _show;
       _show = function(id) {

@@ -1,5 +1,4 @@
 javascriptTag "/_j/jquery.masonry.js"
-javascriptTag "/_j/ghost.js"
 
 script ->
   if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0

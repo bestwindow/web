@@ -82,23 +82,27 @@ $ ->
     d.attr 'disabled',"disabled"
     d.attr 'value',"正在抓取" 
   crawUrl = (e)->
+    domainList = ["taobao.com","tmall.com","amazon.com"]
     link = (l)->
       #http://detail.tmall.com/item.htm?id=17291880090&ali_trackid=2:mm_29801262_0_0,1001155510048686:1339946923_4z6_1948906727
       targetDomain = ->
-        for el in ["taobao","tmall"]
+        for el in domainList
           return el if l.indexOf(el)>0
         return false
       idPos = ->
-        for el in ["?id=","&id="]
+        for el in ["?id=","&id=",]
           return el if l.indexOf(el)>0
         return false
       domain = targetDomain()
-      return targetUrlBtnReset(->alert "目前只直至抓取taobao.com, tmall.com下的商品信息") if domain==false
-      idIndex = idPos()
-      return targetUrlBtnReset(->alert "链接信息不完整,没有找到商品id") if idIndex==false
-      idStr = l.split(idIndex)[1]
-      id = idStr.split("&")[0]
-      pureLink =  "http://detail.tmall.com/item.htm?id=#{id}"
+      return targetUrlBtnReset(->alert "目前只直至抓取taobao,tmall,amazon的商品信息") if domain==false
+      if ["taobao.com","tmall.com"].indexOf(domain)>=0 
+        idIndex = idPos()
+        return targetUrlBtnReset(->alert "链接信息不完整,没有找到商品id") if idIndex==false
+        idStr = l.split(idIndex)[1]
+        id = idStr.split("&")[0]
+        pureLink =  "http://detail.tmall.com/item.htm?id=#{id}"
+      else if domain == "amazon.com"
+        pureLink =l.split('/ref=')[0]
       $('#linkhidden').val pureLink
       true
     price = (p)->
@@ -112,8 +116,9 @@ $ ->
     url = '/image/crawlurl'
     dom = $ "#targetUrlInput"
     return true if dom.val()=='' or !link dom.val()
+    urlAndImageVal = $('#linkhidden').val()+$(('#imagelist')).val()
     targetUrlBtnDisable()
-    $.post url,url:dom.val(),(data)->
+    $.post url,url:urlAndImageVal,(data)->
       data = JSON.parse(data).result
       $('#texthidden').val unescape data.title
       return targetUrlBtnReset(->$("#crawlerResult").html "没有抓取到价格") if price(data.price) ==false
@@ -286,9 +291,12 @@ $ ->
     
     crawlChunk initialize if $('#itemCrawler').length==0
     
+    if $('#imagelist').length>0
+      $('#imagelist').val decodeURIComponent $('#imagelist').val().replace /\~/g,'.'      
+    
     if $('#website').length>0
       input = $ '#website'
-      url   = decodeURIComponent input.val().replace /\-/g,'.'
+      url   = decodeURIComponent input.val().replace /\~/g,'.'
       if url is '' then return true
       if url.indexOf('http://')<0 then url = 'http://'+url
       $("#targetUrlInput").val url

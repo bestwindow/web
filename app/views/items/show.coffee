@@ -1,5 +1,4 @@
 contentFor "title", "Item #{@item.toLabel()}"
-javascriptTag "/_j/ghost.js"
 script ->
   if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0
     text "var favorits = ['#{@request.user.favorit.join('\',\'')}']"

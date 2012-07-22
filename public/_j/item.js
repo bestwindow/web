@@ -123,14 +123,14 @@
       return d.attr('value', "正在抓取");
     };
     crawUrl = function(e) {
-      var dom, link, price, url;
+      var dom, domainList, link, price, url, urlAndImageVal;
+      domainList = ["taobao.com", "tmall.com", "amazon.com"];
       link = function(l) {
         var domain, id, idIndex, idPos, idStr, pureLink, targetDomain;
         targetDomain = function() {
-          var el, _i, _len, _ref;
-          _ref = ["taobao", "tmall"];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            el = _ref[_i];
+          var el, _i, _len;
+          for (_i = 0, _len = domainList.length; _i < _len; _i++) {
+            el = domainList[_i];
             if (l.indexOf(el) > 0) return el;
           }
           return false;
@@ -147,18 +147,22 @@
         domain = targetDomain();
         if (domain === false) {
           return targetUrlBtnReset(function() {
-            return alert("目前只直至抓取taobao.com, tmall.com下的商品信息");
+            return alert("目前只直至抓取taobao,tmall,amazon的商品信息");
           });
         }
-        idIndex = idPos();
-        if (idIndex === false) {
-          return targetUrlBtnReset(function() {
-            return alert("链接信息不完整,没有找到商品id");
-          });
+        if (["taobao.com", "tmall.com"].indexOf(domain) >= 0) {
+          idIndex = idPos();
+          if (idIndex === false) {
+            return targetUrlBtnReset(function() {
+              return alert("链接信息不完整,没有找到商品id");
+            });
+          }
+          idStr = l.split(idIndex)[1];
+          id = idStr.split("&")[0];
+          pureLink = "http://detail.tmall.com/item.htm?id=" + id;
+        } else if (domain === "amazon.com") {
+          pureLink = l.split('/ref=')[0];
         }
-        idStr = l.split(idIndex)[1];
-        id = idStr.split("&")[0];
-        pureLink = "http://detail.tmall.com/item.htm?id=" + id;
         $('#linkhidden').val(pureLink);
         return true;
       };
@@ -176,9 +180,10 @@
       url = '/image/crawlurl';
       dom = $("#targetUrlInput");
       if (dom.val() === '' || !link(dom.val())) return true;
+      urlAndImageVal = $('#linkhidden').val() + $('#imagelist').val();
       targetUrlBtnDisable();
       return $.post(url, {
-        url: dom.val()
+        url: urlAndImageVal
       }, function(data) {
         var render;
         data = JSON.parse(data).result;
@@ -385,9 +390,12 @@
         if (event.type === "keyup" && event.which === 13) return crawUrl();
       });
       if ($('#itemCrawler').length === 0) crawlChunk(initialize);
+      if ($('#imagelist').length > 0) {
+        $('#imagelist').val(decodeURIComponent($('#imagelist').val().replace(/\~/g, '.')));
+      }
       if ($('#website').length > 0) {
         input = $('#website');
-        url = decodeURIComponent(input.val().replace(/\-/g, '.'));
+        url = decodeURIComponent(input.val().replace(/\~/g, '.'));
         if (url === '') return true;
         if (url.indexOf('http://') < 0) url = 'http://' + url;
         $("#targetUrlInput").val(url);

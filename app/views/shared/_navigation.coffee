@@ -4,10 +4,10 @@
           a class:"brand",href:"/",->
             img src:"/images/logo.gif"
           div class:"nav-sub",=>
-            ul class:"nav",=>
-              li class:"dropdown", =>
+            ul class:"nav pull-right",=>
+              li class:"dropdown #{if !@request.user then 'anonymous' else 'logedin'}", =>
                 if !@request.user
-                  linkTo "用户登录", "/login"
+                  a href:"/login", -> "用户登录"
                 else
                   a class:"dropdown-toggle","data-toggle":"dropdown",href:"#",->
                     text "帐户"
@@ -18,6 +18,8 @@
                     li -> linkTo "退出登录","/exit"
             if @request.user
               a class:"fave",href:"/ghosts",-> "我的收藏"
+    div id:"registerPanel",class:"hide",->
+      input type:"button",value:"x",id:"registerDestoryBtn"
     div id:"sub-nav", ->
       div class:"upper", ->
         a href:"/","首页"

@@ -71,6 +71,7 @@ App.chunkDef =
     "photo-films":[
       "polariod"
       "photobook"
+      "lomo"
     ]
     publication:[
       "western-zine"  

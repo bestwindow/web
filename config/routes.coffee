@@ -23,7 +23,7 @@ Tower.Route.draw ->
   @match "/messages/page/:page",        to: "messages#index",    via: "get"
 
   @resources "items"
-  @match "/items/new/:id",              to: "items#new",      via: "get"
+  @match "/items/new",                  to: "items#new",      via: "post"
 
   @resources "shells"
   @match "/shells/:id/page/:page",      to: "shells#show",    via: "get"

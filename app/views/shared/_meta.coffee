@@ -38,6 +38,8 @@ link href: "/favicon.png", rel: "icon shortcut-icon favicon"
 #  yield "headStyleSheets"
 
 javascriptTag "/_j/jquery.min.js"
+javascriptTag "/_j/jquery.cookie.js"
+javascriptTag "/_j/ghost.js"
   
 #if contentFor "headJavaScripts"
 #  yield "headJavaScripts"

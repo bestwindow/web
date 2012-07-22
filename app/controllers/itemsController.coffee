@@ -48,8 +48,13 @@ class App.ItemsController extends App.ApplicationController
         @render "index"
 
   new: ->
+    if @params.url
+      str = @params.url.split "http%3A%2F%2F"
+      url = "http%3A%2F%2F#{str[1]}"
+      imagelist = if str.length>2 then "http%3A%2F%2F#{str.splice(2).join 'http%3A%2F%2F'}" else ''
     @item = new App.Item
-    @website = @params.id
+    @website = url || ''
+    @imagelist = imagelist || ''
     @render "new"
       
   recommend:(chunks,next)->

@@ -10,22 +10,53 @@ jquery = fs.readFileSync("./public/_j/jquery.min.js").toString()
 
 class App.ImagesController extends App.ApplicationController
   
-  crawlHtml=(url,fn)->
-    options = url:url,encoding:null
+  crawlHtml=(urls,fn)->
+    url = "http://#{urls.split('http://')[1]}"
     domainList = ['taobao.com','tmall.com','amazon.com']
-    domain = (->
+    domain = ((u)->
       for el in domainList
-        if url.replace('://','').split('com/')[0].indexOf(el)>=0 then return el
+        if u.replace('://','').split('/')[0].indexOf(el)>=0 then return el
       false
+    ) url
+    res = images:[]
+    options = (->
+      o = url:url,timeout:30000
+      if ["tmall.com","taobao.com"].indexOf(domain)>=0 then o.encoding = null
+      o
+    )()
+    imagesByBookmark = (->
+      imageArray = urls.split 'http://'
+      if imageArray.length<2 then return []
+      for i in [0..imageArray.length-1] 
+        imageArray[i] = "http://#{imageArray[i]}"
+      imageArray.splice 2
     )()
     afterRequest = (error, response, body)->
       process = 
         'amazon.com':(errors,window)->
-          
+          imageHost = "http://ecx.images-amazon.com/images/"
+          if errors or !window or !window.$ then return fn []
+          $ = window.$
+          res.title = escape $('title').html()
+          res.price = (->
+            dom = $('.priceLarge')
+            if !dom.html() then return 0
+            dom.html().replace('$','').split('.')[0]
+          )()
+          res.images = (->
+            imageArray = []
+            for i in imagesByBookmark.concat($.makeArray $ 'img')
+              if typeof(i) is 'string'
+                imageArray.push i
+              else
+                el = $ i
+                if el.attr('src').indexOf(".jpg")>0 then imageArray.push el.attr 'src'
+            imageArray
+          )()
+          fn res            
+            
         "taobao.com":(errors, window)->
-          res = images:[]
-          if errors or !window or !window.$
-            fn []
+          if errors or !window or !window.$ then return fn []
           $ = window.$
           res.title = escape $("title").html()
           res.price = $('#J_StrPrice').html()
@@ -62,6 +93,7 @@ class App.ImagesController extends App.ApplicationController
           else
             next()
       process["tmall.com"] = process["taobao.com"]
+      
       decoder = ->
         if domain is false then return fn images:[],title:'',price:''
         if ["tmall.com","taobao.com"].indexOf(domain)>=0
@@ -70,14 +102,12 @@ class App.ImagesController extends App.ApplicationController
             body = gbk_to_utf8_iconv.convert body
           catch error
             body = String body
-        else
-          body = String body
   
         jsdom.env
           html: body||""
           src: [jquery]
           done:process[domain]
-      
+
       decoder()
 
     try
