@@ -19,7 +19,11 @@
             if @request.user
               a class:"fave",href:"/ghosts",-> "我的收藏"
     div id:"registerPanel",class:"hide",->
-      input type:"button",value:"x",id:"registerDestoryBtn"
+      div class:"words",->"果味调频是一个线上lifestyle指南，手工为你调试生活好品味。"
+      div class:"pull-right",->
+        span class:"registerBtn",onclick:"window.location.replace('/register')",->"&nbsp;注册"
+        span id:"registerDestoryBtn",->"✕"
+        
     div id:"sub-nav", ->
       div class:"upper", ->
         a href:"/","首页"
