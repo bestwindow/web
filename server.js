@@ -1,8 +1,8 @@
+global.isPro = true;
+
 var daemon = require('daemon');
-
 require("coffee-script");
-require("tower").run(process.argv);
-
+require("tower").run(process.argv);  
 
 daemon.daemonize('tmp/stdout-and-stderr.log', 'tmp/shop.pid', function (err, pid) {
     //
@@ -14,3 +14,6 @@ daemon.daemonize('tmp/stdout-and-stderr.log', 'tmp/shop.pid', function (err, pid
 
     console.log('Daemon started successfully with pid: ' + pid);
   });
+
+
+

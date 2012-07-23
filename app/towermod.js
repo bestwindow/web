@@ -31,5 +31,6 @@ Tower.Store.MongoDB.Serialization.encodeArray = function(value) {
   }
   return value;
 }
-
 Tower.Store.MongoDB.include(Tower.Store.MongoDB.Serialization);
+
+if(isPro) Tower.Application.prototype.watch = function(){return false}
