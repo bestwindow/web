@@ -14,6 +14,14 @@ if (cluster.isMaster) {
 
   cluster.on('death', function(worker) {
     console.log('worker ' + worker.pid + ' died');
+    for (var i = 0 ; i <workers.length;i++){
+      if(String(workers[i].pid) == String(worker.pid))
+      {
+        workers.splice(i,1);
+        break;
+      }
+    }
+    workers.push(cluster.fork());
   });
   console.log('Master PID:', process.pid);
   
