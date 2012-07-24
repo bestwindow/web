@@ -3,7 +3,7 @@ html ->
   head ->
     meta charset: 'utf-8'
   
-    title "guo.fm"
+    title "guo.fm 果味调频"
   
     link rel: 'icon', href: '/favicon.png'
     link rel: 'stylesheet', href: '/_c/bootswatch/bootstrap.css'

@@ -6,7 +6,7 @@ if hasContentFor "title"
 else
   title t("title")
 ###
-title "a demo"
+title "guo.fm 果味调频"
 
 meta name: "description", content: t("description")
 meta name: "keywords", content: t("keywords")
