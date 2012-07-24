@@ -3,7 +3,7 @@
   $(function() {
     var crawUrl, crawlChunk, crawlImage, initialize, showImage, updateInfo;
     crawlChunk = function(fn) {
-      return $.get("/chunks.json", function(data) {
+      return $.get("/chunks.json?" + ((new Date()).getDate()), function(data) {
         var checked, chunker, chunkid, chunks, dom, e1, e2, e2Key, e2Value, e3, html, key, template, value, _i, _j, _len, _len2;
         dom = $("#chunkSelector");
         html = '';

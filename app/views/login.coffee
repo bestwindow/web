@@ -17,4 +17,4 @@ coffeescript ->
   $ -> 
     $.validation "auth",['email','password']
     err = $ '#autherror'
-    if err then err.html $.authErr err.html()
+    if err.length>0 then err.html $.authErr err.html()
