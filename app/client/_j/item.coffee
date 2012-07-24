@@ -1,7 +1,7 @@
 $ ->
 
   crawlChunk = (fn)->
-    $.get "/chunks.json",(data)->
+    $.get "/chunks.json?#{(new Date()).getDate()}",(data)->
       dom = $ "#chunkSelector"
       html=''
       chunkid = $ "#chunkid"
