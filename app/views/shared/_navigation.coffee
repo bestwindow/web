@@ -20,7 +20,7 @@
               if @request.user
                 a class:"fave",href:"/ghosts",-> "我的收藏"
     div id:"registerPanel",class:"hide",->
-      div class:"words",->"果味调频是一个线上lifestyle指南，手工为你调试生活好品味。"
+      div class:"words",->"果味调频, 是一个手工精选的良品指南。每日为你调拭生活好品位"
       div class:"pull-right",->
         span class:"registerBtn",onclick:"window.location.replace('/register')",->"&nbsp;注册"
         span id:"registerDestoryBtn",->"✕"
