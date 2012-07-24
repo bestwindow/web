@@ -11,12 +11,12 @@ html ->
     link rel: 'stylesheet', href: '/_c/fortawesome/css/font-awesome.css'
     link rel: 'stylesheet', href: '/_c/validation/engine.css'
     link rel: 'stylesheet', href: '/stylesheets/app/client/stylesheets/application.css'
+
+  body role: "application", =>  
     script src: '/_j/jquery.min.js'
     script src: '/_j/jquery.validationEngine-zh_CN.js'
     script src: '/_j/jquery.validationEngine.js'
-    script src: '/_j/auth.js'
-
-  body role: "application", =>
+    script src: '/_j/auth.js'  
     partial "shared/_navigation"
 
     header id: "header", class: "header", role: "banner", ->

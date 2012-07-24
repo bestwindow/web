@@ -37,20 +37,11 @@ link href: "/favicon.png", rel: "icon shortcut-icon favicon"
 #if contentFor "headStyleSheets"
 #  yield "headStyleSheets"
 
-javascriptTag "/_j/jquery.min.js"
-javascriptTag "/_j/jquery.cookie.js"
-javascriptTag "/_j/ghost.js"
+
   
 #if contentFor "headJavaScripts"
 #  yield "headJavaScripts"
 
-contentFor "bottom", ->
-  jsname = "transition,alert,modal,dropdown,scrollspy,tab,tooltip,popover,button,collapse,carousel,typeahead"
-  jsname.split(',').forEach (el)->
-    javascriptTag "/javascripts/vendor/javascripts/bootstrap/bootstrap-#{el}.js"
-  
-  #http://www.viglink.com/
-  javascriptTag '/_j/viglink.js'
 
   ###
   javascripts "vendor" 

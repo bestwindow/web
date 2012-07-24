@@ -1,15 +1,3 @@
-script ->
-  "top.chunkDef = #{JSON.stringify App.chunkDef}"
-
-javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
-javascriptTag '/_j/jquery.validationEngine.js'
-javascriptTag "/_j/jquery.maskMoney.js"
-javascriptTag "/_j/jquery.ui.widget.js"
-javascriptTag "/_j/jquery.iframe-transport.js"
-javascriptTag "/_j/jquery.fileupload.js"
-javascriptTag '/_libs/epiceditor/epiceditor.js'
-javascriptTag "/_j/item.js"
-
 edit = if @item.picture then true else false
 
 div class:"bookmark pull-right",->
@@ -55,3 +43,16 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
         div class:"right", ->
           input class:"btn btn-primary",value:"#{if edit then '保存' else '发布'}",type:"submit"
           if edit then a class:"btn",href:"javascript:history.back()",->'取消'
+
+contentFor "bottom", ->            
+  script ->
+    "top.chunkDef = #{JSON.stringify App.chunkDef}"
+  
+  javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
+  javascriptTag '/_j/jquery.validationEngine.js'
+  javascriptTag "/_j/jquery.maskMoney.js"
+  javascriptTag "/_j/jquery.ui.widget.js"
+  javascriptTag "/_j/jquery.iframe-transport.js"
+  javascriptTag "/_j/jquery.fileupload.js"
+  javascriptTag '/_libs/epiceditor/epiceditor.js'
+  javascriptTag "/_j/item.js"

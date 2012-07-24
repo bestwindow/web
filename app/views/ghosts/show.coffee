@@ -1,11 +1,4 @@
-javascriptTag "/_j/jquery.masonry.js"
-coffeescript ->
-  $ ->
-    $container = $('#items')
-    $container.imagesLoaded -> $container.masonry itemSelector:'.item'
-
 contentFor "title", "Ghost #{@ghost.toLabel()}"
-javascriptTag "/_j/ghost.js"
 
 script ->
   if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0
@@ -31,3 +24,9 @@ div id:"items", =>
         
 
 partial "shared/paginate"
+contentFor "bottom", ->
+  javascriptTag "/_j/jquery.masonry.js"
+  coffeescript ->
+    $ ->
+      $container = $('#items')
+      $container.imagesLoaded -> $container.masonry itemSelector:'.item'

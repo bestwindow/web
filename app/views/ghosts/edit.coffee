@@ -1,8 +1,6 @@
 contentFor "title", "Editing Ghost"
 
-javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
-javascriptTag '/_j/jquery.validationEngine.js'
-javascriptTag '/_j/auth.js'
+
 
 
 div class:"page-title",->"帐户设置"
@@ -32,10 +30,15 @@ div class:"form-horizontal", ->
     div class:"form-actions",->
       input type:"submit",class:"btn btn-primary",value:"保存"
       a href:"/ghosts",class:"btn","取消"
-
-coffeescript ->
-  $ -> 
-    $.validation "ghost-form",['ghost-email-input','ghost-name-input','ghost-pass-input']
+        
+contentFor "bottom", ->
+  javascriptTag '/_j/jquery.validationEngine-zh_CN.js'
+  javascriptTag '/_j/jquery.validationEngine.js'
+  javascriptTag '/_j/auth.js'
+  
+  coffeescript ->
+    $ -> 
+      $.validation "ghost-form",['ghost-email-input','ghost-name-input','ghost-pass-input']
 
 
 

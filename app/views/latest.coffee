@@ -1,8 +1,3 @@
-script ->
-  if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0
-    text "var favorits = ['#{@request.user.favorit.join('\',\'')}']"
-  else
-    text "var favorits = []"
 div class:"page-title"
 div ->
   for item in @items
@@ -30,3 +25,10 @@ div ->
               img src:"/image/#{recommend.picture}_0.jpg",title:recommend.text.split("\r\n")[0]           
 
 partial "shared/paginate"
+contentFor "bottom", ->
+  script ->
+    if @request.user && @request.user.favorit && @request.user.favorit.length && @request.user.favorit.length>0
+      text "var favorits = ['#{@request.user.favorit.join('\',\'')}']"
+    else
+      text "var favorits = []"
+  
