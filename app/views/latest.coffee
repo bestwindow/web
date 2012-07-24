@@ -10,7 +10,7 @@ div ->
       div class:"item span9",->
         div ->
           a href:"/items/#{item.id}",->
-            img src:"/image/#{item.picture}_5.jpg"
+            img src:"/image/#{item.picture}_5.jpg",title:item.text.split("\r\n")[0]
         div class:"html", ->
           item.html
         div class:"operation",->
@@ -27,6 +27,6 @@ div ->
         for recommend in item.recommend
           div class:"recommend",->
             a href:"/items/#{recommend.id}",->
-              img src:"/image/#{recommend.picture}_0.jpg"           
+              img src:"/image/#{recommend.picture}_0.jpg",title:recommend.text.split("\r\n")[0]           
 
 partial "shared/paginate"

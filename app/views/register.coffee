@@ -16,7 +16,8 @@ form id:"auth",class:"form-horizontal well",action:"/register",method:"POST", =>
       input class:"input-xlarge validate[required,minSize[4]]",type:"password",name:"password",id:"password"
   div class:"form-actions",->
     input type:"submit",class:"btn btn-primary",value:"注册"
-
+    span class:"pull-right",->
+      a href:"/login",->"已注册用户请直接登录"
 coffeescript ->
   $ -> 
     $.validation "auth",['name','email','password']

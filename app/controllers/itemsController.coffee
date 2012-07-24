@@ -40,12 +40,15 @@ class App.ItemsController extends App.ApplicationController
       v.parallel getGhost,getRecommend,render
          
   index: ->
+    @response.redirect "/"
+    ###
     App.Chunk.all (error, chunks) =>
       App.Item.paginate(page:1,limit:5).all (error, items) =>
         for el in items
           el.createdAt = App.moment(el.createdAt).format App.iso8601
         @items = items
         @render "index"
+    ###
 
   new: ->
     if @params.url

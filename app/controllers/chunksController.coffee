@@ -18,6 +18,8 @@ class App.ChunksController extends App.ApplicationController
     if @format=='json'
       App.ChunkHelper.all (error, chunks) =>@render json:chunks
     else
+      @response.redirect "/"
+      ###
       App.ChunkHelper.all (error, chunks) =>
         @paginate = 
           limit:App.pageLimit
@@ -31,6 +33,7 @@ class App.ChunksController extends App.ApplicationController
           @paginate.end = @pagination.end items 
           @items = items
           @render "index"
+      ###
       
   new: ->
     @chunk = new App.Chunk

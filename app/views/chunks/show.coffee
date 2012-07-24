@@ -23,7 +23,7 @@ div id:"items", ->
     div class:"item chunk-show",->
       div class:"item_picture",->
         a href:"/items/#{item.get('id')}", ->
-          img src:"/image/#{item.get('picture')}_1.jpg"
+          img src:"/image/#{item.get('picture')}_1.jpg",title:item.text.split("\r\n")[0]
       div class:"html", ->
         item.text.split("\r\n")[0]
       div class:"operation",->

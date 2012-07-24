@@ -17,7 +17,7 @@ div class:"item-index row-fluid",->
   div class:"item span9",->
     div ->
       a href:"/items/#{it.id}",->
-        img src:"/image/#{it.picture}_5.jpg"
+        img src:"/image/#{it.picture}_5.jpg",title:it.text.split("\r\n")[0]
     div class:"html", ->
       div ->it.html
       div class:"operation",->
@@ -40,7 +40,7 @@ div class:"item-index row-fluid",->
             div class:"span4",->
               div class:"item_picture",->
                 a href:"/items/#{item.get('id')}", ->
-                  img src:"/image/#{item.get('picture')}_1.jpg"
+                  img src:"/image/#{item.get('picture')}_1.jpg",title:item.text.split("\r\n")[0]
               div class:"html", ->
                 item.text.split("\r\n")[0]
               div class:"operation",->
