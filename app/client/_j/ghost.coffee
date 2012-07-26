@@ -25,7 +25,7 @@ $ ->
         return true if id is el
       false
     init = ->
-      return true if typeof(favorits) is 'undefined' or favorits.length<=0
+      return true if typeof(favorits) is 'undefined'
       dom = $ '.favorits'
       if $('.anonymous').length is 0 then dom.removeClass 'hide'
       for el in dom
