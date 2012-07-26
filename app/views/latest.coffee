@@ -23,7 +23,7 @@ div ->
           div class:"recommend",->
             a href:"/items/#{recommend.id}",->
               img src:"/image/#{recommend.picture}_0.jpg",title:recommend.text.split("\r\n")[0]           
-
+br()
 partial "shared/paginate"
 contentFor "bottom", ->
   script ->
