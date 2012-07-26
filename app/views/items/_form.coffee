@@ -41,7 +41,7 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
           input class:"money",id:"money",type:"text",value:"#{if @item.price then @item.price else '￥'}"
       div class:"footer", ->
         div class:"right", ->
-          input class:"btn btn-primary",value:"#{if edit then '保存' else '发布'}",type:"submit"
+          input class:"submitBtn btn btn-primary",value:"#{if edit then '保存' else '发布'}",type:"submit"
           if edit then a class:"btn",href:"javascript:history.back()",->'取消'
 
 contentFor "bottom", ->            

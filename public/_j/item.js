@@ -336,7 +336,8 @@
         }
       });
       $("#item-form").submit(function(e) {
-        var after, alertDom, alertr, before, chunkid, html, noerror, picture, price, text, validate;
+        var after, alertDom, alertr, before, chunkid, html, noerror, picture, price, submitBtn, text, validate;
+        submitBtn = $($(".submitBtn")[0]);
         noerror = true;
         alertDom = $(".alert");
         text = $("#texthidden");
@@ -349,6 +350,7 @@
           return noerror = false;
         };
         before = function() {
+          submitBtn.attr('disabled', true);
           return text.val($.epicEditor.get('editor').value);
         };
         validate = function() {
@@ -366,7 +368,8 @@
           html.val($.epicEditor.exportHTML());
           if (noerror === false) {
             alertDom.addClass("alert-error");
-            return alertDom.addClass("in");
+            alertDom.addClass("in");
+            return submitBtn.attr('disabled', false);
           }
         };
         before();

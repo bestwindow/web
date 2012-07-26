@@ -242,6 +242,7 @@ $ ->
 
 
     $("#item-form").submit (e) ->
+      submitBtn = $ $(".submitBtn")[0]
       noerror   = true
       alertDom  = $ ".alert"
       text      = $ "#texthidden"
@@ -253,7 +254,8 @@ $ ->
         alertDom.html text
         noerror = false
       before    = ->
-        text.val $.epicEditor.get('editor').value
+        submitBtn.attr 'disabled',true
+        text.val $.epicEditor.get('editor').value   
       validate  = ->
         if chunkid.val() is "" or chunkid.val() is "undefined"
           alertr "请选择发布到哪个类别"
@@ -268,6 +270,7 @@ $ ->
         if noerror is false
           alertDom.addClass "alert-error"
           alertDom.addClass "in"
+          submitBtn.attr 'disabled',false
       before()
       validate()
       after()
