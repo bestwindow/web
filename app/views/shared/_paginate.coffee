@@ -1,3 +1,4 @@
+text "     "
 if @paginate.end
   div class:"row",->
     div class:"span12",-> 

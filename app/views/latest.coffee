@@ -22,8 +22,7 @@ div ->
         for recommend in item.recommend
           div class:"recommend",->
             a href:"/items/#{recommend.id}",->
-              img src:"/image/#{recommend.picture}_0.jpg",title:recommend.text.split("\r\n")[0]           
-text "     "
+              img src:"/image/#{recommend.picture}_0.jpg",title:recommend.text.split("\r\n")[0]
 partial "shared/paginate"
 contentFor "bottom", ->
   script ->
