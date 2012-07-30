@@ -13,6 +13,8 @@ class App.ImagesController extends App.ApplicationController
   crawlHtml=(urls,fn)->
     url = "http://#{urls.split('http://')[1]}"
     domainList = ['taobao.com','tmall.com','amazon.com']
+    exchangeRate = 
+      us:6.4
     domain = ((u)->
       for el in domainList
         if u.replace('://','').split('/')[0].indexOf(el)>=0 then return el
@@ -39,9 +41,10 @@ class App.ImagesController extends App.ApplicationController
           $ = window.$
           res.title = escape $('title').html()
           res.price = (->
+            
             dom = $('.priceLarge')
             if !dom.html() then return 0
-            dom.html().replace('$','').split('.')[0]
+            parseInt ((parseInt dom.html().replace('$','').split('.')[0],10) * exchangeRate.us),10
           )()
           res.images = (->
             imageArray = []
