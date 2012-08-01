@@ -41,8 +41,8 @@ class App.ImagesController extends App.ApplicationController
           $ = window.$
           res.title = escape $('title').html()
           res.price = (->
-            
             dom = $('.priceLarge')
+            console.log "dom.html():"+dom.html()
             if !dom.html() then return 0
             parseInt ((parseInt dom.html().replace('$','').split('.')[0],10) * exchangeRate.us),10
           )()
