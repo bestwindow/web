@@ -15,7 +15,7 @@ else
 
 div class:"item-index row-fluid",->
   div class:"item span9",->
-    div ->
+    div class:"img", ->
       a href:"/items/#{it.id}",->
         img src:"/image/#{it.picture}_5.jpg",title:it.text.split("\r\n")[0]
     div class:"html", ->
