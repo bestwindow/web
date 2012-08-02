@@ -41,9 +41,16 @@ App.ImageHelper = ((option)->
       writeLocal:(file,filename,next)->
         filename = "/tmp/#{md5 filename}"
         fs.writeFile filename,file,->next filename
-      write:(file,type,next)->
+      write:(file,type,forceSize,next)->
+        saveSize = (->
+          iSize = imageSize type
+          if forceSize
+            for i in [0..iSize.length-1]
+              if forceSize < iSize[i] then iSize[i] = forceSize
+          iSize
+        )()
         image = imageName(type,file)
-        saveImage file,image,imageSize(type),->
+        saveImage file,image,saveSize,->
           next image
       read:(file,next)->
         gridfs.get file,(err,filedata)->

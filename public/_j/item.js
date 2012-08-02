@@ -91,16 +91,20 @@
       $('#itemCrawler').addClass('hide');
       $('.bookmark').addClass('hide');
       $('#itemEditor').removeClass('hide');
+      $('#uploaderDiv').removeClass('hide');
       return crawlChunk(initialize);
     };
     crawlImage = function(imageUrl) {
-      var url;
+      var forceSize, params, url;
       url = '/image/crawl';
       $("#crawlImageBtn").attr('disabled', "disabled");
       $("#crawlImageBtn").attr('value', "正在抓取");
-      return $.post(url, {
+      params = {
         url: imageUrl
-      }, function(data) {
+      };
+      forceSize = parseInt($("#forceSize").val(), 10);
+      if (!isNaN(forceSize) && forceSize > 100) params.size = forceSize;
+      return $.post(url, params, function(data) {
         data = JSON.parse(data);
         $("#crawlImageBtn").attr('disabled', false);
         $("#crawlImageBtn").attr('value', "使用这张图片");
@@ -221,7 +225,7 @@
             html = htmlTemp;
             $('#imageCarousel .row-fluid').html(html.join('</div>'));
           } else {
-            html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">", "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />", "</div>", '<div id="imageCarousel">', '<div class=row-fluid>', html.join('</div>'), '</div>', '</div>'].join("");
+            html = ["<div>共获得" + data.images.length + "张图片&nbsp;&nbsp;&nbsp;&nbsp;", "<span id=crawlerInfo></span>", "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "<input type=text id=forceSize placeholder=\"强制缩图:350\" />&nbsp;", "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />", "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">", "</div>", '<div id="imageCarousel">', '<div class=row-fluid>', html.join('</div>'), '</div>', '</div>'].join("");
             $("#crawlerResult").html(html);
           }
           return $("#crawlerResult .item img").load(function() {
@@ -275,7 +279,7 @@
     };
     showImage = function(file) {
       $("#pictureinput")[0].value = file.thumbnail_url.split("image/")[1].replace("_0.jpg", "");
-      $("#fileupload").css("display", "none");
+      $("#uploaderDiv").addClass("hide");
       $(".left").css("border", "8px solid #eee");
       $("<div>").html("<a href=" + file.url + " target=_blank><img src=" + file.url + " width=430 /></a>").appendTo($("#fileresult"));
       return $('#pictureclose').css("display", "block");
@@ -292,14 +296,22 @@
       $("#fileupload").fileupload({
         dataType: "json",
         url: "/image",
-        formData: {
-          type: "item"
-        },
         done: function(e, data) {
           return $.each(data.result, function(index, file) {
             return showImage(file);
           });
         }
+      });
+      $('#fileupload').bind('fileuploadsubmit', function(e, data) {
+        var forceSize, formData;
+        formData = {
+          type: "item"
+        };
+        forceSize = parseInt($("#uploaderForceSize").val(), 10);
+        if (!isNaN(forceSize) && forceSize > 100) formData.size = forceSize;
+        data.formData = formData;
+        $("#uploaderForceSize").val("");
+        return true;
       });
       $.epicEditor = new EpicEditor(document.getElementById('text'));
       $.epicEditor.$filename = 'editor';
@@ -318,7 +330,7 @@
       $('#pictureclose').click(function(e) {
         e.target.style.display = 'none';
         $("#pictureinput")[0].value = '';
-        $("#fileupload").css("display", "block");
+        $("#uploaderDiv").removeClass("hide");
         $(".left").css("border", "8px dashed #CCC");
         return $("#fileresult").html('');
       });

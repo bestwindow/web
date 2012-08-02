@@ -27,12 +27,12 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
       div class:"content", =>
         a class:"pictureclose",id:"pictureclose",href:"#",=>'&nbsp;'      
         div class:"left", style:"#{if edit then 'border:8px solid #eee' else ''}", =>
-          if !edit
+          div id:"uploaderDiv",class:"#{if edit then '' else 'hide'}",->
             input id:"fileupload",type:"file",name:"files[]"
-            div id:"fileresult"
-          else
-            input id:"fileupload",type:"file",name:"files[]",style:"display:none"
-            div id:"fileresult",=>
+            br()
+            input id:"uploaderForceSize",type:"text",placeholder:"强制缩图:350"
+          div id:"fileresult",=>
+            if edit
               div =>
                 a href:"/image/#{@item.picture}_5.jpg",target:"_blank",=>
                   img src:"/image/#{@item.picture}_5.jpg",width:430

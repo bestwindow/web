@@ -158,9 +158,12 @@ class App.ImagesController extends App.ApplicationController
     .on 'end', ()=>
       return @response.json {errorThrown:'no type'} if !fields[0]
       return @response.json {errorThrown:'no file'} if !files[0]
-      type = fields[0][1]
+      forceSize = false
+      for el in fields
+        if el[0] is 'type' then type = el[1]
+        if el[0] is 'size' then forceSize = parseInt el[1],10
       file = files[0][1].path
-      App.ImageHelper.write file,type,(imageName)=>formJson.apply this,[imageName,'item']
+      App.ImageHelper.write file,type,forceSize,(imageName)=>formJson.apply this,[imageName,'item']
     form.parse @request
   show:->
     App.ImageHelper.read "#{@request.params.id}.jpg",(fileData)=>
@@ -171,11 +174,12 @@ class App.ImagesController extends App.ApplicationController
       @response.writeHead 200, {'Content-Type':'text/plain'}
       @response.end JSON.stringify result:html
   crawl: ->
+    forceSize = @params.size || false
     crawlImage @params.url,(imageUrl)=>
       if imageUrl ==''
         @response.writeHead 200, {'Content-Type':'text/plain'}
         @response.end JSON.stringify error:true        
       else
-        App.ImageHelper.write imageUrl,"item",(imageName)=>
+        App.ImageHelper.write imageUrl,"item",forceSize,(imageName)=>
           formJson.apply this,[imageName,'item']
 

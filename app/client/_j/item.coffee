@@ -63,7 +63,10 @@ $ ->
     url = '/image/crawl'
     $("#crawlImageBtn").attr 'disabled',"disabled"
     $("#crawlImageBtn").attr 'value',"正在抓取"
-    $.post url,url:imageUrl,(data)->
+    params = url:imageUrl
+    forceSize = parseInt $("#forceSize").val(),10
+    if !isNaN(forceSize) && forceSize >100 then params.size = forceSize
+    $.post url,params,(data)->
       data = JSON.parse data
       $("#crawlImageBtn").attr 'disabled',false
       $("#crawlImageBtn").attr 'value',"使用这张图片"
@@ -142,8 +145,9 @@ $ ->
             "<div>共获得#{data.images.length}张图片&nbsp;&nbsp;&nbsp;&nbsp;"
             "<span id=crawlerInfo></span>"
             "<input type=button class=btn id=sizeImageBtn value=\"按大小排序\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
-            "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">"
+            "<input type=text id=forceSize placeholder=\"强制缩图:350\" />&nbsp;"
             "<input type=button class=\"btn btn-primary\" id=crawlImageBtn value=\"抓取图片\" />"
+            "<input type=button class=\"btn\" id=noImageBtn value=\"手动上传\">"
             "</div>"
             '<div id="imageCarousel">'
             '<div class=row-fluid>'
@@ -183,6 +187,7 @@ $ ->
         crawlImage top.CrawlImage if top.CrawlImage
       
       $("#noImageBtn").click ->
+        $('#uploaderDiv').removeClass 'hide'
         updateInfo()
 
   
@@ -190,7 +195,7 @@ $ ->
 
   showImage = (file)->
     $("#pictureinput")[0].value = file.thumbnail_url.split("image/")[1].replace("_0.jpg", "")
-    $("#fileupload").css "display", "none"
+    $("#uploaderDiv").addClass "hide"
     $(".left").css "border", "8px solid #eee"
     $("<div>").html("<a href=#{file.url} target=_blank><img src=#{file.url} width=430 /></a>").appendTo $("#fileresult")
     $('#pictureclose').css "display","block"
@@ -207,9 +212,15 @@ $ ->
     $("#fileupload").fileupload
       dataType: "json"
       url: "/image"
-      formData:type:"item"
       done: (e, data) ->
         $.each data.result, (index, file) ->showImage file
+    $('#fileupload').bind 'fileuploadsubmit', (e, data)->
+      formData = type:"item"
+      forceSize = parseInt $("#uploaderForceSize").val(),10
+      if !isNaN(forceSize) && forceSize >100 then formData.size = forceSize
+      data.formData = formData
+      $("#uploaderForceSize").val ""
+      true
     $.epicEditor = new EpicEditor document.getElementById 'text'
     $.epicEditor.$filename = 'editor'
     $.epicEditor.remove $.epicEditor.$filename
@@ -225,7 +236,7 @@ $ ->
     $('#pictureclose').click (e)->
       e.target.style.display='none'
       $("#pictureinput")[0].value = ''
-      $("#fileupload").css "display", "block"
+      $("#uploaderDiv").removeClass "hide"
       $(".left").css "border", "8px dashed #CCC"
       $("#fileresult").html ''
 
