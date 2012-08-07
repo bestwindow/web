@@ -12,7 +12,7 @@ div ->
           span class:"price", ->"￥#{item.price}"
           a href:"#{item.link}",target:"_blank",->"购买"
           a class:"favorits hide",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
-          a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{item.id}','#{item.picture}','#{item.text}');return false",->"分享"
+          a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{item.id}','#{item.picture}','#{item.text.replace(/'/g,"\\\'")}');return false",->"分享"
           span class:"pull-right",->
             chunkString = ["相似品位的"]
             chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in item.chunk
