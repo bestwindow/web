@@ -5,7 +5,7 @@ html ->
   
     title "guo.fm 果味调频"
   
-    link rel: 'icon', href: '/favicon.png'
+    link rel: 'icon', href: '/favicon.ico'
     link rel: 'stylesheet', href: '/_c/bootswatch/bootstrap.css'
     link rel: 'stylesheet', href: '/_c/bootswatch/bootstrap-responsive.css'
     link rel: 'stylesheet', href: '/_c/fortawesome/css/font-awesome.css'

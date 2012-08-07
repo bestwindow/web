@@ -1,6 +1,7 @@
 doctype 5
 html ->
   head ->
+    link rel: 'icon', href: '/favicon.ico'
     partial "shared/meta"
   
   body role: "application", ->
