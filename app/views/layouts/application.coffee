@@ -30,6 +30,7 @@ html ->
         
     javascriptTag "/_j/jquery.min.js"
     javascriptTag "/_j/jquery.cookie.js"
+    javascriptTag "/_j/application.js" 
     javascriptTag "/_j/ghost.js" 
     if hasContentFor "bottom"
       yields "bottom"
