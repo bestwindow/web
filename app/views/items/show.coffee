@@ -24,7 +24,7 @@ div class:"item-index row-fluid",->
         span class:"price", ->"￥#{it.price}"
         a href:"#{it.link}",target:"_blank",->"购买"
         a class:"favorits hide",id:"favorit-#{it.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
-        a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{it.id}','#{it.picture}','#{it.text.replace(/'/g,"\\\'")}');return false",->"分享"
+        a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{it.id}','#{it.picture}','#{it.text.replace(/'/g,"\\\'").replace(/(\n|\r|(\r\n)|(\u0085)|(\u2028)|(\u2029))/g, " ")}');return false",->"分享"
         span class:"pull-right",->
           chunkString = ["相似品味的"]
           chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in it.chunk
@@ -50,7 +50,7 @@ div class:"item-index row-fluid",->
                 text "&nbsp;"
                 a class:"favorits hide",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
                 text "&nbsp;"
-                a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{item.id}','#{item.picture}','#{item.text.replace(/'/g,"\\\'")}');return false",->"分享"
+                a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{item.id}','#{item.picture}','#{item.text.replace(/'/g,"\\\'").replace(/(\n|\r|(\r\n)|(\u0085)|(\u2028)|(\u2029))/g, " ")}');return false",->"分享"
           ),el
         if (i+1)%3 is 0 or (it.recommend.length<3 and i is it.recommend.length-1)
           div class:"recommend-index row-fluid",->
