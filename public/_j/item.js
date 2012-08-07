@@ -91,7 +91,6 @@
       $('#itemCrawler').addClass('hide');
       $('.bookmark').addClass('hide');
       $('#itemEditor').removeClass('hide');
-      $('#uploaderDiv').removeClass('hide');
       return crawlChunk(initialize);
     };
     crawlImage = function(imageUrl) {
@@ -273,6 +272,7 @@
           if (top.CrawlImage) return crawlImage(top.CrawlImage);
         });
         return $("#noImageBtn").click(function() {
+          $('#uploaderDiv').removeClass('hide');
           return updateInfo();
         });
       });

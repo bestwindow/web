@@ -39,7 +39,7 @@ html ->
     
     #http://www.viglink.com/
     div class:"hide",-> javascriptTag "http://s25.cnzz.com/stat.php?id=4369109&web_id=4369109"
-    javascriptTag '/_j/viglink.js'  
+    #javascriptTag '/_j/viglink.js'  
 
   if hasContentFor "popups"
     aside id: "popups", ->
