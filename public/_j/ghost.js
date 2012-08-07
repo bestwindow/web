@@ -62,6 +62,7 @@
           var dom, itemId, url;
           dom = $(e.target);
           itemId = dom.attr('id').replace('favorit-', '');
+          if (parseInt(itemId) === 0) return true;
           url = "/favorit";
           return $.post(url, {
             id: itemId

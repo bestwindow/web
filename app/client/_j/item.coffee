@@ -251,8 +251,7 @@ $ ->
         money = parseInt($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")), 10)
         $("#price").val money  unless isNaN(money)
 
-
-    $("#item-form").submit (e) ->
+    verification = ->
       submitBtn = $ $(".submitBtn")[0]
       noerror   = true
       alertDom  = $ ".alert"
@@ -286,6 +285,18 @@ $ ->
       validate()
       after()
       noerror
+
+    $('#previewBtn').click ->
+      if !verification() then return true
+      f = $ "#preview-form"
+      f.html ""
+      for el in ['chunkid','texthidden','htmlhidden','linkhidden','pictureinput','price']
+        $("##{el}").clone().appendTo f
+        #$("#preview-#{el}").val $("##{el}").val()
+      f.submit()
+      f.html ""
+
+    $("#item-form").submit verification
 
 
     if $('#price').val()!='' 

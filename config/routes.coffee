@@ -15,7 +15,6 @@ Tower.Route.draw ->
   @resources "chunks"
   @match "/chunks/:id/page/:page",      to: "chunks#show",    via: "get"
   @match "/chunks/page/:page",          to: "chunks#index",    via: "get"
-  #@match "/chunks.:format",             to: "chunks#indexJson",    via: "get"
 
   @resources "messages"
   @match "/messages/new/:ghost/:item",  to: "messages#new",      via: "get"
@@ -39,12 +38,14 @@ Tower.Route.draw ->
   @match "/loggedin",                   to: "application#loggedin"
   @match "/registed",                   to: "application#registed"
   @match "/exit",                       to: "application#logout"
-  @match "(/book)",                     to: "application#book"
-  @match "(/landing)",                  to: "application#landing"
+  @match "/book",                     to: "application#book"
+  @match "/landing",                  to: "application#landing"
+  @match "/preview",  to: "application#preview",  via:"post"
   @match "/page/:page",                 to: "application#index",    via: "get"
   @match "/aboutus",                    to: "application#aboutus"
-  
+
   @match "(/*path)",                    to: "application#index"
+
 
   
 

@@ -27,7 +27,7 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
       div class:"content", =>
         a class:"pictureclose",id:"pictureclose",href:"#",=>'&nbsp;'      
         div class:"left", style:"#{if edit then 'border:8px solid #eee' else ''}", =>
-          div id:"uploaderDiv",class:"#{if edit then '' else 'hide'}",->
+          div id:"uploaderDiv",class:"#{if edit then 'hide' else ' '}",->
             input id:"fileupload",type:"file",name:"files[]"
             br()
             input id:"uploaderForceSize",type:"text",placeholder:"强制缩图:350"
@@ -41,8 +41,10 @@ div id:"itemEditor",class:"#{if !edit then 'hide' else ''}",=>
           input class:"money",id:"money",type:"text",value:"#{if @item.price then @item.price else '￥'}"
       div class:"footer", ->
         div class:"right", ->
+          input id:"previewBtn",class:"btn",value:"预览",type:"button"
           input class:"submitBtn btn btn-primary",value:"#{if edit then '保存' else '发布'}",type:"submit"
           if edit then a class:"btn",href:"javascript:history.back()",->'取消'
+  form id:"preview-form",class:"hide",action:"/preview",method:"post",target:"_blank",role:"form",novalidate:"true","data-method":"post",=>
 
 contentFor "bottom", ->            
   script ->

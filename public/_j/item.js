@@ -293,6 +293,7 @@
       });
     };
     initialize = function() {
+      var verification;
       $("#fileupload").fileupload({
         dataType: "json",
         url: "/image",
@@ -347,7 +348,7 @@
           if (!isNaN(money)) return $("#price").val(money);
         }
       });
-      $("#item-form").submit(function(e) {
+      verification = function() {
         var after, alertDom, alertr, before, chunkid, html, noerror, picture, price, submitBtn, text, validate;
         submitBtn = $($(".submitBtn")[0]);
         noerror = true;
@@ -388,7 +389,21 @@
         validate();
         after();
         return noerror;
+      };
+      $('#previewBtn').click(function() {
+        var el, f, _i, _len, _ref;
+        if (!verification()) return true;
+        f = $("#preview-form");
+        f.html("");
+        _ref = ['chunkid', 'texthidden', 'htmlhidden', 'linkhidden', 'pictureinput', 'price'];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          el = _ref[_i];
+          $("#" + el).clone().appendTo(f);
+        }
+        f.submit();
+        return f.html("");
       });
+      $("#item-form").submit(verification);
       if ($('#price').val() !== '') {
         $("#money").val($('#price').val());
         $.money();

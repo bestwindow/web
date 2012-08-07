@@ -41,6 +41,7 @@ $ ->
     create:(e)->
       dom = $ e.target
       itemId = dom.attr('id').replace 'favorit-',''
+      if parseInt(itemId) is 0 then return true
       url = "/favorit"
       $.post url,id:itemId,(data)->
         result = JSON.parse(data).result

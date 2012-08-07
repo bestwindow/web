@@ -14,7 +14,6 @@ class App.ApplicationController extends Tower.Controller
     end:(source)->if source and source.length is 0 then true else false
 
 
-
   registed: ->
     App.createSession @request,@response,()=>
       @response.redirect "/ghosts/new"
@@ -27,13 +26,23 @@ class App.ApplicationController extends Tower.Controller
   aboutus: ->
     App.loadUser App.GhostHelper.findGhost,@request,@response,=>
       @render "aboutus"
-  index: ->
+  preview: ->
+    it = @params.item
+    item = new App.Item
+    item.id = 0
+    for el in ["text","html","chunk","picture","link","price"]
+      item[el] = it[el]
+    item.chunk = item.chunk.split ','
+    item.recommend = []
+    @index item
+  index: (previewItem)->
     App.loadUser App.GhostHelper.findGhost,@request,@response,=>
       @paginate = 
       limit:App.pageLimit
       page:@pagination.current @params.page
       route:"/page/" 
       App.Item.order('createdAt',-1).paginate(@paginate).all (error, items)=>
+        if previewItem then items.unshift previewItem
         @paginate.end = @pagination.end items
         App.ChunkHelper.map items,(data)=>
           recommendLimit = 3
