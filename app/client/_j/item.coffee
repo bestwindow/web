@@ -87,7 +87,6 @@ $ ->
   crawUrl = (e)->
     domainList = ["taobao.com","tmall.com","amazon.com"]
     link = (l)->
-      #http://detail.tmall.com/item.htm?id=17291880090&ali_trackid=2:mm_29801262_0_0,1001155510048686:1339946923_4z6_1948906727
       targetDomain = ->
         for el in domainList
           return el if l.indexOf(el)>0
@@ -251,7 +250,7 @@ $ ->
         money = parseInt($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")), 10)
         $("#price").val money  unless isNaN(money)
 
-    verification = ->
+    verification = (preview)->
       submitBtn = $ $(".submitBtn")[0]
       noerror   = true
       alertDom  = $ ".alert"
@@ -264,7 +263,7 @@ $ ->
         alertDom.html text
         noerror = false
       before    = ->
-        submitBtn.attr 'disabled',true
+        if preview != true then submitBtn.attr 'disabled',true
         text.val $.epicEditor.get('editor').value   
       validate  = ->
         if chunkid.val() is "" or chunkid.val() is "undefined"
@@ -280,19 +279,18 @@ $ ->
         if noerror is false
           alertDom.addClass "alert-error"
           alertDom.addClass "in"
-          submitBtn.attr 'disabled',false
+          if preview != true then submitBtn.attr 'disabled',false
       before()
       validate()
       after()
       noerror
 
     $('#previewBtn').click ->
-      if !verification() then return true
+      if !verification(true) then return true
       f = $ "#preview-form"
       f.html ""
       for el in ['chunkid','texthidden','htmlhidden','linkhidden','pictureinput','price']
         $("##{el}").clone().appendTo f
-        #$("#preview-#{el}").val $("##{el}").val()
       f.submit()
       f.html ""
 
