@@ -279,7 +279,7 @@ $ ->
         if noerror is false
           alertDom.addClass "alert-error"
           alertDom.addClass "in"
-          if preview != true then submitBtn.attr 'disabled',false
+          submitBtn.attr 'disabled',false
       before()
       validate()
       after()
