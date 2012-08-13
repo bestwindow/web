@@ -348,7 +348,7 @@
           if (!isNaN(money)) return $("#price").val(money);
         }
       });
-      verification = function() {
+      verification = function(preview) {
         var after, alertDom, alertr, before, chunkid, html, noerror, picture, price, submitBtn, text, validate;
         submitBtn = $($(".submitBtn")[0]);
         noerror = true;
@@ -363,7 +363,7 @@
           return noerror = false;
         };
         before = function() {
-          submitBtn.attr('disabled', true);
+          if (preview !== true) submitBtn.attr('disabled', true);
           return text.val($.epicEditor.get('editor').value);
         };
         validate = function() {
@@ -392,7 +392,7 @@
       };
       $('#previewBtn').click(function() {
         var el, f, _i, _len, _ref;
-        if (!verification()) return true;
+        if (!verification(true)) return true;
         f = $("#preview-form");
         f.html("");
         _ref = ['chunkid', 'texthidden', 'htmlhidden', 'linkhidden', 'pictureinput', 'price'];
