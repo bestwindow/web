@@ -6,7 +6,7 @@ if !edit
   input id:"website",value:"#{if @website then @website else ''}",type:'hidden'
   input id:"imagelist",value:"#{if @imagelist then @imagelist else ''}",type:'hidden'
   form id:"itemCrawler",onsubmit:"return false",->
-    input id:"targetUrlInput",placeholder:"请输入淘宝或天猫商品页网址"
+    input id:"targetUrlInput",placeholder:"请输入商品页网址"
     input class:"btn btn-primary", id:"targetUrlBtn",value:"确定",type:"button"
     div id:"crawlerResult"
 else

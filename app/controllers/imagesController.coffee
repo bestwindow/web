@@ -7,12 +7,11 @@ Iconv  = require('iconv').Iconv
 jquery = fs.readFileSync("./public/_j/jquery.min.js").toString()
 
 
-
 class App.ImagesController extends App.ApplicationController
   
   crawlHtml=(urls,fn)->
     url = "http://#{urls.split('http://')[1]}"
-    domainList = ['taobao.com','tmall.com','amazon.com']
+    domainList = ['taobao.com','tmall.com','amazon.com','amazon.cn']
     exchangeRate = 
       us:6.4
     domain = ((u)->
@@ -42,9 +41,13 @@ class App.ImagesController extends App.ApplicationController
           res.title = escape $('title').html()
           res.price = (->
             dom = $('.priceLarge')
-            console.log "dom.html():"+dom.html()
             if !dom.html() then return 0
-            parseInt ((parseInt dom.html().replace('$','').split('.')[0],10) * exchangeRate.us),10
+            priceHtml = dom.html()
+            if priceHtml.indexOf('￥ ')>=0
+              priceHtml = (parseFloat dom.html().replace('￥ ','')).toFixed 2
+            else
+              priceHtml = ((parseFloat dom.html().replace('$','')) * exchangeRate.us).toFixed 2
+            ("#{priceHtml}").replace '.00',''
           )()
           res.images = (->
             imageArray = []
@@ -96,6 +99,7 @@ class App.ImagesController extends App.ApplicationController
           else
             next()
       process["tmall.com"] = process["taobao.com"]
+      process["amazon.cn"] = process["amazon.com"]
       
       decoder = ->
         if domain is false then return fn images:[],title:'',price:''

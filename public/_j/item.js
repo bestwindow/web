@@ -127,7 +127,7 @@
     };
     crawUrl = function(e) {
       var dom, domainList, link, price, url, urlAndImageVal;
-      domainList = ["taobao.com", "tmall.com", "amazon.com"];
+      domainList = ["taobao.com", "tmall.com", "amazon.com", "amazon.cn"];
       link = function(l) {
         var domain, id, idIndex, idPos, idStr, pureLink, targetDomain;
         targetDomain = function() {
@@ -163,7 +163,7 @@
           idStr = l.split(idIndex)[1];
           id = idStr.split("&")[0];
           pureLink = "http://detail.tmall.com/item.htm?id=" + id;
-        } else if (domain === "amazon.com") {
+        } else if (["amazon.com", "amazon.cn"].indexOf(domain) >= 0) {
           pureLink = l.split('/ref=')[0];
         }
         $('#linkhidden').val(pureLink);
@@ -285,11 +285,17 @@
       return $('#pictureclose').css("display", "block");
     };
     $.money = function() {
+      var moneyStr;
+      moneyStr = $("#money").val();
+      if (moneyStr.indexOf('.') < 0) {
+        $("#money").val("" + moneyStr + ".00");
+      } else if (moneyStr.split('.')[1].length < 2) {
+        $("#money").val("" + moneyStr + "0");
+      }
       return $("#money").maskMoney({
         symbol: "￥ ",
         showSymbol: true,
-        symbolStay: true,
-        precision: 0
+        symbolStay: true
       });
     };
     initialize = function() {
@@ -344,7 +350,7 @@
       $("#money").keyup(function(e) {
         var money;
         if (!(e.target.value === "￥" || e.target.value === "" || e.target.value === "￥ ")) {
-          money = parseInt($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")), 10);
+          money = parseFloat($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")));
           if (!isNaN(money)) return $("#price").val(money);
         }
       });

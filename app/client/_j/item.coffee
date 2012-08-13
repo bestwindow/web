@@ -85,7 +85,7 @@ $ ->
     d.attr 'disabled',"disabled"
     d.attr 'value',"正在抓取" 
   crawUrl = (e)->
-    domainList = ["taobao.com","tmall.com","amazon.com"]
+    domainList = ["taobao.com","tmall.com","amazon.com","amazon.cn"]
     link = (l)->
       targetDomain = ->
         for el in domainList
@@ -103,7 +103,7 @@ $ ->
         idStr = l.split(idIndex)[1]
         id = idStr.split("&")[0]
         pureLink =  "http://detail.tmall.com/item.htm?id=#{id}"
-      else if domain == "amazon.com"
+      else if ["amazon.com","amazon.cn"].indexOf(domain)>=0
         pureLink =l.split('/ref=')[0]
       $('#linkhidden').val pureLink
       true
@@ -201,11 +201,16 @@ $ ->
     
 
   $.money = ->
+    moneyStr = $("#money").val()
+    if moneyStr.indexOf('.')<0 
+      $("#money").val "#{moneyStr}.00"
+    else if moneyStr.split('.')[1].length<2
+      $("#money").val "#{moneyStr}0"
     $("#money").maskMoney
       symbol: "￥ "
       showSymbol: true
       symbolStay: true
-      precision: 0
+
 
   initialize = ->
     $("#fileupload").fileupload
@@ -247,7 +252,7 @@ $ ->
 
     $("#money").keyup (e) ->
       unless e.target.value is "￥" or e.target.value is "" or e.target.value is "￥ "
-        money = parseInt($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")), 10)
+        money = parseFloat $.trim e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")
         $("#price").val money  unless isNaN(money)
 
     verification = (preview)->
