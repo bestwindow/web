@@ -17,13 +17,12 @@ html ->
       div class: "container", ->
         partial "shared/header"
         
-    section id: "content", role: "main", ->
-      div class: "container", ->
-        partial "shared/flash"
-        yields "body"
-        aside id: "sidebar", role: "complementary", ->
-          if hasContentFor "sidebar"
-            yields "sidebar"
+    div class: "container", ->
+      partial "shared/flash"
+      yields "body"
+      aside id: "sidebar", role: "complementary", ->
+        if hasContentFor "sidebar"
+          yields "sidebar"
             
     footer id: "footer", class: "footer", role: "contentinfo", ->
       div class: "container", ->
@@ -39,9 +38,7 @@ html ->
     jsname.split(',').forEach (el)->
       javascriptTag "/javascripts/vendor/javascripts/bootstrap/bootstrap-#{el}.js"
     
-    #http://www.viglink.com/
-    div class:"hide",-> javascriptTag "http://s25.cnzz.com/stat.php?id=4369109&web_id=4369109"
-    #javascriptTag '/_j/viglink.js'  
+
 
   if hasContentFor "popups"
     aside id: "popups", ->

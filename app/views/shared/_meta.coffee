@@ -1,12 +1,6 @@
 meta charset: "utf-8"
 
-###
-if hasContentFor "title"
-  title @title
-else
-  title t("title")
-###
-title "guo.fm 果味调频"
+title "the web title"
 
 meta name: "description", content: t("description")
 meta name: "keywords", content: t("keywords")
@@ -30,22 +24,3 @@ link rel:"stylesheet",href:"/stylesheets/app/client/stylesheets/application.css"
 
 
 link href: "/favicon.png", rel: "icon shortcut-icon favicon"
-
-#if browserIs("firefox")
-#  stylesheets "font"
-
-#if contentFor "headStyleSheets"
-#  yield "headStyleSheets"
-
-
-  
-#if contentFor "headJavaScripts"
-#  yield "headJavaScripts"
-
-
-  ###
-  javascripts "vendor" 
-  if Tower.env == "development"
-    javascripts "development"
-  javascripts "lib", "application"
-  ###

@@ -1,10 +1,74 @@
 body {
-  padding-top: 60px;
+  color: #222;
+  border-top: 10px solid #eee;
+  background: #fff;
+  font-family: 'Gill Sans', Arial;
 }
 abbr,
 abbr[title] {
   border: 0px;
   cursor: auto;
+}
+.nav-header {
+  padding: 0;
+}
+.navbar-inner {
+  clear: both;
+  background: #000;
+  min-height: 36px;
+  height: 36px;
+  line-height: 36px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #000;
+}
+.navbar .divider-vertical {
+  border: 0;
+  border-left: 1px solid #808080;
+  margin: 0;
+}
+.navbar .nav li {
+  line-height: 36px;
+}
+.navbar .nav li  a {
+  padding: 0 16px;
+}
+.navbar .nav-collapse.collapse .nav li a {
+  letter-spacing: 2px;
+  color: #fff;
+  font-weight: 100;
+  font-style: normal;
+}
+.navbar .nav-collapse.collapse .nav li a:hover {
+  background: #333;
+}
+.container,
+.navbar {
+  width: 880px;
+  overflow: hidden;
+  margin: auto;
+}
+.navbar {
+  margin-top: -10px;
+}
+.navbar .brand {
+  background: url("/images/logo.gif");
+  height: 96px;
+  width: 96px;
+  padding: 0;
+  margin: 0px 18px 23px 5px;
+}
+.navbar .brand a {
+  display: block;
+  width: 96px;
+  height: 96px;
+  float: left;
+}
+.navbar .brand div {
+  margin-left: 100px;
+  color: #000;
 }
 .item_picture_small {
   height: 50px;
