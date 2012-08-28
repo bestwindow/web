@@ -2,7 +2,6 @@ domain = ""
 imageSize = ""
 path = ""
 
-md5 = require "MD5"
 moment = require 'moment'
 magic = require 'imagemagick'
 fs = require 'fs'
@@ -14,7 +13,6 @@ imageName =(type,file)->
 
 
 saveImage = (file,imagename_mongod,sizeArray,next)->
-  hLimited = 1.2
   magic.identify ['-format','%w.%h',file],(err,fileSize)->
     fWidth = fileSize.split('.')[0]
     fHeight = fileSize.split('.')[1]
@@ -22,9 +20,6 @@ saveImage = (file,imagename_mongod,sizeArray,next)->
       tempFile = "#{file}_#{idx}"
       wSize = if el == 0 || el > fWidth then fWidth else el
       hSize = parseInt fHeight*wSize/fWidth,10
-      if hSize>(el*hLimited)
-        wSize = parseInt wSize*((el*hLimited)/hSize),10
-        hSize = el*hLimited
       magic.resize {srcPath:file,dstPath:tempFile,quality:0.9,width:wSize,height:hSize},(err)->
         fs.readFile tempFile,(err,buffer)->
           gridfs.put buffer,("#{imagename_mongod}_#{idx}.jpg"),'w',(err,r)->
@@ -32,33 +27,20 @@ saveImage = (file,imagename_mongod,sizeArray,next)->
               fs.unlink(file,next) if idx == sizeArray.length-1
 #app.set 'db-image-name', "#{app.domain}-img-development"
 App.ImageHelper = ((option)->
-    gridfs = new GridFS(option.db)
+    gridfs = new GridFS option.db
     domain = option.domain
-    #console.log "App.imageSize:"+App.imageSize
     imageSize = option.imageSize
     path = option.path || '/tmp/'
     fn =
-      writeLocal:(file,filename,next)->
-        filename = "/tmp/#{md5 filename}"
-        fs.writeFile filename,file,->next filename
-      write:(file,type,forceSize,next)->
-        saveSize = (->
-          iSize = imageSize type
-          if forceSize
-            for i in [0..iSize.length-1]
-              if forceSize < iSize[i] then iSize[i] = forceSize
-          iSize
-        )()
+      write:(file,type,next)->
         image = imageName(type,file)
-        saveImage file,image,saveSize,->
+        saveImage file,image,imageSize(type),->
           next image
       read:(file,next)->
         gridfs.get file,(err,filedata)->
           next filedata
     return fn
-)(domain:Tower.domain.split('.')[0],imageSize:Tower.imageSize,db:"img-#{Tower.config.databases.mongodb[Tower.env].name}")
-
-
+) domain:Tower.domain.split('.')[0],imageSize:Tower.imageSize,db:"img-#{Tower.config.databases.mongodb[Tower.env].name}"
 
 
 

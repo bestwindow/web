@@ -13,10 +13,6 @@ div ->
           a href:"#{item.link}",target:"_blank",->"购买"
           a class:"favorits hide",id:"favorit-#{item.id}",href:"#",onclick:"favorit.toggle(event);return false",->"收藏"
           a href:"#",onclick:"shareBtnClick('#{Tower.domain}','#{item.id}','#{item.picture}','#{item.text.replace(/'/g,"\\\'").replace(/(\n|\r|(\r\n)|(\u0085)|(\u2028)|(\u2029))/g, " ")}');return false",->"分享"
-          span class:"pull-right",->
-            chunkString = ["相似品位的"]
-            chunkString.push "<a href=/chunks/#{chunk.path}>#{chunk.title}</a>" for chunk in item.chunk
-            text chunkString.join '&nbsp;'
           
       div class:"span3",->
         for recommend in item.recommend

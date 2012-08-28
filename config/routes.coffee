@@ -22,17 +22,13 @@ Tower.Route.draw ->
   @match "/messages/page/:page",        to: "messages#index",    via: "get"
 
   @resources "items"
-  @match "/items/new",                  to: "items#new",      via: "post"
+  @match "/items/new/:id",  to: "items#new",      via: "get"
 
   @resources "shells"
   @match "/shells/:id/page/:page",      to: "shells#show",    via: "get"
 
   @match "/image",                      to: "images#create",via: "post"
   @match "/image/:id",                  to: "images#show",via: "get"
-  @match "/image/crawlurl",             to: "images#crawlUrl",      via: "post"
-  @match "/image/crawl",                to: "images#crawl",      via: "post"
-  
-  
 
 
   @match "/loggedin",                   to: "application#loggedin"

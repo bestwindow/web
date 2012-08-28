@@ -6,8 +6,6 @@ class App.Item extends Tower.Model
   @field "html", type: "String"
   @field "link", type: "String"
   @field "picture", type: "String"
-  @field "price", type: "Number"
   @field "chunk",type:"Array"
-  @field "recommend",type:"Array"
   
   @timestamps()

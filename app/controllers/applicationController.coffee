@@ -45,24 +45,8 @@ class App.ApplicationController extends Tower.Controller
         if previewItem then items.unshift previewItem
         @paginate.end = @pagination.end items
         App.ChunkHelper.map items,(data)=>
-          recommendLimit = 3
-          recommendIds = []
-          for el in data
-            for i in [0..recommendLimit-1]
-              if el.recommend[i] && recommendIds.indexOf(el.recommend[i])<0 then recommendIds.push el.recommend[i]
-          App.Item.find recommendIds,(error,recommends)=>
-            recommends = [recommends] if !recommends.push
-            getRecommend = (id)->
-              for recommend in recommends
-                return recommend if String(recommend.id) == String(id)
-            for el in data
-              recommendArray   = []
-              for i in [0..recommendLimit-1]
-                if el.recommend[i] then recommendArray.push getRecommend el.recommend[i] 
-              el.recommend = recommendArray
-            
-            @items = data
-            @render "latest"
+          @items = data
+          @render "latest"
   landing:->
     @render "index"    
   book: ->
