@@ -18,8 +18,8 @@ $ ->
         $.each data.result, (index, file) ->
           $("#pictureinput")[0].value = file.thumbnail_url.split("image/")[1].replace("_0.jpg", "")
           $("#fileupload").css "display", "none"
-          $(".left").css "border", "8px solid #eee"
-          $("<div>").html("<a href=#{file.url} target=_blank><img src=#{file.url} width=430 /></a>").appendTo $("#fileresult")
+          $(".left").css "border", "30px solid #eee"
+          $("<div>").html("<a href=#{file.url} target=_blank><img src=#{file.url} /></a>").appendTo $("#fileresult")
           $('#pictureclose').css "display","block"
 
 

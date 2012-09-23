@@ -61,7 +61,7 @@ class App extends Tower.Application
 Tower.imageSize = (type)->
   imageArray = 
     type:['picture','avatar','blog']
-    item:[100,160,200,300,400,500]
+    item:[100,220,500,820]
     blog:[100,200,300,400,480,700,960]
     avatar:[50,100,180,480,700]
     background:[0]
@@ -80,11 +80,17 @@ Array.prototype.shuffle = ->
   this
 
 compileClient = ->
+  stylus = require('stylus')
   cs = require("coffee-script")
-  sourceDir = "app/client/_j/" 
-  for file in (fs.readdirSync sourceDir)
+  jsSourceDir = "app/client/_j/" 
+  cssSourceDir = "app/client/stylesheets/" 
+  for file in ((fs.readdirSync jsSourceDir).concat fs.readdirSync cssSourceDir)
     if file.match /\.(coffee)$/
-      fs.writeFileSync "public/_j/#{file.replace(/\.(coffee)$/,'.js')}",cs.compile fs.readFileSync "#{sourceDir}#{file}","utf-8"
+      fs.writeFileSync "public/_j/#{file.replace(/\.(coffee)$/,'.js')}",cs.compile fs.readFileSync "#{jsSourceDir}#{file}","utf-8"
+    if file.match /\.(styl)$/      
+      stylus.render fs.readFileSync("#{cssSourceDir}#{file}","utf-8"),(err,cssStr)->
+        if err then console.log "stylus compile error: #{err}"
+        fs.writeFileSync "public/stylesheets/app/client/stylesheets/#{file.replace(/\.(styl)$/,'.css')}",cssStr
 compileClient()
 
 

@@ -19,8 +19,8 @@ saveImage = (file,imagename_mongod,sizeArray,next)->
     sizeArray.forEach (el,idx)->
       tempFile = "#{file}_#{idx}"
       wSize = if el == 0 || el > fWidth then fWidth else el
-      hSize = parseInt fHeight*wSize/fWidth,10
-      magic.resize {srcPath:file,dstPath:tempFile,quality:0.9,width:wSize,height:hSize},(err)->
+      #hSize = parseInt fHeight*wSize/fWidth,10
+      magic.resize {srcPath:file,dstPath:tempFile,quality:0.9,width:wSize},(err)->
         fs.readFile tempFile,(err,buffer)->
           gridfs.put buffer,("#{imagename_mongod}_#{idx}.jpg"),'w',(err,r)->
             fs.unlink (tempFile), ->

@@ -22,7 +22,7 @@
               a href:"#",->"私语"
             li class:"divider-vertical"
           div class:"pull-right",->
-            if @request && !@request.user
+            if !@request or !@request.user
               a href:"/login", -> "用户登录"
             else
               linkTo "帐户","/ghosts/#{@request.user.id}/edit"

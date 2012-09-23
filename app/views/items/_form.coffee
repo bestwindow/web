@@ -10,7 +10,7 @@ formFor @item, (f) =>
     input name:"item[price]",type:"hidden",id:"price",value:"#{if @item.price then @item.price else ''}"
     div class:"content", =>
       a class:"pictureclose",id:"pictureclose",href:"#",=>'&nbsp;'      
-      div class:"left", style:"#{if edit then 'border:8px solid #eee' else ''}", =>
+      div class:"left", style:"#{if edit then 'border:30px solid #eee' else ''}", =>
         if !edit
           input id:"fileupload",type:"file",name:"files[]"
           div id:"fileresult"
