@@ -24,17 +24,7 @@ for chunk in @chunks
     text "&nbsp;&nbsp;&nbsp;&nbsp;"
     linkTo chunk.title,"/chunks/#{chunk.path}"
 
-h3 '有什么新货物:'
-div id:"items", =>
-  for item in @items
-    div class:"item",=>
-      div class:"item_picture",=>
-        a href:"/items/#{item.get('id')}", ->
-          img src:"/image/#{item.get('picture')}_1.jpg"
-      div class:"item_text",->
-        linkTo "#{item.get('text').split('\r\n')[0]}","/items/#{item.get('id')}"
-      div class:"item_price",->
-        span class:"label label-warning",->if item.price!='' then "￥#{item.price}"
+div ""
 
 partial "shared/paginate"
 

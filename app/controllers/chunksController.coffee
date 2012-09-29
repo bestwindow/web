@@ -14,19 +14,16 @@ class App.ChunksController extends App.ApplicationController
       @render "admin"
 
   index: ->
+
+    @paginate = 
+    limit:App.pageLimit
+    page:@pagination.current @params.page
+    route:"/chunks/page/"
+
     App.Chunk.paginate(page:1,limit:100).all (error, chunks) =>
-      @paginate = 
-        limit:App.pageLimit
-        page:@pagination.current @params.page
-        route:"/chunks/page/" 
-      App.Item
-      .paginate(@paginate)
-      .order('createdAt',"desc")
-      .find (error,items)=>
-        @chunks = chunks
-        @paginate.end = @pagination.end items 
-        @items = items
-        @render "index"
+      @paginate.end = @pagination.end chunks
+      @chunks = chunks
+      @render "index"
 
   new: ->
     @chunk = new App.Chunk
