@@ -3,9 +3,10 @@ contentFor "title", "Editing Ghost"
 
 
 
-div class:"page-title",->"帐户设置"
+
 ghost = @ghost
-div class:"form-horizontal", ->
+div class:"form-horizontal well", ->
+  label class:"page-title",->"帐户设置"
   formFor @ghost, (f) ->
     div class:"control-group", ->
       label class:"control-label",for:"ghost-email-input","邮件"

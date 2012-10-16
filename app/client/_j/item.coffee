@@ -1,14 +1,5 @@
 $ ->
 
-
-
-  $.money = ->
-    $("#money").maskMoney
-      symbol: "￥ "
-      showSymbol: true
-      symbolStay: true
-      precision: 0
-
   initialize = ->    
     $("#fileupload").fileupload
       dataType: "json"
@@ -23,18 +14,16 @@ $ ->
           $('#pictureclose').css "display","block"
 
 
-
-    $.epicEditor = new EpicEditor document.getElementById 'text'
-    $.epicEditor.$filename = 'editor'
-    $.epicEditor.remove $.epicEditor.$filename
-    $.epicEditor.options(
-      file:defaultContent:decodeURI($('#texthidden').val()),name:$.epicEditor.$filename
+    $.epicEditor = new EpicEditor
+      container:'text'
+      file:defaultContent:decodeURI($('#texthidden').val()),name:'editor'
       basePath:"/_libs/epiceditor"
       themes:
+        base:'/themes/base/epiceditor.css'
         preview:'/themes/preview/github.css'
         editor:'/themes/editor/epic-light.css'
-    ).load()
-
+    $.epicEditor.remove 'editor'
+    $.epicEditor.load ->
 
     $('#pictureclose').click (e)->
       e.target.style.display='none'
@@ -44,38 +33,28 @@ $ ->
       $("#fileresult").html ''
 
 
-    $("#money").focus (e) ->
-      if e.target.value is "￥"
-        e.target.value = ""
-        $.money()
-
-    $("#money").keyup (e) ->
-      unless e.target.value is "￥" or e.target.value is "" or e.target.value is "￥ "
-        money = parseInt($.trim(e.target.value.replace(/￥/g, "").replace(/,/g, "").replace(/%/g, "")), 10)
-        $("#price").val money  unless isNaN(money)
-
-
     $("#item-form").submit (e) ->
       noerror   = true
       alertDom  = $ ".alert"
       text      = $ "#texthidden"
       html      = $ '#htmlhidden'
-      price     = $ "#price"
+      title     = $ "#titleinput"
       picture   = $ "#pictureinput"
       alertr    = (text)->
         alertDom.html text
         noerror = false
       before    = ->
-        text.val $.epicEditor.get('editor').value
+        text.val $.epicEditor.getElement('editor').body.innerText
       validate  = ->
         if picture.val() is ""
           alertr "请上传一张货物图片"
         else if text.val() is "" or text.val() is "货物描述"
           alertr "请填写货物描述"
-        else if price.val() is "" or parseInt(price.val()) is 0
-          alertr "请填写货物价格"
+        else if title.val() is ""
+          alertr "请填写标题"
       after     = ->
-        html.val $.epicEditor.exportHTML()
+        $.epicEditor.preview()
+        html.val $.epicEditor.getElement('previewer').getElementById('epiceditor-preview').innerHTML
         if noerror is false
           alertDom.addClass "alert-error"
           alertDom.addClass "in"
@@ -84,11 +63,6 @@ $ ->
       after()
       noerror
 
-
-    if $('#price').val()!='' 
-      $("#money").val $('#price').val()
-      $.money()
-      $("#money").mask()
 
     if $('#pictureinput').val()!=''
       $('#pictureclose').css "display","block"

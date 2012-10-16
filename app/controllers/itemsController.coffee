@@ -27,6 +27,7 @@ class App.ItemsController extends App.ApplicationController
         @ghost = ghost
         @chunk = chunk
         @item = resource
+        @item.createdAt = App.moment(@item.createdAt).format App.iso8601
         @render route
       if !resource then return error()
       v.parallel getGhost,getChunk,render

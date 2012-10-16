@@ -1,8 +1,8 @@
     div id: "navigation", class: "navbar navbar-site", role: "navigation", =>
       div class:"nav-header",->
         div class:"brand",->
-          a href:"#"
-          div "1234"
+          a href:"/"
+          div "( ´ ▽ ` )ﾉ(￣▽￣)"
       div class: "navbar-inner", =>
         div class:"nav-collapse collapse",=>
           ul class:"nav",=>
@@ -23,7 +23,7 @@
             li class:"divider-vertical"
           div class:"pull-right",->
             if !@request or !@request.user
-              a href:"/login", -> "用户登录"
+              a href:"/login", -> "用户登录&nbsp;&nbsp;"
             else
               linkTo "帐户","/ghosts/#{@request.user.id}/edit"
               text "&nbsp;&nbsp;"

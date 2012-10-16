@@ -61,7 +61,7 @@ class App extends Tower.Application
 Tower.imageSize = (type)->
   imageArray = 
     type:['picture','avatar','blog']
-    item:[100,220,500,820]
+    item:[100,200,400,820]
     blog:[100,200,300,400,480,700,960]
     avatar:[50,100,180,480,700]
     background:[0]

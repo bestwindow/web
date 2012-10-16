@@ -13,7 +13,11 @@ class App.ApplicationController extends Tower.Controller
     current:(page)->((p)->if isNaN p then 1 else p) parseInt page,10
     end:(source)->if source and source.length is 0 then true else false
 
-
+  post:->
+    console.log "post"
+    console.log @params
+    @response.writeHead 200, {'Content-Type':'text/plain'}
+    @response.end "YES"
   registed: ->
     App.createSession @request,@response,()=>
       @response.redirect "/ghosts/new"
@@ -45,6 +49,8 @@ class App.ApplicationController extends Tower.Controller
         if previewItem then items.unshift previewItem
         @paginate.end = @pagination.end items
         App.ChunkHelper.map items,(data)=>
+          for el in data
+            el.createdAt = App.moment(el.createdAt).format App.iso8601
           @items = data
           @render "latest"
   landing:->

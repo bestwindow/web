@@ -39,6 +39,7 @@ Tower.Route.draw ->
   @match "/preview",  to: "application#preview",  via:"post"
   @match "/page/:page",                 to: "application#index",    via: "get"
   @match "/aboutus",                    to: "application#aboutus"
+  @match "/",                    to: "application#post",via:"post"
 
   @match "(/*path)",                    to: "application#index"
 

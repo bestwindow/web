@@ -4,7 +4,7 @@ class App.Item extends Tower.Model
   @field "founder", type: "Id"
   @field "text", type: "String"
   @field "html", type: "String"
-  @field "link", type: "String"
+  @field "title", type: "String"
   @field "picture", type: "String"
   @field "chunk",type:"Array"
   

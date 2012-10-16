@@ -3,7 +3,7 @@ html ->
   head ->
     meta charset: 'utf-8'
   
-    title "the web"
+    title "未命名"
   
     link rel: 'icon', href: '/favicon.ico'
     link rel: 'stylesheet', href: '/_c/bootswatch/bootstrap.css'
@@ -19,14 +19,9 @@ html ->
     script src: '/_j/auth.js'  
     partial "shared/_navigation"
 
-    header id: "header", class: "header", role: "banner", ->
-      div class: "container", ->
-        partial "shared/_header"
+    div class: "container", =>
+      @body
 
-    section id: "content", role: "main", =>
-      div class: "container", =>
-        @body
-
-    footer id: "footer", class: "footer", role: "contentinfo", ->
+    div id: "footer", class: "footer", role: "contentinfo", ->
       div class: "container", ->
         partial "shared/_footer"

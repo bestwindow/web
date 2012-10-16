@@ -1,5 +1,5 @@
-div class:"page-title", -> "注册"
 form id:"auth",class:"form-horizontal well",action:"/register",method:"POST", =>
+  label class:"page-title", -> "注册"
   if typeof @errors != 'undefined' && @errors.length
     div class:"alert alert-error", id:"autherror", => @errors.join ''
   div class:"control-group", ->

@@ -1,6 +1,6 @@
 meta charset: "utf-8"
 
-title "the web title"
+title "未命名"
 
 meta name: "description", content: t("description")
 meta name: "keywords", content: t("keywords")

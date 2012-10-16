@@ -13,9 +13,11 @@ html ->
       
     partial "shared/navigation"
         
+    ###
     header id: "header", class: "header", role: "banner", ->
       div class: "container", ->
         partial "shared/header"
+    ###
         
     div class: "container", ->
       partial "shared/flash"
@@ -24,7 +26,7 @@ html ->
         if hasContentFor "sidebar"
           yields "sidebar"
             
-    footer id: "footer", class: "footer", role: "contentinfo", ->
+    div id: "footer", class: "footer", role: "contentinfo", ->
       div class: "container", ->
         partial "shared/footer"
         

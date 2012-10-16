@@ -2,33 +2,31 @@ contentFor "title", "Item #{@item.toLabel()}"
 
 
 edit = if App.GhostHelper.isSelf.bind(this,@ghost.id)() then true else false
-ul class:"breadcrumb",=>
-  li ->
-    a href:'/', '首页'
-    span class:"divider",'/'
-  li ->
-    a href:'/chunks', '分类'
-    span class:"divider",'/'
-  li ->
-    a href:"/chunks/#{@chunk.path}", "#{@chunk.title}"
-    span class:"divider",'/'
-  li class:"active", =>"#{@item.text.split('\r\n')[0]}"
-  if edit
-    li class:"pull-right",=>
-      a href:"/items/#{@item.id}/edit",->"编辑货物"
 
-console.log "htmlhtml"+@item.html
-div class:"content row",id:"itemshow",=>
-  div class:"span7",=>
-    div class:"picture", =>
-      img src:"/image/#{@item.picture}_5.jpg",style:"border:20px solid white"
-  div class:"span5",=>
-    div class:"hero-unit",=>
-      div (@item.html || @item.text)
-      div "&nbsp;"
-      h3 "价格:￥ #{@item.get('price')}"
-      a class:"btn btn-warning btn-large", href:"/messages/new/#{@ghost.id}/#{@item.id}",=>"询价&购买"
-    div => 
-      text "此货物由"
-      linkTo @ghost.name,"/shells/#{@ghost.id}"
-      text "所有"
+div class:"content",id:"itemshow",=>
+  div class:"header row-fluid",=>
+    div class:"span7",=>
+      a href:"#",=>
+        abbr class:"timeago",title:"#{@item.createdAt}",=>
+          @item.createdAt
+    div class:"span4 pull-right",->
+  div class:"title",=>
+    @item.title
+  div class:"picture", =>
+    img src:"/image/#{@item.picture}_3.jpg"
+  div class:"html",=>
+    @item.html
+  div class:"footer",=>
+    div =>
+      text "目录："
+      a href:"/chunks/#{@chunk.path}", "#{@chunk.title}"
+    if edit
+      div class:"pull-right",=>
+        a href:"/items/#{@item.id}/edit",->"编辑"
+
+contentFor "bottom", ->
+  javascriptTag "/_j/jquery.timeago.js"
+  javascriptTag "/_j/jquery.timeago.zh-CN.js"
+  coffeescript ->
+    $ ->
+      $("abbr.timeago").timeago()

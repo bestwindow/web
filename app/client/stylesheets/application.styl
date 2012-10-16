@@ -15,7 +15,7 @@ box-shadow-heavy()
   -webkit-box-shadow: 0 2px 5px rgba(34,25,25,0.5)
 
 
-//bootstrap mod
+//theme mod
 body
   color:#222
   border-top:10px solid #eee
@@ -40,7 +40,13 @@ abbr[title]
   border-top:1px solid black
 
 
+a
+a:hover
+  color:#999
+  text-decoration:none
 
+.navbar
+  border-bottom:1px solid gray
 
 .navbar .divider-vertical
   border:0
@@ -64,27 +70,103 @@ abbr[title]
 //scaffolding
 .container
 .navbar
-  width:880px
+  width:820px
   overflow:hidden
   margin:auto
 
 //nav
 .navbar
   margin-top:-10px
-.navbar .brand
-  background:url(/images/logo.gif)
-  height:96px
-  width:96px
-  padding:0
-  margin:0px 18px 23px 5px
-.navbar .brand a
-  display:block
-  width:96px
-  height:96px
-  float:left
-.navbar .brand div
-  margin-left:100px
-  color:black
+  .brand
+    font-size:60px
+    line-height:230%
+    font-family:sans-serif
+    background:url(/images/logo.gif) no-repeat
+    height:96px
+    width:100%
+    padding:0
+    margin:0px 18px 23px 5px
+    text-shadow:0 0px 0 black
+  .brand a
+    display:block
+    width:96px
+    height:96px
+    float:left
+  .brand div
+    margin-left:100px
+    color:black
+
+.well
+  background-color:black
+  border:1px solid black
+
+div.page-title
+  border-top:5px solid #eee
+  border-bottom:1px solid #b2b2b2
+  line-height:40px
+  font-size:14px
+  padding:0px 15px
+
+div.pagination *
+  background-color:white
+
+.pagination 
+  .disabled a
+  .disabled a:hover
+    color:#ddd
+div.pagination li a:hover
+  color:#999
+
+.pagination
+  outline:1px solid #b2b2b2
+  border-top:5px solid #eee
+
+.copyright
+  margin:50px auto
+  height:40px
+  line-height:40px
+  text-align:center
+  width:200px
+  background:black
+  color:white
+  font-family:sans-serif
+
+
+//app def
+
+//latest
+.item-index
+  width:840px
+  overflow:hidden
+  margin-left:-10px
+  .item
+    width:400px
+    overflow:hidden
+    padding:0px 9px 0px 10px
+    border-top:5px solid #eee
+    border-right:1px solid #b2b2b2
+    border-bottom:1px solid #b2b2b2
+    float:left
+    .header
+      font-size:12px
+      line-height:300%
+  .title
+    font-size:30px
+    line-height:100%
+    padding-bottom:10px
+  .html
+    margin-top:10px
+
+#itemshow
+  border-top:5px solid #eee
+  .header
+    font-size:12px
+    line-height:300%
+  .title
+    font-size:30px
+    line-height:100%
+    padding-bottom:10px
+
   
   
   

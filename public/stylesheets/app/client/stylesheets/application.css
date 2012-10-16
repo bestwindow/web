@@ -24,6 +24,14 @@ abbr[title] {
   margin: 0;
   border-top: 1px solid #000;
 }
+a,
+a:hover {
+  color: #999;
+  text-decoration: none;
+}
+.navbar {
+  border-bottom: 1px solid #808080;
+}
 .navbar .divider-vertical {
   border: 0;
   border-left: 1px solid #808080;
@@ -46,7 +54,7 @@ abbr[title] {
 }
 .container,
 .navbar {
-  width: 880px;
+  width: 820px;
   overflow: hidden;
   margin: auto;
 }
@@ -54,11 +62,15 @@ abbr[title] {
   margin-top: -10px;
 }
 .navbar .brand {
-  background: url("/images/logo.gif");
+  font-size: 60px;
+  line-height: 230%;
+  font-family: sans-serif;
+  background: url("/images/logo.gif") no-repeat;
   height: 96px;
-  width: 96px;
+  width: 100%;
   padding: 0;
   margin: 0px 18px 23px 5px;
+  text-shadow: 0 0px 0 #000;
 }
 .navbar .brand a {
   display: block;
@@ -69,4 +81,77 @@ abbr[title] {
 .navbar .brand div {
   margin-left: 100px;
   color: #000;
+}
+.well {
+  background-color: #000;
+  border: 1px solid #000;
+}
+div.page-title {
+  border-top: 5px solid #eee;
+  border-bottom: 1px solid #b2b2b2;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0px 15px;
+}
+div.pagination * {
+  background-color: #fff;
+}
+.pagination .disabled a,
+.pagination .disabled a:hover {
+  color: #ddd;
+}
+div.pagination li a:hover {
+  color: #999;
+}
+.pagination {
+  outline: 1px solid #b2b2b2;
+  border-top: 5px solid #eee;
+}
+.copyright {
+  margin: 50px auto;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  width: 200px;
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+}
+.item-index {
+  width: 840px;
+  overflow: hidden;
+  margin-left: -10px;
+}
+.item-index .item {
+  width: 400px;
+  overflow: hidden;
+  padding: 0px 9px 0px 10px;
+  border-top: 5px solid #eee;
+  border-right: 1px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
+  float: left;
+}
+.item-index .item .header {
+  font-size: 12px;
+  line-height: 300%;
+}
+.item-index .title {
+  font-size: 30px;
+  line-height: 100%;
+  padding-bottom: 10px;
+}
+.item-index .html {
+  margin-top: 10px;
+}
+#itemshow {
+  border-top: 5px solid #eee;
+}
+#itemshow .header {
+  font-size: 12px;
+  line-height: 300%;
+}
+#itemshow .title {
+  font-size: 30px;
+  line-height: 100%;
+  padding-bottom: 10px;
 }
