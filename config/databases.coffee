@@ -1,4 +1,5 @@
-domain = Tower.domain.replace '.','-'
+domain = Tower.databaseName || Tower.domain
+domain = domain.replace '.','-'
 module.exports =
   mongodb:
     development:
