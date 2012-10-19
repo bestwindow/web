@@ -17,7 +17,7 @@ div class:"content",id:"itemshow",=>
   div class:"html",=>
     @item.html
   div class:"footer",=>
-    div =>
+    span =>
       text "目录："
       a href:"/chunks/#{@chunk.path}", "#{@chunk.title}"
     if edit

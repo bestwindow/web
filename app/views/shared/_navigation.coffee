@@ -7,21 +7,18 @@
         div class:"nav-collapse collapse",=>
           ul class:"nav",=>
             li ->
-              a href:"#",->"首页"
+              a href:"/",->"首页"
             li class:"divider-vertical"
             li ->
-              a href:"#",->"指南"
+              a href:"/chunks/guide",->"指南"
             li class:"divider-vertical"
             li ->
-              a href:"#",->"下载"
+              a href:"/chunks/download",->"下载"
             li class:"divider-vertical"
             li ->
-              a href:"#",->"正在发生的事"
+              a href:"/chunks/latest",->"正在发生的事"
             li class:"divider-vertical"
-            li ->
-              a href:"#",->"私语"
-            li class:"divider-vertical"
-          div class:"pull-right",->
+          div class:"pull-right hide",->
             if !@request or !@request.user
               a href:"/login", -> "用户登录&nbsp;&nbsp;"
             else

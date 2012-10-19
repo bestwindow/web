@@ -155,3 +155,11 @@ div.pagination li a:hover {
   line-height: 100%;
   padding-bottom: 10px;
 }
+#itemshow .html {
+  border-bottom: 1px solid #b2b2b2;
+}
+#itemshow .footer {
+  border-top: 5px solid #eee;
+  border-bottom: 1px solid #b2b2b2;
+  line-height: 40px;
+}
