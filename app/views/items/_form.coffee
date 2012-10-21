@@ -17,8 +17,8 @@ formFor @item, (f) =>
           input id:"fileupload",type:"file",name:"files[]",style:"display:none"
           div id:"fileresult",=>
             div =>
-              a href:"/image/#{@item.picture}_7.jpg",target:"_blank",=>
-                img src:"/image/#{@item.picture}_7.jpg",width:430
+              a href:"/image/#{@item.picture}_3.jpg",target:"_blank",=>
+                img src:"/image/#{@item.picture}_3.jpg",width:760
       div class:"right", =>
         input name:"item[title]",class:"title",id:"titleinput",type:"text",value:"#{if @item.title then @item.title else ''}"
         div id:"text"

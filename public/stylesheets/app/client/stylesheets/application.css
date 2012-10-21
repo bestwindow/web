@@ -163,3 +163,18 @@ div.pagination li a:hover {
   border-bottom: 1px solid #b2b2b2;
   line-height: 40px;
 }
+#newitem .content {
+  position: relative;
+}
+#newitem #pictureclose {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 30px;
+  height: 30px;
+  background: transparent url("/images/cerabox.png") -40px 0;
+  cursor: pointer;
+  z-index: 1000;
+  text-decoration: none;
+  display: none;
+}
